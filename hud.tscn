@@ -1,0 +1,166 @@
+[gd_scene format=3 uid="uid://cdv2ga1h6objp"]
+
+[ext_resource type="Script" uid="uid://c4kklnt2i0tna" path="res://hud.gd" id="1_64ctp"]
+[ext_resource type="FontFile" uid="uid://g7rn7ivvdoed" path="res://dodge_the_creeps_2d_assets/fonts/Xolonium-Regular.ttf" id="2_8sq4i"]
+
+[node name="HUD" type="CanvasLayer" unique_id=116784494]
+script = ExtResource("1_64ctp")
+
+[node name="ScoreLabel" type="Label" parent="." unique_id=1465033203]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -22.5
+offset_right = 22.5
+offset_bottom = 78.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 64
+text = "Time: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IngredientsLabel" type="Label" parent="." unique_id=1745531174]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -220.0
+offset_top = 76.0
+offset_right = 220.0
+offset_bottom = 154.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 48
+text = "Ingredients: 0"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=-1077732729]
+self_modulate = Color(0.9474059, 4.0670484e-06, 3.85046e-07, 1)
+offset_left = 80.0
+offset_right = 280.0
+offset_bottom = 30.0
+value = 100.0
+show_percentage = false
+
+[node name="HealthLabel" type="Label" parent="HealthBar" unique_id=-1077732728]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.2
+anchor_top = 0.53300005
+anchor_right = -0.2
+anchor_bottom = 0.53300005
+offset_left = -40.0
+offset_top = -15.990002
+offset_right = 40.0
+offset_bottom = 16.009998
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 16
+text = "HP"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="HealthBar" unique_id=1304782405]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.22
+anchor_top = 0.53300005
+anchor_right = 1.22
+anchor_bottom = 0.53300005
+offset_left = -44.0
+offset_top = -15.990002
+offset_right = 44.0
+offset_bottom = 16.009998
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 16
+text = "100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HungerBar" type="ProgressBar" parent="." unique_id=-1077732727]
+self_modulate = Color(0.85490197, 0.36078432, 0.019607844, 1)
+offset_left = 80.0
+offset_top = 34.0
+offset_right = 280.0
+offset_bottom = 64.0
+value = 100.0
+show_percentage = false
+
+[node name="HungerLabel" type="Label" parent="HungerBar" unique_id=-1077732726]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.2
+anchor_top = 0.467
+anchor_right = -0.2
+anchor_bottom = 0.467
+offset_left = -40.0
+offset_top = -16.01
+offset_right = 40.0
+offset_bottom = 15.99
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 16
+text = "Hunger"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="HungerBar" unique_id=1930643625]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.22
+anchor_top = 0.467
+anchor_right = 1.22
+anchor_bottom = 0.467
+offset_left = -44.0
+offset_top = -16.01
+offset_right = 44.0
+offset_bottom = 15.99
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 16
+text = "100/100"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Message" type="Label" parent="." unique_id=1273957329]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -576.0
+offset_top = -120.0
+offset_right = 576.0
+offset_bottom = 120.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 64
+text = "Dodge the Creeps!"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="." unique_id=321333991]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("2_8sq4i")
+theme_override_font_sizes/font_size = 64
+text = "Start"
+
+[node name="MessageTimer" type="Timer" parent="." unique_id=1812932210]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
