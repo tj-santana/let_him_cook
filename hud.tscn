@@ -124,43 +124,20 @@ text = "100/100"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Message" type="Label" parent="." unique_id=1273957329]
+[node name="GameOver" type="Label" parent="." unique_id=1706377218]
+visible = false
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -576.0
-offset_top = -120.0
-offset_right = 576.0
-offset_bottom = 120.0
+offset_left = -20.0
+offset_top = -11.5
+offset_right = 20.0
+offset_bottom = 11.5
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_8sq4i")
-theme_override_font_sizes/font_size = 64
-text = "Dodge the Creeps!"
+theme_override_font_sizes/font_size = 70
+text = "Game Over"
 horizontal_alignment = 1
 vertical_alignment = 1
-autowrap_mode = 2
-
-[node name="StartButton" type="Button" parent="." unique_id=321333991]
-anchors_preset = 7
-anchor_left = 0.5
-anchor_top = 1.0
-anchor_right = 0.5
-anchor_bottom = 1.0
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-grow_horizontal = 2
-grow_vertical = 0
-theme_override_fonts/font = ExtResource("2_8sq4i")
-theme_override_font_sizes/font_size = 64
-text = "Start"
-
-[node name="MessageTimer" type="Timer" parent="." unique_id=1812932210]
-wait_time = 2.0
-one_shot = true
-
-[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
-[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]

@@ -122,7 +122,7 @@ func _on_body_entered(_body):
 
 	can_take_hit = false
 	hit.emit()
-	await get_tree().create_timer(hit_invulnerability).timeout
+	await get_tree().create_timer(hit_invulnerability).timeout if get_tree() else die()
 	if visible:
 		can_take_hit = true
 	
