@@ -18,7 +18,17 @@ func update_hunger(current_hunger: float, max_hunger: float):
 	$HungerBar/Label.text = "%d" % current_hunger + "/%d" % max_hunger
 
 func update_ingredients(ingredients):
-	$IngredientsLabel.text = "Ingredients: %s" % ingredients
+	pass
+
+
+func update_inventory(inventory: Dictionary):
+	var sus_meat = int(inventory.get("Sus Meat", 0))
+	var slime = int(inventory.get("Slime", 0))
+	var essence = int(inventory.get("Essence", 0))
+
+	$InventorySlots/InvSlot_Carne/QtdTexto.text = str(sus_meat)
+	$InventorySlots/InvSlot_Slime/QtdTexto.text = str(slime)
+	$InventorySlots/InvSlot_Essence/QtdTexto.text = str(essence)
 	
 func update_score(score):
 	$ScoreLabel.text = "Time: %s" % score

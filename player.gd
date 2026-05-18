@@ -75,9 +75,6 @@ func _process(delta):
 		$AnimatedSprite2D.flip_v = false
 		# See the note below about the following boolean assignment.
 		$AnimatedSprite2D.flip_h = velocity.x < 0
-	elif velocity.y != 0:
-		$AnimatedSprite2D.animation = "up"
-		$AnimatedSprite2D.flip_v = velocity.y > 0
 
 func attack():
 	if not can_attack:
@@ -143,3 +140,24 @@ func _draw():
 	if debug_attack_preview and show_attack_preview:
 		var center = facing.normalized() * attack_offset
 		draw_circle(center, attack_range, Color(1.0, 0.2, 0.2, 0.2))
+
+# Apply temporary combat buffs from cooked food
+func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float):
+	# 1. Aplica os buffs (Ficas mais forte/rápido)
+	speed += bonus_velocidade
+	attack_cooldown -= reducao_cooldown
+	
+	# Garante que o cooldown do ataque não fica a zero ou negativo
+	if attack_cooldown < 0.1:
+		attack_cooldown = 0.1
+		
+	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown)
+	
+	# 2. Espera que o tempo do buff passe
+	await get_tree().create_timer(duracao).timeout
+	
+	# 3. Remove os buffs (Voltas ao normal)
+	speed -= bonus_velocidade
+	attack_cooldown += reducao_cooldown
+	
+	print("O Buff acabou! Voltaste ao normal.")

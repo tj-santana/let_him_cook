@@ -5,6 +5,7 @@ extends Node
 @export var hit_health_damage = 10.0
 @export var hit_max_health_damage = 5.0
 @export var min_max_health = 25.0
+@export var game_over_timer = 2.0
 
 var score
 var ingredients
@@ -13,13 +14,27 @@ var max_health = 100.0
 var hunger = 100.0
 var max_hunger = 100.0
 var is_game_over = false
-var game_over_timer = 2
 var is_playing = false
 var player_inventory = {
 	"Sus Meat": 0,
 	"Slime": 0,
 	"Essence": 0
 }
+
+# Simple wave system: list of dictionaries {count, interval}
+var waves = [
+	{"count": 5, "interval": 0.8},
+	{"count": 8, "interval": 0.7},
+	{"count": 12, "interval": 0.6}
+]
+var current_wave = 0
+var mobs_left_to_spawn = 0
+var mobs_alive = 0
+
+
+func _refresh_inventory_hud() -> void:
+	if $HUD.has_method("update_inventory"):
+		$HUD.update_inventory(player_inventory)
 
 
 # Called when the node enters the scene tree for the first time.
@@ -39,12 +54,30 @@ func _ready():
 		$HUD.update_score(score)
 		$HUD.update_health(health, max_health)
 		$HUD.update_hunger(hunger, max_hunger)
-		# recompute ingredient count
-		ingredients = 0
-		for v in player_inventory.values():
-			ingredients += int(v)
-		$HUD.update_ingredients(ingredients)
+		_refresh_inventory_hud()
 
+		# Apply any pending food buffs from cooking
+		if typeof(GameManager) != TYPE_NIL and GameManager.get("buff_pendente"):
+			print("--- APPLYING FOOD BUFFS ---")
+			if $Player.has_method("aplicar_buff_comida"):
+				$Player.aplicar_buff_comida(
+					GameManager.get("buff_velocidade"),
+					GameManager.get("buff_cooldown"),
+					GameManager.get("buff_duracao")
+				)
+			else:
+				print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
+			
+			# Recover some health and hunger from eating
+			hunger = min(hunger + 10.0, max_hunger)
+			health = min(health + 20.0, max_health)
+			$HUD.update_hunger(hunger, max_hunger)
+			$HUD.update_health(health, max_health)
+			
+			# Clear the pending buff flag
+			GameManager.buff_pendente = false
+			print("Buffs aplicados com sucesso!")
+		
 		# Place player back where they were
 		if s.has("player_pos"):
 			$Player.start(s.get("player_pos"))
@@ -80,10 +113,7 @@ func _process(delta: float) -> void:
 	if not Engine.is_editor_hint() and typeof(GameManager) != TYPE_NIL:
 		if GameManager.inventario_jogador:
 			player_inventory = GameManager.inventario_jogador.duplicate()
-			ingredients = 0
-			for v in player_inventory.values():
-				ingredients += int(v)
-			$HUD.update_ingredients(ingredients)
+			_refresh_inventory_hud()
 
 
 
@@ -118,7 +148,6 @@ func new_game():
 		"Essence": 0
 	}
 	$HUD.update_score(score)
-	$HUD.update_ingredients(ingredients)
 	$HUD.update_health(health, max_health)
 	$HUD.update_hunger(hunger, max_hunger)
 	if $HUD.has_node("Message"):
@@ -130,11 +159,14 @@ func new_game():
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 
+	# initialize waves
+	current_wave = 0
+	mobs_left_to_spawn = 0
+	mobs_alive = 0
+	# prepare first wave when start timer fires
+
 	# refresh HUD for inventory
-	ingredients = 0
-	for v in player_inventory.values():
-		ingredients += int(v)
-	$HUD.update_ingredients(ingredients)
+	_refresh_inventory_hud()
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
 
@@ -163,29 +195,46 @@ func _on_mob_timer_timeout():
 	# Spawn the mob by adding it to the Main scene.
 	add_child(mob)
 	mob.defeated.connect(_on_mob_defeated)
+	mobs_alive += 1
+	if mobs_left_to_spawn > 0:
+		mobs_left_to_spawn -= 1
+		if mobs_left_to_spawn == 0:
+			# stop spawning for this wave
+			$MobTimer.stop()
+
+	# If we've spawned all and there are no mobs alive, advance wave
+	if mobs_left_to_spawn == 0 and mobs_alive == 0:
+		_advance_wave()
 
 func _on_score_timer_timeout():
 	score += 1
 	$HUD.update_score(score)
 
-func _on_mob_defeated():
+func _on_mob_defeated(drop_type: String = "Sus Meat"):
 
-	# Add a simple ingredient to the player's inventory. For now we
-	# attribute all mob drops to "Sus Meat" so the cooking module has
-	# something to consume. This can be refined later.
-	player_inventory["Sus Meat"] = player_inventory.get("Sus Meat", 0) + 1
+	# Add the dropped ingredient type to the player's inventory
+	var key = drop_type if typeof(drop_type) == TYPE_STRING and drop_type != "" else "Sus Meat"
+	player_inventory[key] = player_inventory.get(key, 0) + 1
 
 	# Update the visible ingredient count (sum of all ingredient types)
-	ingredients = 0
-	for v in player_inventory.values():
-		ingredients += int(v)
-	$HUD.update_ingredients(ingredients)
-	GameManager.inventario_jogador = player_inventory.duplicate()
+	_refresh_inventory_hud()
+	if typeof(GameManager) != TYPE_NIL:
+		GameManager.inventario_jogador = player_inventory.duplicate()
 
 	# Small hunger refund on kill
 	hunger += 5.0
 	hunger = min(hunger, max_hunger)
 	$HUD.update_hunger(hunger, max_hunger)
+
+	# track alive mobs for wave progression
+	mobs_alive = max(0, mobs_alive - 1)
+	if mobs_left_to_spawn == 0 and mobs_alive == 0:
+		_advance_wave()
+
+	# update GameManager inventory snapshot
+	if typeof(GameManager) != TYPE_NIL:
+		GameManager.inventario_jogador = player_inventory.duplicate()
+
 
 func _on_player_hit():
 	if is_game_over:
@@ -204,6 +253,29 @@ func _on_start_timer_timeout():
 	$ScoreTimer.start()
 	is_playing = true
 	$Player.is_playing = true
+	# Start first wave
+	_start_wave(current_wave)
+
+
+func _start_wave(index: int) -> void:
+	if index >= waves.size():
+		# no more waves; optionally loop or increase difficulty
+		return
+	var w = waves[index]
+	mobs_left_to_spawn = int(w.get("count", 5))
+	$MobTimer.wait_time = float(w.get("interval", 0.8))
+	$MobTimer.start()
+
+
+func _advance_wave() -> void:
+	current_wave += 1
+	if current_wave < waves.size():
+		# small delay then start next wave
+		get_tree().create_timer(1.2).timeout.connect(func(): _start_wave(current_wave))
+	else:
+		# all waves complete -- for now, restart waves
+		current_wave = 0
+		get_tree().create_timer(2.0).timeout.connect(func(): _start_wave(current_wave))
 
 
 func _input(event):

@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://c4kklnt2i0tna" path="res://hud.gd" id="1_64ctp"]
 [ext_resource type="FontFile" uid="uid://g7rn7ivvdoed" path="res://dodge_the_creeps_2d_assets/fonts/Xolonium-Regular.ttf" id="2_8sq4i"]
+[ext_resource type="Texture2D" uid="uid://u8jmjlfugbug" path="res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres" id="3_mxnnk"]
+[ext_resource type="Texture2D" uid="uid://q3t01qyc1fgp" path="res://microgames/Assets/Food/Isolated Food/icon_slime.tres" id="4_fuams"]
+[ext_resource type="Texture2D" uid="uid://c4d2gbml72pkf" path="res://microgames/Assets/Food/Isolated Food/icon_essence.tres" id="5_10tfs"]
 
 [node name="HUD" type="CanvasLayer" unique_id=116784494]
 script = ExtResource("1_64ctp")
@@ -20,26 +23,86 @@ text = "Time: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="IngredientsLabel" type="Label" parent="." unique_id=1745531174]
+[node name="InventorySlots" type="HBoxContainer" parent="." unique_id=2147483001]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
-offset_left = -220.0
-offset_top = 76.0
-offset_right = 220.0
-offset_bottom = 154.0
+offset_left = -130.0
+offset_top = 552.0
+offset_right = 130.0
+offset_bottom = 632.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_8sq4i")
-theme_override_font_sizes/font_size = 48
-text = "Ingredients: 0"
-horizontal_alignment = 1
-vertical_alignment = 1
+theme_override_constants/separation = 10
+
+[node name="InvSlot_Carne" type="Button" parent="InventorySlots" unique_id=2147483002]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+icon = ExtResource("3_mxnnk")
+icon_alignment = 1
+expand_icon = true
+
+[node name="QtdTexto" type="Label" parent="InventorySlots/InvSlot_Carne" unique_id=2147483003]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/outline_size = 4
+text = "0"
+
+[node name="InvSlot_Slime" type="Button" parent="InventorySlots" unique_id=2147483004]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+icon = ExtResource("4_fuams")
+icon_alignment = 1
+expand_icon = true
+
+[node name="QtdTexto" type="Label" parent="InventorySlots/InvSlot_Slime" unique_id=2147483005]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -10.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/outline_size = 4
+text = "0"
+
+[node name="InvSlot_Essence" type="Button" parent="InventorySlots" unique_id=2147483006]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+icon = ExtResource("5_10tfs")
+icon_alignment = 1
+expand_icon = true
+
+[node name="QtdTexto" type="Label" parent="InventorySlots/InvSlot_Essence" unique_id=2147483007]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/outline_size = 4
+text = "0"
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=-1077732729]
 self_modulate = Color(0.9474059, 4.0670484e-06, 3.85046e-07, 1)
 offset_left = 80.0
+offset_top = 5.0
 offset_right = 280.0
-offset_bottom = 30.0
+offset_bottom = 35.0
 value = 100.0
 show_percentage = false
 
@@ -82,9 +145,9 @@ vertical_alignment = 1
 [node name="HungerBar" type="ProgressBar" parent="." unique_id=-1077732727]
 self_modulate = Color(0.85490197, 0.36078432, 0.019607844, 1)
 offset_left = 80.0
-offset_top = 34.0
+offset_top = 39.0
 offset_right = 280.0
-offset_bottom = 64.0
+offset_bottom = 69.0
 value = 100.0
 show_percentage = false
 

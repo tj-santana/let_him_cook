@@ -16,8 +16,10 @@ var textura_essence = preload("res://microgames/Assets/Food/Isolated Food/icon_e
 ]
 
 func _ready():
-	if GameManager.desempenho_microgame > 0:
+	# Se tivermos ingredientes guardados no GameManager, significa que acabámos de voltar dos minijogos!
+	if GameManager.ingredientes_atuais.size() > 0:
 		avaliar_resultado()
+		
 	atualizar_ecra()
 	atualizar_textos_inventario() # Garante que os números aparecem certos logo ao iniciar!
 	
@@ -37,102 +39,99 @@ func atualizar_textos_inventario():
 
 # --- ADICIONAR E REMOVER DA PANELA ---
 func tentar_adicionar_ingrediente(ingrediente: String):
-	# 1. Verifica se temos quantidade maior que 0 no inventário
 	if GameManager.inventario_jogador[ingrediente] > 0:
-		
-		# 2. Verifica se a panela tem espaço (limite de 2)
 		if ingredientes_na_panela.size() < limite_ingredientes:
-			
-			# Retira 1 do inventário e coloca na panela
 			GameManager.inventario_jogador[ingrediente] -= 1
 			ingredientes_na_panela.append(ingrediente)
 			print(ingrediente, " adicionado!")
 			
 			atualizar_ecra()
-			atualizar_textos_inventario() # Atualiza os números no ecrã!
+			atualizar_textos_inventario()
 		else:
 			print("A panela já está cheia!")
 	else:
 		print("Não tens mais ", ingrediente, " no inventário!")
 
 func tentar_remover_ingrediente(indice_slot: int):
-	# Se existir um item naquele slot
 	if indice_slot < ingredientes_na_panela.size():
 		var ingrediente_removido = ingredientes_na_panela[indice_slot]
-		
-		# Devolvemos 1 à quantidade desse item no inventário
 		GameManager.inventario_jogador[ingrediente_removido] += 1
-		
-		# Tiramos da panela
 		ingredientes_na_panela.remove_at(indice_slot)
 		
 		atualizar_ecra()
-		atualizar_textos_inventario() # Atualiza os números no ecrã!
+		atualizar_textos_inventario()
 
-func _on_inv_slot_carne_pressed():
-	tentar_adicionar_ingrediente("Sus Meat")
-
-func _on_inv_slot_slime_pressed():
-	tentar_adicionar_ingrediente("Slime")
-
-func _on_inv_slot_essence_pressed():
-	tentar_adicionar_ingrediente("Essence")
+func _on_inv_slot_carne_pressed(): tentar_adicionar_ingrediente("Sus Meat")
+func _on_inv_slot_slime_pressed(): tentar_adicionar_ingrediente("Slime")
+func _on_inv_slot_essence_pressed(): tentar_adicionar_ingrediente("Essence")
 
 # --- BOTÃO DE COZINHAR ---
 func _on_botao_cozinhar_pressed():
-	# Verifica diretamente o tamanho da lista nova
+	# 1. Verifica se a panela tem os ingredientes necessários
 	if ingredientes_na_panela.size() == limite_ingredientes:
-		print("A começar o preparo...")
 		
-		# Guarda os ingredientes atuais no GameManager para quando o jogo voltar a esta cena saber o que avaliar!
-		GameManager.ingredientes_atuais = ingredientes_na_panela.duplicate()
+		# 2. Testa se a receita existe antes de ir para os minijogos
+		var ingredientes_teste = ingredientes_na_panela.duplicate()
+		ingredientes_teste.sort()
 		
-		# Chama o GameManager para arrancar com a roleta russa de minijogos!
-		GameManager.iniciar_sequencia_minijogos()
+		if GameManager.livro_de_receitas.has(ingredientes_teste):
+			print("A começar o preparo do prato...")
+			GameManager.ingredientes_atuais = ingredientes_na_panela.duplicate()
+			GameManager.iniciar_sequencia_minijogos()
+		else:
+			print("ERRO: Essa combinação não existe no livro de receitas!")
 	else:
 		print("Precisas de 2 ingredientes na panela primeiro!")
 
 # --- AVALIAÇÃO DE RECEITAS ---
+# Altera a tua função avaliar_resultado() para incluir o GameManager.buff_fome:
+
 func avaliar_resultado():
-	var score = GameManager.desempenho_microgame
+	var pontuacao = GameManager.pontuacao_total
 	var ingredientes = GameManager.ingredientes_atuais
-	
 	ingredientes.sort()
 	
 	if GameManager.livro_de_receitas.has(ingredientes):
 		var nome_do_prato = GameManager.livro_de_receitas[ingredientes]
 		
-		if score >= 0.8:
-			print("SUCESSO PERFEITO! Criaste um(a) ", nome_do_prato, " de excelente qualidade!")
-		elif score >= 0.5:
-			print("SUCESSO! Criaste um(a) ", nome_do_prato, " com qualidade razoável.")
-		else:
-			print("FALHA! Queimaste a receita de ", nome_do_prato, " no minijogo!")
-	else:
-		print("ERRO DE RECEITA! Essa combinação (", ingredientes, ") criou uma gororoba tóxica!")
+		if pontuacao >= 2.5: 
+			print("SUCESSO PERFEITO! Criaste um(a) ", nome_do_prato, " ★★★")
+			GameManager.buff_pendente = true
+			GameManager.buff_velocidade = 200
+			GameManager.buff_cooldown = 0.15
+			GameManager.buff_duracao = 30.0
+			GameManager.buff_fome = 10.0 # <--- ADICIONADO
 
-	GameManager.limpar_dados()
-	ingredientes_na_panela.clear()
-	atualizar_ecra()
-
+		elif pontuacao >= 1.5: 
+			print("SUCESSO! Criaste um(a) ", nome_do_prato, " ★★")
+			GameManager.buff_pendente = true
+			GameManager.buff_velocidade = 100
+			GameManager.buff_cooldown = 0.05
+			GameManager.buff_duracao = 15.0
+			GameManager.buff_fome = 10.0 # <--- ADICIONADO
+			
+		else: 
+			print("POR POUCO! O teu(a) ", nome_do_prato, " ficou meio queimado ★")
+			GameManager.buff_pendente = true
+			GameManager.buff_velocidade = 50
+			GameManager.buff_cooldown = 0.0
+			GameManager.buff_duracao = 10.0
+			GameManager.buff_fome = 10.0 # <--- ADICIONADO
+			
 # --- MAGIA VISUAL ---
 func atualizar_ecra():
-	# Mudei para ver o tamanho total dos slots visuais para limpar corretamente os quadrados extras
 	for i in range(slots_visuais.size()):
 		var icon_do_slot = slots_visuais[i].get_node("Icon")
 		
 		if i < ingredientes_na_panela.size():
 			if ingredientes_na_panela[i] == "Sus Meat":
 				icon_do_slot.texture = textura_sus_meat
-				slots_visuais[i].color = Color.DARK_GRAY
-
 			elif ingredientes_na_panela[i] == "Slime":
 				icon_do_slot.texture = textura_slime
-				slots_visuais[i].color = Color.DARK_GRAY
-				
 			elif ingredientes_na_panela[i] == "Essence":
 				icon_do_slot.texture = textura_essence
-				slots_visuais[i].color = Color.DARK_GRAY
+				
+			slots_visuais[i].color = Color.DARK_GRAY
 		else:
 			icon_do_slot.texture = null
 			slots_visuais[i].color = Color.DARK_GRAY

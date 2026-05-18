@@ -5,6 +5,11 @@ var cena_principal_path = "res://game.tscn"
 # --- NOVA LÓGICA DE SEQUÊNCIA ---
 var fila_de_minijogos: Array = []
 var pontuacao_total: float = 0.0
+var buff_pendente = false
+var buff_velocidade = 0
+var buff_cooldown = 0.0
+var buff_duracao = 0.0
+var buff_fome: float = 0.0
 
 # Coloca aqui os caminhos EXATOS das tuas cenas
 var todas_as_cenas_minijogos: Array = [
@@ -40,7 +45,8 @@ func avancar_para_proximo_minijogo():
 	else:
 		# A fila acabou! Volta para a cozinha
 		print("Prato Terminado! Pontuação Total: ", pontuacao_total)
-		get_tree().change_scene_to_file(cena_principal_path)
+		# MUDA PARA O CAMINHO EXATO DA COZINHA:
+		get_tree().change_scene_to_file("res://microgames/CozinhaPrincipal.tscn")
 		
 var ingredientes_atuais: Array = []
 var desempenho_microgame: float = 0.0
@@ -58,7 +64,8 @@ var inventario_jogador: Dictionary = {
 # O NOSSO LIVRO DE RECEITAS
 var livro_de_receitas: Dictionary = {
 	["Slime", "Sus Meat"]: "Geleia Duvidosa",
-	["Essence", "Sus Meat"]: "Guisado Arcano"
+	["Essence", "Sus Meat"]: "Guisado Arcano",
+	["Sus Meat", "Sus Meat"] : "Carne Estufada"
 }
 
 # Limpa os dados temporários da panela/microgame
