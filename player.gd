@@ -5,7 +5,7 @@ signal hit
 @export var max_health = 100.0
 @export var attack_range = 70.0
 @export var attack_offset = 42.0
-@export var attack_cooldown = 0.25
+@export var attack_cooldown = 0.5
 @export var dash_speed = 1100.0
 @export var dash_duration = 0.16
 @export var dash_cooldown = 0.7
@@ -17,6 +17,7 @@ var can_attack = true
 var can_dash = true
 var can_take_hit = true
 var is_dashing = false
+var is_attacking = false
 var dash_time_left = 0.0
 var current_health = 100.0
 var show_attack_preview = false
@@ -60,6 +61,8 @@ func _process(delta):
 		if velocity.length() > 0:
 			velocity = velocity.normalized() * speed
 			$AnimatedSprite2D.play()
+		elif is_attacking:
+			$AnimatedSprite2D.play()
 		else:
 			$AnimatedSprite2D.stop()
 			
@@ -70,19 +73,38 @@ func _process(delta):
 	if debug_attack_preview and show_attack_preview:
 		queue_redraw()
 	
-	if velocity.x != 0:
-		$AnimatedSprite2D.animation = "walk"
-		$AnimatedSprite2D.flip_v = false
-		# See the note below about the following boolean assignment.
-		$AnimatedSprite2D.flip_h = velocity.x < 0
+	# Only update animation if not attacking (attack animation takes priority)
+	if not is_attacking:
+		if velocity.x != 0:
+			$AnimatedSprite2D.animation = "walk"
+			$AnimatedSprite2D.flip_v = false
+			# See the note below about the following boolean assignment.
+			$AnimatedSprite2D.flip_h = velocity.x < 0
+		elif velocity.y != 0:
+			# Check if "up" animation exists, otherwise use "walk"
+			if $AnimatedSprite2D.sprite_frames.has_animation("up"):
+				$AnimatedSprite2D.animation = "up"
+			else:
+				$AnimatedSprite2D.animation = "walk"
+			$AnimatedSprite2D.flip_v = velocity.y > 0
+		else:
+			$AnimatedSprite2D.animation = "idle"
 
 func attack():
 	if not can_attack:
 		return
 
 	can_attack = false
+	is_attacking = true
 	show_attack_preview = true
 	queue_redraw()
+		
+	if $AnimatedSprite2D.sprite_frames.has_animation("attack"):
+		$AnimatedSprite2D.animation = "attack"
+		#$AnimatedSprite2D.play()
+		print("Attack animation playing")
+	else:
+		print("ERROR: 'attack' animation not found!")
 	var query := PhysicsShapeQueryParameters2D.new()
 	var shape := CircleShape2D.new()
 	shape.radius = attack_range
@@ -102,6 +124,7 @@ func attack():
 	show_attack_preview = false
 	queue_redraw()
 	can_attack = true
+	is_attacking = false
 
 func dash():
 	if not can_dash:

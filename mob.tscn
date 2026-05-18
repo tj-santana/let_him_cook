@@ -107,6 +107,29 @@ animations = [{
 "texture": SubResource("AtlasTexture_pcqmr")
 }],
 "loop": true,
+"name": &"attack",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_1qmh0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_gfurk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ieysi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cixyi")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7ulmv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pcqmr")
+}],
+"loop": true,
 "name": &"fly",
 "speed": 3.0
 }, {
@@ -177,9 +200,7 @@ metadata/_edit_group_ = true
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_yscv0")
-animation = &"fly"
-frame = 5
-frame_progress = 0.19016302
+animation = &"attack"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1725461507]
 position = Vector2(11, -1)

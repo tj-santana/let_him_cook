@@ -65,7 +65,16 @@ func take_hit():
 
 func damage_player():
 	if get_parent() and get_parent().has_method("take_damage_from_enemy"):
+		# Play attack animation if available
+		if $AnimatedSprite2D and $AnimatedSprite2D.sprite_frames and $AnimatedSprite2D.sprite_frames.has_animation("attack"):
+			$AnimatedSprite2D.animation = "attack"
+			$AnimatedSprite2D.play()
 		get_parent().call_deferred("take_damage_from_enemy", damage_amount)
+
+func play_attack_animation():
+	if $AnimatedSprite2D and $AnimatedSprite2D.sprite_frames and $AnimatedSprite2D.sprite_frames.has_animation("attack"):
+		$AnimatedSprite2D.animation = "attack"
+		$AnimatedSprite2D.play()
 	elif get_parent() and get_parent().has_method("_on_player_hit"):
 		# fallback to emitting a hit signal on the player (some projects use different APIs)
 		if _player and _player.has_method("_on_body_entered"):
