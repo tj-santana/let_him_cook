@@ -164,10 +164,12 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_b26j0"]
-radius = 31.0
-height = 62.0
+radius = 20.0
+height = 64.0
 
-[node name="Player" type="Area2D" unique_id=772028638]
+[node name="Player" type="CharacterBody2D" unique_id=1145636219]
+z_index = 1
+collision_layer = 2
 script = ExtResource("1_sweqy")
 metadata/_edit_group_ = true
 
@@ -175,12 +177,12 @@ metadata/_edit_group_ = true
 texture_filter = 1
 scale = Vector2(3.005, 3.005)
 sprite_frames = SubResource("SpriteFrames_dw050")
-animation = &"idle"
-frame = 2
-frame_progress = 0.6655966
+animation = &"attack"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=394405508]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1163220003]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=394405508]
 position = Vector2(0, -5)
 shape = SubResource("CapsuleShape2D_b26j0")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]

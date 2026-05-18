@@ -171,29 +171,23 @@ func new_game():
 		GameManager.inventario_jogador = player_inventory.duplicate()
 
 func _on_mob_timer_timeout():
-	# Create a new instance of the Mob scene.
-	var mob = mob_scene.instantiate()
-
-	# Choose a random location on Path2D.
-	var mob_spawn_location = $MobPath/MobSpawnLocation
+	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
 	mob_spawn_location.progress_ratio = randf()
-
-	# Set the mob's position to the random location.
-	mob.position = mob_spawn_location.position
-
-	# Set the mob's direction perpendicular to the path direction.
-	var direction = mob_spawn_location.rotation + PI / 2
-
-	# Add some randomness to the direction.
-	direction += randf_range(-PI / 4, PI / 4)
-	mob.rotation = direction
-
-	# Choose the velocity for the mob.
-	var velocity = Vector2(randf_range(150.0, 250.0), 0.0)
-	mob.linear_velocity = velocity.rotated(direction)
-
-	# Spawn the mob by adding it to the Main scene.
+	
+	var mob = mob_scene.instantiate()
+	mob.global_position = mob_spawn_location.global_position
+	
+	var screen_center = get_viewport().get_visible_rect().size / 2
+	var direction_to_center = (screen_center - mob.global_position).normalized()
+	
+	var random_variance = randf_range(-PI / 4, PI / 4)
+	direction_to_center = direction_to_center.rotated(random_variance)
+	
+	var base_speed = randf_range(mob.speed, mob.chase_speed)
+	mob.velocity = direction_to_center * base_speed
+	
 	add_child(mob)
+
 	mob.defeated.connect(_on_mob_defeated)
 	mobs_alive += 1
 	if mobs_left_to_spawn > 0:

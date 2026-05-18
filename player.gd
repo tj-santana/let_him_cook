@@ -1,7 +1,7 @@
-extends Area2D
+extends CharacterBody2D
 signal hit
 
-@export var speed = 400 # How fast the player will move (pixels/sec).
+@export var speed = 400.0
 @export var max_health = 100.0
 @export var attack_range = 70.0
 @export var attack_offset = 42.0
@@ -22,29 +22,29 @@ var dash_time_left = 0.0
 var current_health = 100.0
 var show_attack_preview = false
 var facing = Vector2.RIGHT
-var screen_size # Size of the game window.
+var screen_size 
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
+	if has_node("Hitbox") and not $Hitbox.body_entered.is_connected(_on_hitbox_body_entered):
+		$Hitbox.body_entered.connect(_on_hitbox_body_entered)
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _physics_process(delta):
 	if not is_playing:
 		return
-	var velocity = Vector2.ZERO # The player's movement vector.
+	var input_vector = Vector2.ZERO 
 	if Input.is_action_pressed("move_right"):
-		velocity.x += 1
+		input_vector.x += 1
 	if Input.is_action_pressed("move_left"):
-		velocity.x -= 1
+		input_vector.x -= 1
 	if Input.is_action_pressed("move_down"):
-		velocity.y += 1
+		input_vector.y += 1
 	if Input.is_action_pressed("move_up"):
-		velocity.y -= 1
+		input_vector.y -= 1
 
-	if velocity.length() > 0:
-		facing = velocity.normalized()
+	if input_vector.length() > 0:
+		facing = input_vector.normalized()
 
 	if Input.is_action_just_pressed("attack"):
 		attack()
@@ -53,40 +53,37 @@ func _process(delta):
 		dash()
 
 	if is_dashing:
-		position += facing * dash_speed * delta
+		velocity = facing * dash_speed
 		dash_time_left -= delta
 		if dash_time_left <= 0.0:
 			is_dashing = false
 	else:
-		if velocity.length() > 0:
-			velocity = velocity.normalized() * speed
+		if input_vector.length() > 0:
+			velocity = input_vector.normalized() * speed
 			$AnimatedSprite2D.play()
 		elif is_attacking:
 			$AnimatedSprite2D.play()
 		else:
+			velocity = Vector2.ZERO
 			$AnimatedSprite2D.stop()
 			
-		position += velocity * delta
-		
+	move_and_slide()
 	position = position.clamp(Vector2.ZERO, screen_size)
 
 	if debug_attack_preview and show_attack_preview:
 		queue_redraw()
 	
-	# Only update animation if not attacking (attack animation takes priority)
 	if not is_attacking:
 		if velocity.x != 0:
 			$AnimatedSprite2D.animation = "walk"
 			$AnimatedSprite2D.flip_v = false
-			# See the note below about the following boolean assignment.
 			$AnimatedSprite2D.flip_h = velocity.x < 0
 		elif velocity.y != 0:
-			# Check if "up" animation exists, otherwise use "walk"
 			if $AnimatedSprite2D.sprite_frames.has_animation("up"):
 				$AnimatedSprite2D.animation = "up"
 			else:
 				$AnimatedSprite2D.animation = "walk"
-			$AnimatedSprite2D.flip_v = velocity.y > 0
+			$AnimatedSprite2D.flip_v = false
 		else:
 			$AnimatedSprite2D.animation = "idle"
 
@@ -101,24 +98,34 @@ func attack():
 		
 	if $AnimatedSprite2D.sprite_frames.has_animation("attack"):
 		$AnimatedSprite2D.animation = "attack"
-		#$AnimatedSprite2D.play()
 		print("Attack animation playing")
 	else:
 		print("ERROR: 'attack' animation not found!")
+	
+	var attack_center = global_position + facing.normalized() * attack_offset
 	var query := PhysicsShapeQueryParameters2D.new()
 	var shape := CircleShape2D.new()
 	shape.radius = attack_range
 	query.shape = shape
-	query.transform = Transform2D(0.0, global_position + facing.normalized() * attack_offset)
+	query.transform = Transform2D(0.0, attack_center)
 	query.collide_with_bodies = true
-	query.collide_with_areas = false
-	query.collision_mask = 1
+	query.collide_with_areas = true
+	query.collision_mask = 4
 
 	var hits = get_world_2d().direct_space_state.intersect_shape(query, 8)
-	for hit in hits:
-		var body = hit["collider"]
-		if body != null and body.has_method("take_hit"):
+	var hit_mobs = []
+	
+	for hit_result in hits:
+		var body = hit_result["collider"]
+		if body != null and body.has_method("take_hit") and not hit_mobs.has(body):
+			hit_mobs.append(body)
 			body.take_hit()
+			
+	if hit_mobs.is_empty() and get_parent():
+		for child in get_parent().get_children():
+			if child.has_method("take_hit") and child.has_method("damage_player"):
+				if child.global_position.distance_to(attack_center) <= attack_range:
+					child.take_hit()
 
 	await get_tree().create_timer(attack_cooldown).timeout
 	show_attack_preview = false
@@ -136,13 +143,34 @@ func dash():
 	await get_tree().create_timer(dash_cooldown).timeout
 	can_dash = true
 
+func _on_hitbox_body_entered(body):
+	if is_dashing or not can_take_hit:
+		return
+	if body.has_method("take_hit") or body.has_method("damage_player"):
+		can_take_hit = false
+		var dmg = body.damage_amount if "damage_amount" in body else 10.0
+		current_health -= dmg
+		hit.emit()
+		if current_health <= 0:
+			die()
+		else:
+			if get_tree():
+				await get_tree().create_timer(hit_invulnerability).timeout
+			else:
+				die()
+			if visible:
+				can_take_hit = true
+
 func _on_body_entered(_body):
 	if is_dashing or not can_take_hit:
 		return
 
 	can_take_hit = false
 	hit.emit()
-	await get_tree().create_timer(hit_invulnerability).timeout if get_tree() else die()
+	if get_tree():
+		await get_tree().create_timer(hit_invulnerability).timeout
+	else:
+		die()
 	if visible:
 		can_take_hit = true
 	
@@ -151,35 +179,31 @@ func start(pos):
 	show()
 	current_health = max_health
 	can_take_hit = true
-	$CollisionShape2D.disabled = false	
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.set_deferred("disabled", false)
 
 func die():
 	hide()
 	can_take_hit = false
-	# Must be deferred as we can't change physics properties on a physics callback.
-	$CollisionShape2D.set_deferred("disabled", true)
+	if has_node("CollisionShape2D"):
+		$CollisionShape2D.set_deferred("disabled", true)
 
 func _draw():
 	if debug_attack_preview and show_attack_preview:
 		var center = facing.normalized() * attack_offset
 		draw_circle(center, attack_range, Color(1.0, 0.2, 0.2, 0.2))
 
-# Apply temporary combat buffs from cooked food
 func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float):
-	# 1. Aplica os buffs (Ficas mais forte/rápido)
 	speed += bonus_velocidade
 	attack_cooldown -= reducao_cooldown
 	
-	# Garante que o cooldown do ataque não fica a zero ou negativo
 	if attack_cooldown < 0.1:
 		attack_cooldown = 0.1
 		
 	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown)
 	
-	# 2. Espera que o tempo do buff passe
 	await get_tree().create_timer(duracao).timeout
 	
-	# 3. Remove os buffs (Voltas ao normal)
 	speed -= bonus_velocidade
 	attack_cooldown += reducao_cooldown
 	
