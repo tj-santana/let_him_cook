@@ -56,6 +56,7 @@ func _physics_process(delta):
 		
 	if Input.is_action_pressed("cooking") and Input.is_action_pressed("mama"):
 		audio_player.play()
+		print("COOKING MAMA!")
 
 	if is_dashing:
 		velocity = facing * dash_speed

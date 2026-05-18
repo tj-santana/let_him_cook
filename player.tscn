@@ -190,5 +190,3 @@ shape = SubResource("CapsuleShape2D_b26j0")
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=1131884951]
 stream = ExtResource("5_sweqy")
-
-[connection signal="body_entered" from="." to="." method="_on_body_entered"]
