@@ -1,7 +1,7 @@
 extends Node
 
 @export var mob_scene: PackedScene
-@export var hunger_drain_rate = 4.0
+@export var hunger_drain_rate = 3.0
 @export var hit_health_damage = 10.0
 @export var hit_max_health_damage = 5.0
 @export var min_max_health = 25.0

@@ -1,7 +1,9 @@
 extends CharacterBody2D
 signal hit
 
-@export var speed = 400.0
+@onready var audio_player : AudioStreamPlayer = $AudioStreamPlayer
+
+@export var speed = 400.0 # How fast the player will move (pixels/sec).
 @export var max_health = 100.0
 @export var attack_range = 70.0
 @export var attack_offset = 42.0
@@ -51,6 +53,9 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("dash"):
 		dash()
+		
+	if Input.is_action_pressed("cooking") and Input.is_action_pressed("mama"):
+		audio_player.play()
 
 	if is_dashing:
 		velocity = facing * dash_speed
