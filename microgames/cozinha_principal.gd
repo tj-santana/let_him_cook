@@ -117,7 +117,11 @@ func avaliar_resultado():
 			GameManager.buff_cooldown = 0.0
 			GameManager.buff_duracao = 10.0
 			GameManager.buff_fome = 10.0 # <--- ADICIONADO
-			
+		
+		pontuacao = 0.0 # Reseta a pontuação para o próximo prato	
+		GameManager.pontuacao_total = 0.0
+		GameManager.ingredientes_atuais = [] # Limpa os ingredientes atuais		
+		
 # --- MAGIA VISUAL ---
 func atualizar_ecra():
 	for i in range(slots_visuais.size()):
