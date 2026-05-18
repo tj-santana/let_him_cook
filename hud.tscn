@@ -1,7 +1,6 @@
 [gd_scene format=3 uid="uid://cdv2ga1h6objp"]
 
 [ext_resource type="Script" uid="uid://c4kklnt2i0tna" path="res://hud.gd" id="1_64ctp"]
-[ext_resource type="FontFile" uid="uid://g7rn7ivvdoed" path="res://dodge_the_creeps_2d_assets/fonts/Xolonium-Regular.ttf" id="2_8sq4i"]
 [ext_resource type="Texture2D" uid="uid://u8jmjlfugbug" path="res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres" id="3_mxnnk"]
 [ext_resource type="Texture2D" uid="uid://q3t01qyc1fgp" path="res://microgames/Assets/Food/Isolated Food/icon_slime.tres" id="4_fuams"]
 [ext_resource type="Texture2D" uid="uid://c4d2gbml72pkf" path="res://microgames/Assets/Food/Isolated Food/icon_essence.tres" id="5_10tfs"]
@@ -18,7 +17,6 @@ offset_left = -22.5
 offset_right = 22.5
 offset_bottom = 78.0
 grow_horizontal = 2
-theme_override_fonts/font = ExtResource("2_8sq4i")
 theme_override_font_sizes/font_size = 64
 text = "Time: 0"
 horizontal_alignment = 1
@@ -120,7 +118,6 @@ offset_right = 40.0
 offset_bottom = 16.009998
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_8sq4i")
 theme_override_font_sizes/font_size = 16
 text = "HP"
 horizontal_alignment = 1
@@ -137,7 +134,6 @@ offset_left = -44.0
 offset_top = -15.990002
 offset_right = 44.0
 offset_bottom = 16.009998
-theme_override_fonts/font = ExtResource("2_8sq4i")
 theme_override_font_sizes/font_size = 16
 text = "100/100"
 horizontal_alignment = 1
@@ -165,7 +161,6 @@ offset_right = 40.0
 offset_bottom = 15.99
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_fonts/font = ExtResource("2_8sq4i")
 theme_override_font_sizes/font_size = 16
 text = "Hunger"
 horizontal_alignment = 1
@@ -182,7 +177,6 @@ offset_left = -44.0
 offset_top = -16.01
 offset_right = 44.0
 offset_bottom = 15.99
-theme_override_fonts/font = ExtResource("2_8sq4i")
 theme_override_font_sizes/font_size = 16
 text = "100/100"
 horizontal_alignment = 1
