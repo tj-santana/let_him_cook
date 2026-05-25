@@ -21,7 +21,6 @@ size = Vector2(1536, 16)
 
 [node name="Room_B" type="Node2D" unique_id=1829835156]
 script = ExtResource("1")
-position = Vector2(2048, 0)
 room_id = "room_b"
 bounds = Rect2(0, 0, 1536, 864)
 
@@ -45,10 +44,9 @@ target_scene = "res://rooms/Room_A.tscn"
 entry_marker = "StartPosition"
 
 [node name="BackDoor#CollisionShape2D" type="CollisionShape2D" parent="Room_B#BackDoor" unique_id=1704337396]
-position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_backdoor")
 
-[node name="Campfire" parent="." instance=ExtResource("3")]
+[node name="Campfire" parent="." unique_id=236849583 instance=ExtResource("3")]
 position = Vector2(768, 432)
 
 [node name="Room_B#LeftWall" type="StaticBody2D" parent="." unique_id=923119889]
