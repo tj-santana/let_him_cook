@@ -1,0 +1,92 @@
+[gd_scene format=3 uid="uid://ddpoeh4aer0w4"]
+
+[ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="1_4wawi"]
+[ext_resource type="Script" uid="uid://bfhtt77l5rv07" path="res://microgames/Scripts/Microgame_Bone.gd" id="1_h1vkn"]
+[ext_resource type="Texture2D" uid="uid://b1l523pd5bqux" path="res://microgames/Assets/Food/Isolated Food/osso.png" id="2_h1vkn"]
+[ext_resource type="Texture2D" uid="uid://b5pmccjhq8gll" path="res://microgames/Assets/faca.png" id="3_l2wix"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a4jph"]
+bg_color = Color(0, 1, 0.14117648, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4wawi"]
+size = Vector2(640, 136)
+
+[node name="Microgame_Bone" type="Node2D" unique_id=1564300637]
+script = ExtResource("1_h1vkn")
+
+[node name="Fundo" type="TextureRect" parent="." unique_id=1096361744]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1156.0
+offset_bottom = 651.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_4wawi")
+expand_mode = 1
+
+[node name="Osso" type="Sprite2D" parent="." unique_id=371235427]
+position = Vector2(579, 343)
+scale = Vector2(1.592, 1)
+texture = ExtResource("2_h1vkn")
+region_enabled = true
+region_rect = Rect2(0, 161.48596, 500, 177.15613)
+
+[node name="Faca" type="Sprite2D" parent="." unique_id=459203675]
+position = Vector2(625, 358)
+texture = ExtResource("3_l2wix")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1255761128]
+
+[node name="TextoAjuda" type="Label" parent="UI" unique_id=459708347]
+offset_left = 424.0
+offset_top = -4.0
+offset_right = 726.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "Clear it!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarraTempo" type="ProgressBar" parent="UI" unique_id=1621606804]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -358.0
+offset_top = -72.0
+offset_right = 343.54498
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_a4jph")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ProgressBar" type="ProgressBar" parent="." unique_id=1610644964]
+custom_minimum_size = Vector2(500, 30)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 346.0
+offset_top = 144.0
+offset_right = 846.0
+offset_bottom = 174.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OssoArea" type="Area2D" parent="." unique_id=1914110750]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OssoArea" unique_id=1551267726]
+position = Vector2(590, 350)
+shape = SubResource("RectangleShape2D_4wawi")
+
+[connection signal="mouse_entered" from="OssoArea" to="." method="_on_osso_area_mouse_entered"]
+[connection signal="mouse_exited" from="OssoArea" to="." method="_on_osso_area_mouse_exited"]

@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://dh7iufankjhh4"]
+
+[ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="1_w8g0l"]
+[ext_resource type="Script" uid="uid://di320jh6hedxk" path="res://microgames/Scripts/microgame_bat_wing.gd" id="1_x68jy"]
+[ext_resource type="Texture2D" uid="uid://brkrchxibjbdj" path="res://microgames/Assets/Food/Isolated Food/asa_morcego.png" id="3_mpghb"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_x68jy"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v5kvd"]
+bg_color = Color(0, 1, 0.14117648, 1)
+
+[node name="Microgame_BatWing" type="Node2D" unique_id=797072300]
+script = ExtResource("1_x68jy")
+
+[node name="Fundo" type="TextureRect" parent="." unique_id=1019180292]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1156.0
+offset_bottom = 651.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_w8g0l")
+expand_mode = 1
+
+[node name="AsaVisual" type="Sprite2D" parent="." unique_id=1020820386]
+position = Vector2(616, 335)
+texture = ExtResource("3_mpghb")
+
+[node name="LinhaVisual" type="Line2D" parent="." unique_id=850527742]
+position = Vector2(616, 335)
+default_color = Color(0.9192808, 4.47616e-06, 1.1551381e-06, 1)
+
+[node name="PontosDeCorte" type="Node2D" parent="." unique_id=2066112436]
+
+[node name="Area2D" type="Area2D" parent="PontosDeCorte" unique_id=1851179688]
+position = Vector2(400, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D" unique_id=442687404]
+position = Vector2(8, 1)
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D2" type="Area2D" parent="PontosDeCorte" unique_id=802201850]
+position = Vector2(800, 150)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D2" unique_id=66925898]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D3" type="Area2D" parent="PontosDeCorte" unique_id=2014253771]
+position = Vector2(450, 530)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D3" unique_id=1027994162]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D4" type="Area2D" parent="PontosDeCorte" unique_id=835121992]
+position = Vector2(770, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D4" unique_id=412242621]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D5" type="Area2D" parent="PontosDeCorte" unique_id=800721998]
+position = Vector2(740, 350)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D5" unique_id=1896063594]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D6" type="Area2D" parent="PontosDeCorte" unique_id=1075662074]
+position = Vector2(650, 430)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D6" unique_id=1624602355]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D7" type="Area2D" parent="PontosDeCorte" unique_id=155901874]
+position = Vector2(550, 480)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D7" unique_id=2038570828]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="Area2D8" type="Area2D" parent="PontosDeCorte" unique_id=599310401]
+position = Vector2(430, 250)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PontosDeCorte/Area2D8" unique_id=2058604096]
+shape = SubResource("CircleShape2D_x68jy")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1209563847]
+
+[node name="TextoAjuda" type="Label" parent="UI" unique_id=1442980348]
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 110.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "Connect all the vertices!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarraTempo" type="ProgressBar" parent="UI" unique_id=825539654]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -358.0
+offset_top = -72.0
+offset_right = 343.54498
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_v5kvd")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true

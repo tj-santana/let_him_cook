@@ -1,0 +1,17 @@
+[gd_scene format=3 uid="uid://cohxv5mgrydm"]
+
+[ext_resource type="Texture2D" uid="uid://bxqr0shtrn5ql" path="res://microgames/Assets/mosca.png" id="1_3115x"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8kdo2"]
+size = Vector2(223.077, 169.23076)
+
+[node name="Mosca" type="Area2D" unique_id=696339220]
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1658063969]
+scale = Vector2(0.575, 0.575)
+texture = ExtResource("1_3115x")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=532906148]
+position = Vector2(0, 3)
+scale = Vector2(0.26, 0.26)
+shape = SubResource("RectangleShape2D_8kdo2")

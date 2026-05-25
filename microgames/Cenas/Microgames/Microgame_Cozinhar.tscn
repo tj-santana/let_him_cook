@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://c3p06p6ubm4sd"]
+
+[ext_resource type="Script" uid="uid://dgx0ncstblcq7" path="res://microgames/Scripts/microgame_cozinhar.gd" id="1_bk24f"]
+[ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="2_ck7gl"]
+[ext_resource type="Texture2D" uid="uid://ulj58i1ae8ht" path="res://microgames/Assets/slime.png" id="3_rqs3r"]
+[ext_resource type="Texture2D" uid="uid://qixo3hl53khc" path="res://microgames/Assets/arco-iris.png" id="4_3kv0v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3kv0v"]
+size = Vector2(471.99994, 460.00003)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_exyvy"]
+bg_color = Color(0, 1, 0.14117648, 1)
+
+[node name="Microgame_Slime" type="Node2D" unique_id=440741711]
+script = ExtResource("1_bk24f")
+
+[node name="Fundo" type="TextureRect" parent="." unique_id=320010951]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1156.0
+offset_bottom = 651.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ck7gl")
+expand_mode = 1
+
+[node name="BarraProgresso" type="ProgressBar" parent="." unique_id=664540884]
+offset_left = 231.0
+offset_top = 494.0
+offset_right = 914.0
+offset_bottom = 521.0
+
+[node name="TempoJogo" type="Timer" parent="." unique_id=869883919]
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[node name="SlimeArea" type="Area2D" parent="." unique_id=888499944]
+position = Vector2(550, 300)
+scale = Vector2(0.75, 0.75)
+
+[node name="Slime" type="Sprite2D" parent="SlimeArea" unique_id=1944312631]
+texture = ExtResource("3_rqs3r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SlimeArea" unique_id=912170178]
+position = Vector2(-3.9999597, -2.6666462)
+shape = SubResource("RectangleShape2D_3kv0v")
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=1185880686]
+
+[node name="TextoAjuda" type="Label" parent="UI" unique_id=1305536457]
+offset_left = 424.0
+offset_top = -4.0
+offset_right = 726.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "Beat it!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarraTempo" type="ProgressBar" parent="UI" unique_id=2004875134]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -358.0
+offset_top = -72.0
+offset_right = 343.54498
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_exyvy")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ArcoIrisVisual" type="Sprite2D" parent="." unique_id=2092611487]
+visible = false
+position = Vector2(547, 298)
+scale = Vector2(1.2442532, 1)
+texture = ExtResource("4_3kv0v")
+
+[connection signal="timeout" from="TempoJogo" to="." method="_on_tempo_jogo_timeout"]
+[connection signal="input_event" from="SlimeArea" to="." method="_on_slime_area_input_event"]

@@ -1,0 +1,79 @@
+[gd_scene format=3 uid="uid://b5jenp5hfwro1"]
+
+[ext_resource type="Script" uid="uid://dhqdqws6vic48" path="res://microgames/Scripts/microgame_carne.gd" id="1_puecu"]
+[ext_resource type="PackedScene" uid="uid://cohxv5mgrydm" path="res://microgames/Cenas/mosca.tscn" id="2_yd06f"]
+[ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="3_jnsku"]
+[ext_resource type="Texture2D" uid="uid://6hp08q25doeo" path="res://microgames/Assets/tábua_de_madeira.webp" id="4_xsn7w"]
+[ext_resource type="Texture2D" uid="uid://qo4exaev4rh0" path="res://microgames/Assets/Food/raw meats.png" id="5_q6v6n"]
+[ext_resource type="Texture2D" uid="uid://qixo3hl53khc" path="res://microgames/Assets/arco-iris.png" id="6_yd06f"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_j68aw"]
+bg_color = Color(0, 1, 0.14117648, 1)
+
+[node name="Microgame_Carne" type="Node2D" unique_id=1247222677]
+script = ExtResource("1_puecu")
+cena_da_mosca = ExtResource("2_yd06f")
+numero_de_moscas = 8
+
+[node name="Fundo" type="TextureRect" parent="." unique_id=1414330364]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1.0
+offset_top = -1.0
+offset_right = 1156.0
+offset_bottom = 651.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_jnsku")
+expand_mode = 1
+
+[node name="Tábua" type="Sprite2D" parent="." unique_id=628254437]
+position = Vector2(572, 323)
+scale = Vector2(0.79, 0.79)
+texture = ExtResource("4_xsn7w")
+
+[node name="Carne" type="Sprite2D" parent="." unique_id=36105256]
+position = Vector2(569.99994, 323)
+scale = Vector2(13.745, 13.745)
+texture = ExtResource("5_q6v6n")
+region_enabled = true
+region_rect = Rect2(0, 0, 32, 32)
+
+[node name="UI" type="CanvasLayer" parent="." unique_id=920491449]
+
+[node name="TextoAjuda" type="Label" parent="UI" unique_id=2019450858]
+offset_left = 424.0
+offset_top = -4.0
+offset_right = 726.0
+offset_bottom = 106.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 80
+text = "Get Rid!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarraTempo" type="ProgressBar" parent="UI" unique_id=1080442305]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -358.0
+offset_top = -72.0
+offset_right = 343.54498
+offset_bottom = -45.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/fill = SubResource("StyleBoxFlat_j68aw")
+max_value = 5.0
+value = 5.0
+show_percentage = false
+metadata/_edit_use_anchors_ = true
+
+[node name="ArcoIrisVisual" type="Sprite2D" parent="." unique_id=1380556326]
+visible = false
+position = Vector2(565.99994, 298)
+scale = Vector2(1.6149424, 1)
+texture = ExtResource("6_yd06f")
