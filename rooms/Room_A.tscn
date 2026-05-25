@@ -355,7 +355,6 @@ size = Vector2(40, 96)
 [node name="Room_A" type="Node2D" unique_id=1038097634]
 script = ExtResource("1_feb5d")
 room_id = "room_a"
-bounds = Rect2(0, 0, 1536, 864)
 
 [node name="Room_A#StartPosition" type="Marker2D" parent="." unique_id=2123220656]
 position = Vector2(576, 320)
