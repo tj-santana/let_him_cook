@@ -35,6 +35,8 @@ var active_room_root: Node = null
 var active_room_instance: Node = null
 var room_transitioning = false
 var transition_rect: ColorRect = null
+const DEFAULT_ROOM_SCENE := "res://game.tscn"
+const SHELL_SCENE := "res://game_shell.tscn"
 
 
 func _refresh_inventory_hud() -> void:
@@ -155,7 +157,7 @@ func _get_current_room_scene_path() -> String:
 		var scene_path = active_room_instance.scene_file_path
 		if scene_path != "":
 			return scene_path
-	return "res://game.tscn"
+	return DEFAULT_ROOM_SCENE
 
 
 func _get_cooking_menu_scene_path() -> String:
@@ -172,17 +174,21 @@ func _fade_to(alpha: float, duration: float = 0.16) -> void:
 	await tween.finished
 
 
-func enter_room(scene_path: String, entry_marker: String = "") -> void:
+func enter_room(scene_path: String, entry_marker: String = "", player_position: Vector2 = Vector2.INF, show_player: bool = true, use_fade: bool = true) -> void:
 	if room_transitioning:
 		return
 	room_transitioning = true
-	await _fade_to(1.0)
+	if use_fade:
+		await _fade_to(1.0)
 
 	if active_room_instance != null and is_instance_valid(active_room_instance):
 		active_room_instance.queue_free()
 		active_room_instance = null
 
-	if scene_path == "" or scene_path == "res://game.tscn":
+	if scene_path == "":
+		scene_path = DEFAULT_ROOM_SCENE
+
+	if scene_path == SHELL_SCENE:
 		active_room_root = self
 		_set_base_room_visible(true)
 	else:
@@ -200,12 +206,19 @@ func enter_room(scene_path: String, entry_marker: String = "") -> void:
 			_set_base_room_visible(false)
 
 	var player = $Player
-	var entry_position = _get_marker_global_position(_get_active_room_root(), entry_marker)
-	if entry_position != Vector2.INF:
-		player.global_position = entry_position
+	var target_position = player_position
+	if target_position == Vector2.INF:
+		target_position = _get_marker_global_position(_get_active_room_root(), entry_marker)
+	if target_position != Vector2.INF:
+		player.global_position = target_position
+	if show_player:
+		player.show()
+	else:
+		player.hide()
 
 	_configure_player_camera()
-	await _fade_to(0.0)
+	if use_fade:
+		await _fade_to(0.0)
 	room_transitioning = false
 
 
@@ -214,10 +227,7 @@ func _ready():
 	# If there's a saved state from the cooking flow, restore it.
 	if typeof(GameManager) != TYPE_NIL and GameManager.obter_estado_principal() != null:
 		var s = GameManager.obter_estado_principal()
-		var saved_room_scene = s.get("room_scene", "res://game.tscn")
-		var should_restore_room = saved_room_scene != "" and saved_room_scene != "res://game.tscn"
-		if should_restore_room:
-			_set_base_room_visible(false)
+		var saved_room_scene = s.get("room_scene", DEFAULT_ROOM_SCENE)
 		# Restore numeric state
 		score = s.get("score", 0)
 		health = s.get("health", max_health)
@@ -254,21 +264,22 @@ func _ready():
 					$HUD.update_health(health, max_health)
 			else:
 				print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
-			
-			
-			
+						
 			# Clear the pending buff flag
 			GameManager.buff_pendente = false
 			print("Buffs aplicados com sucesso!")
 		
-		if should_restore_room:
-			await enter_room(saved_room_scene, "")
-
-		# Place player back where they were
-		if s.has("player_pos"):
-			$Player.start(s.get("player_pos"))
-		else:
-			$Player.show()
+		if saved_room_scene == "" or saved_room_scene == SHELL_SCENE:
+			saved_room_scene = DEFAULT_ROOM_SCENE
+		var saved_player_pos = s.get("player_pos", Vector2.INF)
+		await enter_room(
+			saved_room_scene,
+			s.get("entry_marker", "StartPosition"),
+			saved_player_pos,
+			false,
+			false
+		)
+		$Player.show()
 
 		# Restart timers if the game was playing
 		if s.get("is_playing", false):
@@ -281,12 +292,9 @@ func _ready():
 		GameManager.limpar_estado_principal()
 	else:
 		new_game()
+		await enter_room(DEFAULT_ROOM_SCENE, "StartPosition")
 
-	_ensure_room_host()
 	_ensure_transition_overlay()
-	active_room_root = self
-	_set_base_room_visible(true)
-	_configure_player_camera()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -355,7 +363,6 @@ func new_game():
 		$HUD.get_node("StartButton").hide()
 	if $HUD.has_node("MessageTimer"):
 		$HUD.get_node("MessageTimer").stop()
-	$Player.start($StartPosition.position)
 	$StartTimer.start()
 
 	# initialize waves
@@ -479,33 +486,31 @@ func _advance_wave() -> void:
 		get_tree().create_timer(2.0).timeout.connect(func(): _start_wave(current_wave))
 
 
+func open_cooking() -> void:
+	if is_game_over or room_transitioning or not is_playing:
+		return
+
+	if typeof(GameManager) != TYPE_NIL:
+		GameManager.cena_principal_path = SHELL_SCENE
+		GameManager.inventario_jogador = player_inventory.duplicate()
+		GameManager.guardar_estado_principal({
+			"score": score,
+			"health": health,
+			"max_health": max_health,
+			"hunger": hunger,
+			"max_hunger": max_hunger,
+			"player_pos": $Player.global_position,
+			"room_scene": _get_current_room_scene_path(),
+			"is_playing": is_playing,
+			"player_inventory": player_inventory.duplicate()
+		})
+
+	is_playing = false
+	$MobTimer.stop()
+	$ScoreTimer.stop()
+	$Player.is_playing = false
+	get_tree().change_scene_to_file(_get_cooking_menu_scene_path())
+
+
 func _input(event):
-	if event.is_action_pressed("interact") and is_playing and not is_game_over:
-		# Ensure the autoloaded GameManager knows where to return
-		if typeof(GameManager) != TYPE_NIL:
-			GameManager.cena_principal_path = "res://game.tscn"
-			GameManager.inventario_jogador = player_inventory.duplicate()
-			# Save full state so the main scene can be restored after cooking
-			GameManager.guardar_estado_principal({
-				"score": score,
-				"health": health,
-				"max_health": max_health,
-				"hunger": hunger,
-				"max_hunger": max_hunger,
-				"player_pos": $Player.global_position,
-				"room_scene": _get_current_room_scene_path(),
-				"is_playing": is_playing,
-				"player_inventory": player_inventory.duplicate()
-			})
-
-		# Pause main gameplay
-		is_playing = false
-		$MobTimer.stop()
-		$ScoreTimer.stop()
-		$Player.is_playing = false
-
-		# Switch to the cooking UI (microgames)
-		if typeof(GameManager) != TYPE_NIL and GameManager.has_method("obter_cena_cozinha_principal"):
-			get_tree().change_scene_to_file(GameManager.obter_cena_cozinha_principal())
-		else:
-			get_tree().change_scene_to_file("res://microgames/Cenas/CozinhaPrincipal.tscn")
+	pass

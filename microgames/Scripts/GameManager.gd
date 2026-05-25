@@ -1,6 +1,6 @@
 extends Node
 
-var cena_principal_path = "res://game.tscn"
+var cena_principal_path = "res://game_shell.tscn"
 
 # --- NOVA LÓGICA DE SEQUÊNCIA ---
 var fila_de_minijogos: Array = []
@@ -24,7 +24,10 @@ func obter_cena_cozinha_principal() -> String:
 	var caminho_novo = "res://microgames/Cenas/CozinhaPrincipal.tscn"
 	if FileAccess.file_exists(caminho_novo):
 		return caminho_novo
-	return "res://microgames/Cenas/CozinhaPrincipal.tscn"
+	var caminho_antigo = "res://microgames/Cenas/CozinhaPrincipal.tscn"
+	if FileAccess.file_exists(caminho_antigo):
+		return caminho_antigo
+	return caminho_novo
 
 
 func obter_fila_minijogos_disponiveis() -> Array:

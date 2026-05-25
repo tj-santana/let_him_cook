@@ -24,10 +24,13 @@ func _ready():
 	atualizar_textos_inventario() # Garante que os números aparecem certos logo ao iniciar!
 	
 func _process(delta):
-	if Input.is_action_pressed("escape"):
+	if Input.is_action_just_pressed("escape"):
 		for i in range(ingredientes_na_panela.size(), -1, -1):
 			tentar_remover_ingrediente(i)
-		get_tree().change_scene_to_file("res://game.tscn")
+		var cena_retorno = "res://game.tscn"
+		if typeof(GameManager) != TYPE_NIL and GameManager.cena_principal_path != "":
+			cena_retorno = GameManager.cena_principal_path
+		get_tree().change_scene_to_file(cena_retorno)
 
 # --- ATUALIZAR OS TEXTOS DOS NÚMEROS ---
 func atualizar_textos_inventario():

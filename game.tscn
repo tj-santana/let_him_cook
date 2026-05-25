@@ -1,11 +1,12 @@
 [gd_scene format=4 uid="uid://d2wf0yj1gbgun"]
 
 [ext_resource type="PackedScene" uid="uid://c0vow7slq7hen" path="res://player.tscn" id="1_80nbo"]
-[ext_resource type="Script" uid="uid://jt3ouyxnp6nj" path="res://game.gd" id="1_feb5d"]
+[ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://bko6et6myb4v7" path="res://mob.tscn" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://cdv2ga1h6objp" path="res://hud.tscn" id="4_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="5_7jktm"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="6_4door"]
+[ext_resource type="PackedScene" path="res://floor/Campfire.tscn" id="7_campfire"]
 
 [sub_resource type="Curve2D" id="Curve2D_7jktm"]
 _data = {
@@ -354,25 +355,12 @@ sources/0 = SubResource("TileSetAtlasSource_eow3j")
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door_to_room_b"]
 size = Vector2(40, 96)
 
-[node name="Game" type="Node" unique_id=1038097634]
+[node name="Room_A" type="Node2D" unique_id=1038097634]
 script = ExtResource("1_feb5d")
-mob_scene = ExtResource("2_fc0e3")
+room_id = "room_a"
+bounds = Rect2(0, 0, 1536, 864)
 
-[node name="Player" parent="." unique_id=772028638 instance=ExtResource("1_80nbo")]
-y_sort_enabled = true
-position = Vector2(576, 320)
-
-[node name="Camera2D" type="Camera2D" parent="Player" unique_id=945964141]
-
-[node name="MobTimer" type="Timer" parent="." unique_id=265174134]
-wait_time = 0.5
-
-[node name="ScoreTimer" type="Timer" parent="." unique_id=1465151182]
-
-[node name="StartTimer" type="Timer" parent="." unique_id=1343939055]
-one_shot = true
-
-[node name="StartPosition" type="Marker2D" parent="." unique_id=2123220656]
+[node name="Room_A#StartPosition" type="Marker2D" parent="." unique_id=2123220656]
 position = Vector2(576, 320)
 
 [node name="MobPath" type="Path2D" parent="." unique_id=1141191313]
@@ -382,8 +370,6 @@ curve = SubResource("Curve2D_7jktm")
 
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath" unique_id=1228732442]
 rotation = -0.00746026
-
-[node name="HUD" parent="." unique_id=116784494 instance=ExtResource("4_fc0e3")]
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=129898755]
 y_sort_enabled = true
@@ -411,7 +397,5 @@ entry_marker = "Entry_Left"
 position = Vector2(-18, 0)
 shape = SubResource("RectangleShape2D_door_to_room_b")
 
-[connection signal="hit" from="Player" to="." method="_on_player_hit"]
-[connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
-[connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
-[connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
+[node name="Campfire" parent="." instance=ExtResource("7_campfire")]
+position = Vector2(800, 320)

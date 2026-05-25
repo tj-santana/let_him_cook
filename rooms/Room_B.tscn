@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="2"]
+[ext_resource type="PackedScene" path="res://floor/Campfire.tscn" id="3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_backdoor"]
 size = Vector2(32, 96)
@@ -46,6 +47,9 @@ entry_marker = "StartPosition"
 [node name="BackDoor#CollisionShape2D" type="CollisionShape2D" parent="Room_B#BackDoor" unique_id=1704337396]
 position = Vector2(0, 0)
 shape = SubResource("RectangleShape2D_backdoor")
+
+[node name="Campfire" parent="." instance=ExtResource("3")]
+position = Vector2(768, 432)
 
 [node name="Room_B#LeftWall" type="StaticBody2D" parent="." unique_id=923119889]
 position = Vector2(0, 432)
