@@ -1,9 +1,6 @@
-[gd_scene format=4 uid="uid://d2wf0yj1gbgun"]
+[gd_scene format=4 uid="uid://rffos1naeoa3"]
 
-[ext_resource type="PackedScene" uid="uid://c0vow7slq7hen" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_feb5d"]
-[ext_resource type="PackedScene" uid="uid://bko6et6myb4v7" path="res://mob.tscn" id="2_fc0e3"]
-[ext_resource type="PackedScene" uid="uid://cdv2ga1h6objp" path="res://hud.tscn" id="4_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="5_7jktm"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="6_4door"]
 [ext_resource type="PackedScene" path="res://floor/Campfire.tscn" id="7_campfire"]
@@ -14,7 +11,7 @@ _data = {
 }
 point_count = 5
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ryrav"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1pyr4"]
 texture = ExtResource("5_7jktm")
 0:0/0 = 0
 1:0/0 = 0
@@ -118,9 +115,9 @@ texture = ExtResource("5_7jktm")
 9:9/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_eow3j"]
-sources/0 = SubResource("TileSetAtlasSource_ryrav")
+sources/0 = SubResource("TileSetAtlasSource_1pyr4")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_7jktm"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6r0l2"]
 texture = ExtResource("5_7jktm")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -243,9 +240,9 @@ texture = ExtResource("5_7jktm")
 
 [sub_resource type="TileSet" id="TileSet_ryrav"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_7jktm")
+sources/0 = SubResource("TileSetAtlasSource_6r0l2")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_eow3j"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_ov2f2"]
 texture = ExtResource("5_7jktm")
 0:0/0 = 0
 1:0/0 = 0
@@ -350,7 +347,7 @@ texture = ExtResource("5_7jktm")
 
 [sub_resource type="TileSet" id="TileSet_j5wjh"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_eow3j")
+sources/0 = SubResource("TileSetAtlasSource_ov2f2")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_door_to_room_b"]
 size = Vector2(40, 96)
@@ -362,6 +359,9 @@ bounds = Rect2(0, 0, 1536, 864)
 
 [node name="Room_A#StartPosition" type="Marker2D" parent="." unique_id=2123220656]
 position = Vector2(576, 320)
+
+[node name="Room_A#Entry_Right" type="Marker2D" parent="." unique_id=106421609]
+position = Vector2(1056, 320)
 
 [node name="MobPath" type="Path2D" parent="." unique_id=1141191313]
 position = Vector2(100, 86.339615)
@@ -397,5 +397,5 @@ entry_marker = "Entry_Left"
 position = Vector2(-18, 0)
 shape = SubResource("RectangleShape2D_door_to_room_b")
 
-[node name="Campfire" parent="." instance=ExtResource("7_campfire")]
+[node name="Campfire" parent="." unique_id=1582455992 instance=ExtResource("7_campfire")]
 position = Vector2(800, 320)
