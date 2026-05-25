@@ -247,14 +247,15 @@ func _ready():
 						GameManager.get("buff_cooldown"),
 						GameManager.get("buff_duracao")
 					)
+					# Recover some health and hunger from eating
+					hunger = min(hunger + 10.0, max_hunger)
+					health = min(health + 20.0, max_health)
+					$HUD.update_hunger(hunger, max_hunger)
+					$HUD.update_health(health, max_health)
 			else:
 				print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
 			
-			# Recover some health and hunger from eating
-			hunger = min(hunger + 10.0, max_hunger)
-			health = min(health + 20.0, max_health)
-			$HUD.update_hunger(hunger, max_hunger)
-			$HUD.update_health(health, max_health)
+			
 			
 			# Clear the pending buff flag
 			GameManager.buff_pendente = false
