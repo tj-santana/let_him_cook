@@ -49,17 +49,59 @@ func iniciar_sequencia_minijogos():
 func registar_pontuacao_e_avancar(nota: float):
 	pontuacao_total += nota
 	avancar_para_proximo_minijogo()
-
 func avancar_para_proximo_minijogo():
 	if fila_de_minijogos.size() > 0:
-		# Tira o primeiro minijogo da FILA (e não da lista mestre) e carrega-o
+		# Tira o primeiro minijogo da FILA e carrega-o
 		var proxima_cena = fila_de_minijogos.pop_front() 
 		get_tree().change_scene_to_file(proxima_cena)
 	else:
-		# A fila acabou! Volta para a cozinha
+		# A fila acabou! Volta para a cozinha e mostra o Popup
 		print("Prato Terminado! Pontuação Total: ", pontuacao_total)
 		get_tree().change_scene_to_file(obter_cena_cozinha_principal())
+		mostrar_popup_resultado()
+
+# --- A TUA NOVA FUNÇÃO DO POPUP ---
+func mostrar_popup_resultado():
+	# 1. Carrega a cena do Popup (Atenção: verifica se este caminho está correto no teu projeto!)
+	var cena_popup = load("res://microgames/Cenas/popup_receita.tscn")
+	var popup = cena_popup.instantiate()
+	
+	# 2. Cria uma "Camada Superior" para o popup ficar por cima de tudo na cozinha
+	var canvas = CanvasLayer.new()
+	canvas.layer = 100
+	canvas.add_child(popup)
+	add_child(canvas) # Fica guardado no GameManager
+	
+	# 3. Calcula a nota média (Pontuação a dividir pelo nº total de jogos da receita)
+	var max_minijogos = todas_as_cenas_minijogos.size()
+	var nota_media = pontuacao_total / float(max_minijogos)
+	
+	# 4. Descobre a Receita! (Ordenamos os arrays para ignorar a ordem em que puseste os ingredientes)
+	var nome_prato = "Gororoba Misteriosa"
+	var ing_ordenados = ingredientes_atuais.duplicate()
+	ing_ordenados.sort()
+	
+	for chave in livro_de_receitas.keys():
+		var chave_ordenada = chave.duplicate()
+		chave_ordenada.sort()
+		if ing_ordenados == chave_ordenada:
+			nome_prato = livro_de_receitas[chave]
+			break # Encontrou a receita certa, para de procurar!
+			
+	# 5. Formata o texto dos Buffs
+	var texto_dos_buffs = "Fome: +" + str(buff_fome)
+	if buff_velocidade > 0:
+		texto_dos_buffs += " | Vel: +" + str(buff_velocidade)
 		
+	# 6. Manda as informações todas para o script do teu Popup
+	popup.mostrar_resultado(nome_prato, nota_media, texto_dos_buffs, true)
+	
+	# 7. Quando o jogador clicar em "Delicioso!", apagamos o popup inteiro
+	popup.botao_continuar.pressed.connect(func(): canvas.queue_free())
+	
+	# Limpa a panela para a próxima receita
+	limpar_dados()
+	
 var ingredientes_atuais: Array = []
 var desempenho_microgame: float = 0.0
 

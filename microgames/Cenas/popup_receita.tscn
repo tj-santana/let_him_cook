@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://bqtbh753mab6h"]
+
+[ext_resource type="Script" uid="uid://buv6xlbnajjsr" path="res://microgames/Scripts/popup_receita.gd" id="1_xqw7i"]
+
+[node name="PopupReceita" type="Control" unique_id=1496352871]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_xqw7i")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=408995549]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="Panel" type="Panel" parent="." unique_id=35607358]
+custom_minimum_size = Vector2(600, 400)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -200.0
+offset_right = 300.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=332639965]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextoTitulo" type="Label" parent="Panel/VBoxContainer" unique_id=78265266]
+layout_mode = 2
+
+[node name="TextoNota" type="Label" parent="Panel/VBoxContainer" unique_id=512580374]
+layout_mode = 2
+
+[node name="TextoBuffs" type="Label" parent="Panel/VBoxContainer" unique_id=1267052558]
+layout_mode = 2
+
+[node name="TextoNovaReceita" type="Label" parent="Panel/VBoxContainer" unique_id=1492932365]
+layout_mode = 2
+
+[node name="BotaoContinuar" type="Button" parent="Panel/VBoxContainer" unique_id=374586115]
+layout_mode = 2
+text = "Continue"
