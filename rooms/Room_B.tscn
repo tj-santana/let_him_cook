@@ -1,0 +1,72 @@
+[gd_scene format=3 uid="uid://b725d124yfhbu"]
+
+[ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1"]
+[ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_backdoor"]
+size = Vector2(32, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_leftwall"]
+size = Vector2(16, 864)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rightwall"]
+size = Vector2(16, 864)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_topwall"]
+size = Vector2(1536, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bottomwall"]
+size = Vector2(1536, 16)
+
+[node name="Room_B" type="Node2D" unique_id=1829835156]
+script = ExtResource("1")
+position = Vector2(2048, 0)
+room_id = "room_b"
+bounds = Rect2(0, 0, 1536, 864)
+
+[node name="Room_B#Background" type="Polygon2D" parent="." unique_id=170535895]
+color = Color(0.16, 0.12, 0.08, 1)
+polygon = PackedVector2Array(0, 0, 1536, 0, 1536, 864, 0, 864)
+
+[node name="Room_B#Entry_Left" type="Marker2D" parent="." unique_id=1544230951]
+position = Vector2(96, 432)
+
+[node name="Room_B#Entry_Right" type="Marker2D" parent="." unique_id=1283739978]
+position = Vector2(1440, 432)
+
+[node name="Room_B#StartPosition" type="Marker2D" parent="." unique_id=1656140559]
+position = Vector2(192, 432)
+
+[node name="Room_B#BackDoor" type="Area2D" parent="." unique_id=705106789]
+position = Vector2(72, 432)
+script = ExtResource("2")
+target_scene = "res://game.tscn"
+entry_marker = "StartPosition"
+
+[node name="BackDoor#CollisionShape2D" type="CollisionShape2D" parent="Room_B#BackDoor" unique_id=1704337396]
+position = Vector2(0, 0)
+shape = SubResource("RectangleShape2D_backdoor")
+
+[node name="Room_B#LeftWall" type="StaticBody2D" parent="." unique_id=923119889]
+position = Vector2(0, 432)
+
+[node name="LeftWall#CollisionShape2D" type="CollisionShape2D" parent="Room_B#LeftWall" unique_id=1995650438]
+shape = SubResource("RectangleShape2D_leftwall")
+
+[node name="Room_B#RightWall" type="StaticBody2D" parent="." unique_id=1614127846]
+position = Vector2(1536, 432)
+
+[node name="RightWall#CollisionShape2D" type="CollisionShape2D" parent="Room_B#RightWall" unique_id=402194142]
+shape = SubResource("RectangleShape2D_rightwall")
+
+[node name="Room_B#TopWall" type="StaticBody2D" parent="." unique_id=2081334119]
+position = Vector2(768, 0)
+
+[node name="TopWall#CollisionShape2D" type="CollisionShape2D" parent="Room_B#TopWall" unique_id=1987062302]
+shape = SubResource("RectangleShape2D_topwall")
+
+[node name="Room_B#BottomWall" type="StaticBody2D" parent="." unique_id=1672461156]
+position = Vector2(768, 864)
+
+[node name="BottomWall#CollisionShape2D" type="CollisionShape2D" parent="Room_B#BottomWall" unique_id=2066001988]
+shape = SubResource("RectangleShape2D_bottomwall")

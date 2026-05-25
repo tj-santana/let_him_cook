@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="2_4ux4f"]
 [ext_resource type="Texture2D" uid="uid://u8jmjlfugbug" path="res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres" id="3_mxnnk"]
 [ext_resource type="Texture2D" uid="uid://q3t01qyc1fgp" path="res://microgames/Assets/Food/Isolated Food/icon_slime.tres" id="4_fuams"]
+[ext_resource type="Texture2D" uid="uid://c4d2gbml72pkf" path="res://microgames/Assets/Food/Isolated Food/icon_essence.tres" id="5_3y880"]
 
 [node name="CozinhaPrincipal" type="Node2D" unique_id=271673863]
 script = ExtResource("1_ffrgq")
@@ -140,14 +141,14 @@ grow_vertical = 0
 theme_override_constants/separation = 10
 metadata/_edit_use_anchors_ = true
 
-[node name="InvSlot_Carne" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador" unique_id=1284994875]
+[node name="InvSlot_Carne" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador" unique_id=114065683]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 icon = ExtResource("3_mxnnk")
 icon_alignment = 1
 expand_icon = true
 
-[node name="QtdTexto" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Carne" unique_id=2002491352]
+[node name="QtdTexto" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Carne" unique_id=1702647918]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -161,14 +162,14 @@ grow_vertical = 0
 theme_override_constants/outline_size = 4
 text = "5"
 
-[node name="InvSlot_Slime" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador" unique_id=1922085086]
+[node name="InvSlot_Slime" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador" unique_id=1624694401]
 custom_minimum_size = Vector2(80, 80)
 layout_mode = 2
 icon = ExtResource("4_fuams")
 icon_alignment = 1
 expand_icon = true
 
-[node name="QtdTexto" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Slime" unique_id=1004703212]
+[node name="QtdTexto" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Slime" unique_id=1221625954]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -182,6 +183,27 @@ grow_vertical = 0
 theme_override_constants/outline_size = 4
 text = "5"
 
+[node name="InvSlot_Essence" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador" unique_id=1413985467]
+custom_minimum_size = Vector2(80, 80)
+layout_mode = 2
+icon = ExtResource("5_3y880")
+icon_alignment = 1
+expand_icon = true
+
+[node name="QtdTexto" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Essence" unique_id=910679093]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+theme_override_constants/outline_size = 4
+text = "5"
+
 [connection signal="gui_input" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot1" to="." method="_on_slot_1_gui_input"]
 [connection signal="gui_input" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot2" to="." method="_on_slot_2_gui_input"]
 [connection signal="gui_input" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot3" to="." method="_on_slot_3_gui_input"]
@@ -189,3 +211,4 @@ text = "5"
 [connection signal="pressed" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes/BotaoCozinhar" to="." method="_on_botao_cozinhar_pressed"]
 [connection signal="pressed" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Carne" to="." method="_on_inv_slot_carne_pressed"]
 [connection signal="pressed" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Slime" to="." method="_on_inv_slot_slime_pressed"]
+[connection signal="pressed" from="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador/InvSlot_Essence" to="." method="_on_inv_slot_essence_pressed"]

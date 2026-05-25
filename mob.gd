@@ -9,6 +9,7 @@ signal defeated(drop_type: String)
 @export var detection_radius: float = 180.0
 @export var attack_range: float = 15.0
 @export var attack_cooldown: float = 1.0
+@export var health: float = 10.0
 
 var _player = null
 var _state: String = "idle" 
@@ -19,6 +20,8 @@ func _ready():
 	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
 	$AnimatedSprite2D.animation = mob_types.pick_random()
 	$AnimatedSprite2D.play()
+	$HealthBar.value = health
+	$HealthBar.max_value = health
 	_player = null
 	if get_parent() and get_parent().has_node("Player"):
 		_player = get_parent().get_node("Player")
@@ -65,9 +68,12 @@ func _start_attack_cooldown() -> void:
 	await get_tree().create_timer(attack_cooldown).timeout
 	_attack_ready = true
 
-func take_hit():
-	defeated.emit(drop_type)
-	queue_free()
+func take_hit(attack_dmg):
+	health -= attack_dmg
+	$HealthBar.value = health
+	if health <= 0:
+		defeated.emit(drop_type)
+		queue_free()
 
 func damage_player():
 	if get_parent() and get_parent().has_method("take_damage_from_enemy"):
@@ -85,4 +91,5 @@ func play_attack_animation():
 			_player.call_deferred("_on_body_entered", self)
 
 func _on_visible_on_screen_notifier_2d_screen_exited():
-	queue_free()
+	# Keep enemies alive when they leave the screen so they can return when the camera comes back.
+	pass

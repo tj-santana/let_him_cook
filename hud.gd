@@ -18,7 +18,20 @@ func update_hunger(current_hunger: float, max_hunger: float):
 	$HungerBar/Label.text = "%d" % current_hunger + "/%d" % max_hunger
 
 func update_ingredients(ingredients):
-	pass
+	# Accept either a dictionary inventory or nothing
+	if typeof(ingredients) != TYPE_DICTIONARY:
+		return
+
+	var sus_meat = int(ingredients.get("Sus Meat", 0))
+	var slime = int(ingredients.get("Slime", 0))
+	var essence = int(ingredients.get("Essence", 0))
+
+	if $InventorySlots.has_node("InvSlot_Carne"):
+		$InventorySlots/InvSlot_Carne/QtdTexto.text = str(sus_meat)
+	if $InventorySlots.has_node("InvSlot_Slime"):
+		$InventorySlots/InvSlot_Slime/QtdTexto.text = str(slime)
+	if $InventorySlots.has_node("InvSlot_Essence"):
+		$InventorySlots/InvSlot_Essence/QtdTexto.text = str(essence)
 
 
 func update_inventory(inventory: Dictionary):

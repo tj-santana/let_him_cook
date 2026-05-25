@@ -194,7 +194,6 @@ height = 58.0
 z_index = 1
 collision_layer = 4
 script = ExtResource("1_1qmh0")
-metadata/_edit_group_ = true
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=929967219]
 texture_filter = 1
@@ -208,5 +207,15 @@ rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_eqsov")
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1213439017]
+
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1076663201]
+self_modulate = Color(0, 1, 0, 1)
+offset_left = -24.0
+offset_top = -34.0
+offset_right = 27.0
+offset_bottom = -23.0
+max_value = 20.0
+value = 20.0
+show_percentage = false
 
 [connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

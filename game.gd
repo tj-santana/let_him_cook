@@ -30,6 +30,11 @@ var waves = [
 var current_wave = 0
 var mobs_left_to_spawn = 0
 var mobs_alive = 0
+var room_host: Node2D = null
+var active_room_root: Node = null
+var active_room_instance: Node = null
+var room_transitioning = false
+var transition_rect: ColorRect = null
 
 
 func _refresh_inventory_hud() -> void:
@@ -37,11 +42,182 @@ func _refresh_inventory_hud() -> void:
 		$HUD.update_inventory(player_inventory)
 
 
+func _ensure_room_host() -> void:
+	if room_host != null and is_instance_valid(room_host):
+		return
+	room_host = Node2D.new()
+	room_host.name = "RoomHost"
+	add_child(room_host)
+
+
+func _ensure_transition_overlay() -> void:
+	if transition_rect != null and is_instance_valid(transition_rect):
+		return
+	var layer = CanvasLayer.new()
+	layer.name = "TransitionLayer"
+	layer.layer = 200
+	add_child(layer)
+	transition_rect = ColorRect.new()
+	transition_rect.name = "TransitionRect"
+	transition_rect.color = Color(0, 0, 0, 0)
+	transition_rect.anchor_left = 0
+	transition_rect.anchor_top = 0
+	transition_rect.anchor_right = 1
+	transition_rect.anchor_bottom = 1
+	layer.add_child(transition_rect)
+
+
+func _set_base_room_visible(visible: bool) -> void:
+	for node_name in ["Floor", "Walls", "Props", "MobPath", "StartPosition"]:
+		if has_node(node_name):
+			var node = get_node(node_name)
+			if node is CanvasItem:
+				node.visible = visible
+
+
+func _get_active_room_root() -> Node:
+	if active_room_instance != null and is_instance_valid(active_room_instance):
+		return active_room_instance
+	return self
+
+
+func _collect_tilemap_layers(node: Node, layers: Array) -> void:
+	for child in node.get_children():
+		if child is TileMapLayer:
+			layers.append(child)
+		_collect_tilemap_layers(child, layers)
+
+
+func _get_room_bounds_for(room_root: Node) -> Rect2:
+	if room_root != null and room_root.has_method("get_bounds_rect"):
+		return room_root.get_bounds_rect()
+
+	var min_x = INF
+	var min_y = INF
+	var max_x = -INF
+	var max_y = -INF
+	var found_any = false
+	var layers: Array = []
+	_collect_tilemap_layers(room_root if room_root != null else self, layers)
+
+	for layer in layers:
+		if not layer.has_method("get_used_rect"):
+			continue
+		var used_rect = layer.get_used_rect()
+		if used_rect.size == Vector2i.ZERO:
+			continue
+		var tile_size = Vector2(16.0, 16.0)
+		var scale = layer.scale
+		var origin = layer.global_position
+		var rect_pos = origin + Vector2(used_rect.position.x * tile_size.x * scale.x, used_rect.position.y * tile_size.y * scale.y)
+		var rect_size = Vector2(used_rect.size.x * tile_size.x * scale.x, used_rect.size.y * tile_size.y * scale.y)
+		min_x = min(min_x, rect_pos.x)
+		min_y = min(min_y, rect_pos.y)
+		max_x = max(max_x, rect_pos.x + rect_size.x)
+		max_y = max(max_y, rect_pos.y + rect_size.y)
+		found_any = true
+
+	if not found_any:
+		return Rect2()
+
+	return Rect2(Vector2(min_x, min_y), Vector2(max_x - min_x, max_y - min_y))
+
+
+func _configure_player_camera() -> void:
+	if not has_node("Player/Camera2D"):
+		return
+
+	var cam: Camera2D = $Player/Camera2D
+	if cam.has_method("make_current"):
+		cam.make_current()
+	cam.position_smoothing_enabled = false
+
+	var bounds = _get_room_bounds_for(_get_active_room_root())
+	if bounds.size != Vector2.ZERO:
+		cam.limit_left = int(bounds.position.x)
+		cam.limit_top = int(bounds.position.y)
+		cam.limit_right = int(bounds.position.x + bounds.size.x)
+		cam.limit_bottom = int(bounds.position.y + bounds.size.y)
+
+
+func _get_marker_global_position(room_root: Node, marker_name: String) -> Vector2:
+	if room_root == null or marker_name == "":
+		return Vector2.INF
+	if room_root.has_method("get_entry_position"):
+		return room_root.get_entry_position(marker_name)
+	if room_root.has_node(marker_name):
+		return room_root.get_node(marker_name).global_position
+	return Vector2.INF
+
+
+func _get_current_room_scene_path() -> String:
+	if active_room_instance != null and is_instance_valid(active_room_instance):
+		var scene_path = active_room_instance.scene_file_path
+		if scene_path != "":
+			return scene_path
+	return "res://game.tscn"
+
+
+func _get_cooking_menu_scene_path() -> String:
+	var caminho_novo = "res://microgames/Cenas/CozinhaPrincipal.tscn"
+	if FileAccess.file_exists(caminho_novo):
+		return caminho_novo
+	return "res://microgames/Cenas/CozinhaPrincipal.tscn"
+
+
+func _fade_to(alpha: float, duration: float = 0.16) -> void:
+	_ensure_transition_overlay()
+	var tween = create_tween()
+	tween.tween_property(transition_rect, "modulate:a", alpha, duration)
+	await tween.finished
+
+
+func enter_room(scene_path: String, entry_marker: String = "") -> void:
+	if room_transitioning:
+		return
+	room_transitioning = true
+	await _fade_to(1.0)
+
+	if active_room_instance != null and is_instance_valid(active_room_instance):
+		active_room_instance.queue_free()
+		active_room_instance = null
+
+	if scene_path == "" or scene_path == "res://game.tscn":
+		active_room_root = self
+		_set_base_room_visible(true)
+	else:
+		_ensure_room_host()
+		var packed_room = load(scene_path)
+		if packed_room == null:
+			print("[game.gd] Failed to load room:", scene_path)
+			active_room_root = self
+			_set_base_room_visible(true)
+		else:
+			var room = packed_room.instantiate()
+			room_host.add_child(room)
+			active_room_instance = room
+			active_room_root = room
+			_set_base_room_visible(false)
+
+	var player = $Player
+	var entry_position = _get_marker_global_position(_get_active_room_root(), entry_marker)
+	if entry_position != Vector2.INF:
+		player.global_position = entry_position
+
+	_configure_player_camera()
+	await _fade_to(0.0)
+	room_transitioning = false
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	# If there's a saved state from the cooking flow, restore it.
 	if typeof(GameManager) != TYPE_NIL and GameManager.obter_estado_principal() != null:
 		var s = GameManager.obter_estado_principal()
+		var saved_room_scene = s.get("room_scene", "res://game.tscn")
+		var should_restore_room = saved_room_scene != "" and saved_room_scene != "res://game.tscn"
+		if should_restore_room:
+			_set_base_room_visible(false)
 		# Restore numeric state
 		score = s.get("score", 0)
 		health = s.get("health", max_health)
@@ -57,14 +233,20 @@ func _ready():
 		_refresh_inventory_hud()
 
 		# Apply any pending food buffs from cooking
-		if typeof(GameManager) != TYPE_NIL and GameManager.get("buff_pendente"):
-			print("--- APPLYING FOOD BUFFS ---")
-			if $Player.has_method("aplicar_buff_comida"):
-				$Player.aplicar_buff_comida(
-					GameManager.get("buff_velocidade"),
-					GameManager.get("buff_cooldown"),
-					GameManager.get("buff_duracao")
-				)
+		if typeof(GameManager) != TYPE_NIL:
+			var pending = false
+			if GameManager.has_method("get"):
+				pending = GameManager.get("buff_pendente")
+			print("[game.gd] Checking for pending buff:", pending)
+			if pending:
+				print("--- APPLYING FOOD BUFFS ---")
+				print("[game.gd] Buff values -> vel:", GameManager.get("buff_velocidade"), ", cooldown:", GameManager.get("buff_cooldown"), ", dur:", GameManager.get("buff_duracao"))
+				if $Player.has_method("aplicar_buff_comida"):
+					$Player.aplicar_buff_comida(
+						GameManager.get("buff_velocidade"),
+						GameManager.get("buff_cooldown"),
+						GameManager.get("buff_duracao")
+					)
 			else:
 				print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
 			
@@ -78,9 +260,14 @@ func _ready():
 			GameManager.buff_pendente = false
 			print("Buffs aplicados com sucesso!")
 		
+		if should_restore_room:
+			await enter_room(saved_room_scene, "")
+
 		# Place player back where they were
 		if s.has("player_pos"):
 			$Player.start(s.get("player_pos"))
+		else:
+			$Player.show()
 
 		# Restart timers if the game was playing
 		if s.get("is_playing", false):
@@ -93,6 +280,12 @@ func _ready():
 		GameManager.limpar_estado_principal()
 	else:
 		new_game()
+
+	_ensure_room_host()
+	_ensure_transition_overlay()
+	active_room_root = self
+	_set_base_room_visible(true)
+	_configure_player_camera()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -137,6 +330,11 @@ func game_over():
 func new_game():
 	is_game_over = false
 	is_playing = false
+	active_room_root = self
+	if active_room_instance != null and is_instance_valid(active_room_instance):
+		active_room_instance.queue_free()
+		active_room_instance = null
+	_set_base_room_visible(true)
 	score = 0
 	ingredients = 0
 	max_health = 100.0
@@ -170,13 +368,21 @@ func new_game():
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
 
+	_configure_player_camera()
+
 func _on_mob_timer_timeout():
-	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
-	mob_spawn_location.progress_ratio = randf()
-	
+	var room_root = _get_active_room_root()
+	var mob_spawn_location = null
+	if room_root != null and room_root.has_node("MobPath/MobSpawnLocation"):
+		mob_spawn_location = room_root.get_node("MobPath/MobSpawnLocation")
+
 	var mob = mob_scene.instantiate()
-	mob.global_position = mob_spawn_location.global_position
-	
+	if mob_spawn_location != null:
+		mob_spawn_location.progress_ratio = randf()
+		mob.global_position = mob_spawn_location.global_position
+	else:
+		mob.global_position = $Player.global_position + Vector2(randf_range(-160, 160), randf_range(-160, 160))
+
 	var screen_center = get_viewport().get_visible_rect().size / 2
 	var direction_to_center = (screen_center - mob.global_position).normalized()
 	
@@ -286,6 +492,7 @@ func _input(event):
 				"hunger": hunger,
 				"max_hunger": max_hunger,
 				"player_pos": $Player.global_position,
+				"room_scene": _get_current_room_scene_path(),
 				"is_playing": is_playing,
 				"player_inventory": player_inventory.duplicate()
 			})
@@ -297,4 +504,7 @@ func _input(event):
 		$Player.is_playing = false
 
 		# Switch to the cooking UI (microgames)
-		get_tree().change_scene_to_file("res://microgames/Cenas/CozinhaPrincipal.tscn")
+		if typeof(GameManager) != TYPE_NIL and GameManager.has_method("obter_cena_cozinha_principal"):
+			get_tree().change_scene_to_file(GameManager.obter_cena_cozinha_principal())
+		else:
+			get_tree().change_scene_to_file("res://microgames/Cenas/CozinhaPrincipal.tscn")

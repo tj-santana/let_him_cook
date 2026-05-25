@@ -6,6 +6,7 @@ var limite_ingredientes: int = 2
 # --- TEXTURAS ---
 var textura_sus_meat = preload("res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres")
 var textura_slime = preload("res://microgames/Assets/Food/Isolated Food/icon_slime.tres")
+var textura_essence = preload("res://microgames/Assets/Food/Isolated Food/icon_essence.tres")
 
 @onready var slots_visuais = [
 	$CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot1,
@@ -34,6 +35,7 @@ func atualizar_textos_inventario():
 	
 	caminho_base.get_node("InvSlot_Carne/QtdTexto").text = str(GameManager.inventario_jogador["Sus Meat"])
 	caminho_base.get_node("InvSlot_Slime/QtdTexto").text = str(GameManager.inventario_jogador["Slime"])
+	caminho_base.get_node("InvSlot_Essence/QtdTexto").text = str(GameManager.inventario_jogador["Essence"])
 
 # --- ADICIONAR E REMOVER DA PANELA ---
 func tentar_adicionar_ingrediente(ingrediente: String):
@@ -61,6 +63,7 @@ func tentar_remover_ingrediente(indice_slot: int):
 
 func _on_inv_slot_carne_pressed(): tentar_adicionar_ingrediente("Sus Meat")
 func _on_inv_slot_slime_pressed(): tentar_adicionar_ingrediente("Slime")
+func _on_inv_slot_essence_pressed(): tentar_adicionar_ingrediente("Essence")
 
 # --- BOTÃO DE COZINHAR ---
 func _on_botao_cozinhar_pressed():
@@ -129,6 +132,8 @@ func atualizar_ecra():
 				icon_do_slot.texture = textura_sus_meat
 			elif ingredientes_na_panela[i] == "Slime":
 				icon_do_slot.texture = textura_slime
+			elif ingredientes_na_panela[i] == "Essence":
+				icon_do_slot.texture = textura_essence
 			slots_visuais[i].color = Color.DARK_GRAY
 		else:
 			icon_do_slot.texture = null

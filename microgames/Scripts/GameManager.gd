@@ -13,17 +13,32 @@ var buff_fome: float = 0.0
 
 # Coloca aqui os caminhos EXATOS das tuas cenas
 var todas_as_cenas_minijogos: Array = [
-	"res://microgames/Cenas/Microgames/Microgame_Cozinhar.tscn", 
+	"res://microgames/Cenas/Microgames/Microgame_Cozinhar.tscn",
 	"res://microgames/Cenas/Microgames/Microgame_Temperatura.tscn",
 	"res://microgames/Cenas/Microgames/Microgame_Geleia.tscn",
 	"res://microgames/Cenas/Microgames/Microgame_Carne.tscn"
 ]
 
+
+func obter_cena_cozinha_principal() -> String:
+	var caminho_novo = "res://microgames/Cenas/CozinhaPrincipal.tscn"
+	if FileAccess.file_exists(caminho_novo):
+		return caminho_novo
+	return "res://microgames/Cenas/CozinhaPrincipal.tscn"
+
+
+func obter_fila_minijogos_disponiveis() -> Array:
+	var fila: Array = []
+	for caminho in todas_as_cenas_minijogos:
+		if FileAccess.file_exists(caminho) and not fila.has(caminho):
+			fila.append(caminho)
+	return fila
+
 func iniciar_sequencia_minijogos():
 	pontuacao_total = 0.0 # Reinicia a pontuação
 	
 	# CRIAR A FILA: Copiamos a lista mestre para a fila de jogo atual
-	fila_de_minijogos = todas_as_cenas_minijogos.duplicate()
+	fila_de_minijogos = obter_fila_minijogos_disponiveis()
 	
 	# Arranca para o primeiro da lista
 	avancar_para_proximo_minijogo()
@@ -40,7 +55,7 @@ func avancar_para_proximo_minijogo():
 	else:
 		# A fila acabou! Volta para a cozinha
 		print("Prato Terminado! Pontuação Total: ", pontuacao_total)
-		get_tree().change_scene_to_file("res://microgames/Cenas/CozinhaPrincipal.tscn")
+		get_tree().change_scene_to_file(obter_cena_cozinha_principal())
 		
 var ingredientes_atuais: Array = []
 var desempenho_microgame: float = 0.0
@@ -52,11 +67,13 @@ var estado_principal = null
 var inventario_jogador: Dictionary = {
 	"Sus Meat": 5,
 	"Slime": 5,
+	"Essence": 5
 }
 
 # O NOSSO LIVRO DE RECEITAS
 var livro_de_receitas: Dictionary = {
 	["Slime", "Sus Meat"]: "Geleia Duvidosa",
+	["Essence", "Sus Meat"]: "Guisado Arcano",
 	["Sus Meat", "Sus Meat"] : "Carne Estufada"
 }
 
@@ -76,3 +93,12 @@ func obter_estado_principal():
 
 func limpar_estado_principal():
 	estado_principal = null
+
+# Helper to set a pending buff from microgames and log for debugging
+func aplicar_buff(velocidade: int, cooldown: float, duracao: float, fome: float = 0.0) -> void:
+	buff_pendente = true
+	buff_velocidade = int(velocidade)
+	buff_cooldown = float(cooldown)
+	buff_duracao = float(duracao)
+	buff_fome = float(fome)
+	print("[GameManager] aplicar_buff called. Pending buff set -> vel:", buff_velocidade, ", cooldown:", buff_cooldown, ", dur:", buff_duracao, ", fome:", buff_fome)

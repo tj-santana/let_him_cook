@@ -1,10 +1,12 @@
 extends CharacterBody2D
-signal hit
+
+signal hit(dmg: float)
 
 @onready var audio_player : AudioStreamPlayer = $AudioStreamPlayer
 
 @export var speed = 400.0 # How fast the player will move (pixels/sec).
 @export var max_health = 100.0
+@export var attack_dmg = 10.0
 @export var attack_range = 70.0
 @export var attack_offset = 42.0
 @export var attack_cooldown = 0.5
@@ -14,6 +16,7 @@ signal hit
 @export var hit_invulnerability = 0.6
 @export var debug_attack_preview = true
 @export var is_playing = false
+@export var attack_collision_mask: int = 4
 
 var can_attack = true
 var can_dash = true
@@ -29,8 +32,18 @@ var screen_size
 func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
+
+	# Ensure the player's current health starts at the configured max
+	current_health = max_health
 	if has_node("Hitbox") and not $Hitbox.body_entered.is_connected(_on_hitbox_body_entered):
 		$Hitbox.body_entered.connect(_on_hitbox_body_entered)
+
+	# If the Hitbox Area2D defines a collision mask in the scene, prefer that
+	if has_node("Hitbox"):
+		# read mask from scene so designers can change it in the editor
+		var scene_mask = $Hitbox.collision_mask
+		if typeof(scene_mask) == TYPE_INT and scene_mask != 0:
+			attack_collision_mask = int(scene_mask)
 
 func _physics_process(delta):
 	if not is_playing:
@@ -67,14 +80,16 @@ func _physics_process(delta):
 		if input_vector.length() > 0:
 			velocity = input_vector.normalized() * speed
 			$AnimatedSprite2D.play()
-		elif is_attacking:
-			$AnimatedSprite2D.play()
 		else:
 			velocity = Vector2.ZERO
-			$AnimatedSprite2D.stop()
+			if is_attacking:
+				$AnimatedSprite2D.play()
+			else:
+				$AnimatedSprite2D.stop()
 			
+	# move_and_slide and position clamping
 	move_and_slide()
-	position = position.clamp(Vector2.ZERO, screen_size)
+	# DO NOT clamp to viewport here — room bounds or camera limits will govern allowed movement
 
 	if debug_attack_preview and show_attack_preview:
 		queue_redraw()
@@ -104,7 +119,6 @@ func attack():
 		
 	if $AnimatedSprite2D.sprite_frames.has_animation("attack"):
 		$AnimatedSprite2D.animation = "attack"
-		print("Attack animation playing")
 	else:
 		print("ERROR: 'attack' animation not found!")
 	
@@ -116,7 +130,7 @@ func attack():
 	query.transform = Transform2D(0.0, attack_center)
 	query.collide_with_bodies = true
 	query.collide_with_areas = true
-	query.collision_mask = 4
+	query.collision_mask = attack_collision_mask
 
 	var hits = get_world_2d().direct_space_state.intersect_shape(query, 8)
 	var hit_mobs = []
@@ -125,13 +139,13 @@ func attack():
 		var body = hit_result["collider"]
 		if body != null and body.has_method("take_hit") and not hit_mobs.has(body):
 			hit_mobs.append(body)
-			body.take_hit()
+			body.take_hit(attack_dmg)
 			
 	if hit_mobs.is_empty() and get_parent():
 		for child in get_parent().get_children():
 			if child.has_method("take_hit") and child.has_method("damage_player"):
 				if child.global_position.distance_to(attack_center) <= attack_range:
-					child.take_hit()
+					child.take_hit(attack_dmg)
 
 	await get_tree().create_timer(attack_cooldown).timeout
 	show_attack_preview = false
