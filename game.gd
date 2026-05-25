@@ -35,7 +35,7 @@ var active_room_root: Node = null
 var active_room_instance: Node = null
 var room_transitioning = false
 var transition_rect: ColorRect = null
-const DEFAULT_ROOM_SCENE := "res://game.tscn"
+const DEFAULT_ROOM_SCENE := "res://rooms/Room_A.tscn"
 const SHELL_SCENE := "res://game_shell.tscn"
 
 

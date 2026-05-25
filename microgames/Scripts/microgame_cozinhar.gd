@@ -3,7 +3,7 @@ extends Node2D
 # --- REFERÊNCIAS AOS NÓS ---
 @onready var barra_progresso = $BarraProgresso 
 @onready var barra_tempo = $UI/BarraTempo
-@onready var texto_ajuda = $TextoAjuda         
+@onready var texto_ajuda = $UI/TextoAjuda         
 @onready var slime_visual = $SlimeArea/Slime
 @onready var arco_iris = $ArcoIrisVisual 
 

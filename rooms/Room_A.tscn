@@ -1,6 +1,9 @@
-[gd_scene format=4 uid="uid://c40pknekx4jj7"]
+[gd_scene format=4 uid="uid://d2wf0yj1gbgun"]
 
+[ext_resource type="PackedScene" uid="uid://c0vow7slq7hen" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_feb5d"]
+[ext_resource type="PackedScene" uid="uid://bko6et6myb4v7" path="res://mob.tscn" id="2_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://cdv2ga1h6objp" path="res://hud.tscn" id="4_fc0e3"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="5_7jktm"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="6_4door"]
 [ext_resource type="PackedScene" path="res://floor/Campfire.tscn" id="7_campfire"]
@@ -394,5 +397,5 @@ entry_marker = "Entry_Left"
 position = Vector2(-18, 0)
 shape = SubResource("RectangleShape2D_door_to_room_b")
 
-[node name="Campfire" parent="." unique_id=1802362956 instance=ExtResource("7_campfire")]
+[node name="Campfire" parent="." instance=ExtResource("7_campfire")]
 position = Vector2(800, 320)

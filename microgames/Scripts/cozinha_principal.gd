@@ -27,7 +27,7 @@ func _process(delta):
 	if Input.is_action_just_pressed("escape"):
 		for i in range(ingredientes_na_panela.size(), -1, -1):
 			tentar_remover_ingrediente(i)
-		var cena_retorno = "res://game.tscn"
+		var cena_retorno = "res://game_shell.tscn"
 		if typeof(GameManager) != TYPE_NIL and GameManager.cena_principal_path != "":
 			cena_retorno = GameManager.cena_principal_path
 		get_tree().change_scene_to_file(cena_retorno)
