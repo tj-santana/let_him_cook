@@ -17,8 +17,8 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-GameManager="*uid://winvje88nugc"
 DialogueManager="*uid://c3rodes2l3gxb"
+GameManager="*uid://winvje88nugc"
 
 [editor_plugins]
 

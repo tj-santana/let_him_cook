@@ -297,4 +297,4 @@ func _input(event):
 		$Player.is_playing = false
 
 		# Switch to the cooking UI (microgames)
-		get_tree().change_scene_to_file("res://microgames/CozinhaPrincipal.tscn")
+		get_tree().change_scene_to_file("res://microgames/Cenas/CozinhaPrincipal.tscn")
