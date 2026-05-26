@@ -1,11 +1,10 @@
-[gd_scene format=4 uid="uid://b725d124yfhbu"]
+[gd_scene format=4 uid="uid://dim4olbkjfqes"]
 
 [ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="2"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="2_42yxj"]
-[ext_resource type="PackedScene" path="res://floor/Campfire.tscn" id="3"]
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_42yxj"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lhqfr"]
 texture = ExtResource("2_42yxj")
 0:0/0 = 0
 1:0/0 = 0
@@ -109,9 +108,9 @@ texture = ExtResource("2_42yxj")
 9:9/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_vpju0"]
-sources/0 = SubResource("TileSetAtlasSource_42yxj")
+sources/0 = SubResource("TileSetAtlasSource_lhqfr")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_1pbni"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_txw5j"]
 texture = ExtResource("2_42yxj")
 0:0/0 = 0
 0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)
@@ -234,9 +233,9 @@ texture = ExtResource("2_42yxj")
 
 [sub_resource type="TileSet" id="TileSet_fn4io"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_1pbni")
+sources/0 = SubResource("TileSetAtlasSource_txw5j")
 
-[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_o1myu"]
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_q76jh"]
 texture = ExtResource("2_42yxj")
 0:0/0 = 0
 1:0/0 = 0
@@ -341,14 +340,16 @@ texture = ExtResource("2_42yxj")
 
 [sub_resource type="TileSet" id="TileSet_4g7f3"]
 physics_layer_0/collision_layer = 1
-sources/0 = SubResource("TileSetAtlasSource_o1myu")
+sources/0 = SubResource("TileSetAtlasSource_q76jh")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_backdoor"]
-size = Vector2(32, 96)
+[sub_resource type="CanvasTexture" id="CanvasTexture_p7qad"]
 
-[node name="Room_B" type="Node2D" unique_id=1829835156]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vnbtu"]
+size = Vector2(101, 48)
+
+[node name="F1_room1" type="Node2D" unique_id=1829835156]
 script = ExtResource("1")
-room_id = "room_b"
+room_id = "f1_room1"
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1168680277]
 y_sort_enabled = true
@@ -366,23 +367,37 @@ scale = Vector2(2, 2)
 tile_map_data = PackedByteArray("AAABAAEAAAAJAAQAAAABABIAAAAJAAQAAAACABIAAAAJAAUAAAACAAEAAAAJAAUAAAABAAMAAAABAAkAAAABAAcAAAABAAkAAAABAAsAAAABAAkAAAABAA8AAAABAAkAAAAiAAMAAAADAAkAAAAiAA8AAAADAAkAAAAiAAsAAAADAAkAAAAiAAcAAAADAAkAAAADAAAAAAAEAAcAAAAIAAAAAAAEAAcAAAANAAAAAAAEAAcAAAASAAAAAAAEAAcAAAAXAAAAAAAEAAcAAAAcAAAAAAAEAAcAAAAhAAAAAAAEAAcAAAA=")
 tile_set = SubResource("TileSet_4g7f3")
 
-[node name="Room_B#Entry_Left" type="Marker2D" parent="." unique_id=1544230951]
-position = Vector2(88, 320)
+[node name="StartPosition" type="Marker2D" parent="." unique_id=1656140559]
+position = Vector2(576, 320)
 
-[node name="Room_B#Entry_Right" type="Marker2D" parent="." unique_id=1283739978]
-position = Vector2(1080, 320)
+[node name="EntryPrev" type="Marker2D" parent="." unique_id=1544230951]
+position = Vector2(576, 88)
 
-[node name="Room_B#StartPosition" type="Marker2D" parent="." unique_id=1656140559]
-position = Vector2(568, 320)
-
-[node name="Room_B#BackDoor" type="Area2D" parent="." unique_id=705106789]
-position = Vector2(48, 320)
+[node name="DoorPrev" type="Area2D" parent="." unique_id=1754779999]
+position = Vector2(575, 40)
 script = ExtResource("2")
-target_scene = "res://rooms/Room_A.tscn"
-entry_marker = "Entry_Right"
+target_scene = "res://rooms/floor_1/F1_Entry.tscn"
+entry_marker = "EntryNext"
 
-[node name="BackDoor#CollisionShape2D" type="CollisionShape2D" parent="Room_B#BackDoor" unique_id=1704337396]
-shape = SubResource("RectangleShape2D_backdoor")
+[node name="Sprite2D" type="Sprite2D" parent="DoorPrev" unique_id=1130029317]
+scale = Vector2(102.00001, 47.999977)
+texture = SubResource("CanvasTexture_p7qad")
 
-[node name="Campfire" parent="." unique_id=236849583 instance=ExtResource("3")]
-position = Vector2(768, 432)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorPrev" unique_id=1532889651]
+shape = SubResource("RectangleShape2D_vnbtu")
+
+[node name="EntryNext" type="Marker2D" parent="." unique_id=1283739978]
+position = Vector2(576, 624)
+
+[node name="DoorNext" type="Area2D" parent="." unique_id=841488602]
+position = Vector2(576, 696)
+script = ExtResource("2")
+target_scene = "res://rooms/floor_1/F1_room2.tscn"
+entry_marker = "EntryPrev"
+
+[node name="Sprite2D" type="Sprite2D" parent="DoorNext" unique_id=1922779255]
+scale = Vector2(102.00001, 47.999977)
+texture = SubResource("CanvasTexture_p7qad")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DoorNext" unique_id=804611343]
+shape = SubResource("RectangleShape2D_vnbtu")

@@ -1,6 +1,6 @@
 extends Area2D
 
-@export var target_scene: String = "" # path like 'res://rooms/Room_B.tscn'
+@export var target_scene: String = "" # path like 'res://rooms/floor_1/F1_EastHall.tscn'
 @export var entry_marker: String = ""
 
 func _ready():

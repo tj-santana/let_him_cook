@@ -26,7 +26,7 @@ func _ready():
 
 	# If there is a default test room, try loading it (non-blocking)
 	# Developers can call enter_room(...) to change rooms at runtime
-	# Example: enter_room("res://rooms/Room_A.tscn", "Entry_Left")
+	# Example: enter_room("res://rooms/floor_1/F1_EntryHall.tscn", "Entry_Left")
 	pass
 
 func _fade_in(time := 0.25) -> void:
