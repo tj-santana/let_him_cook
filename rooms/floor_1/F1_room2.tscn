@@ -1,7 +1,9 @@
 [gd_scene format=4 uid="uid://fx7t71frc7ur"]
 
+[ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_2v8mh"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="1_vi2ai"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="2_oce6v"]
+[ext_resource type="PackedScene" uid="uid://ceweh02bircdb" path="res://floor/traps/Pitfall.tscn" id="3_oce6v"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_2v8mh"]
 texture = ExtResource("1_vi2ai")
@@ -350,6 +352,7 @@ size = Vector2(102, 48)
 size = Vector2(48, 104)
 
 [node name="F1Room2" type="Node2D" unique_id=1394386075]
+script = ExtResource("1_2v8mh")
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=1929486466]
 y_sort_enabled = true
@@ -369,7 +372,7 @@ tile_map_data = PackedByteArray("AAABAAEAAAAJAAQAAAABABIAAAAJAAQAAAACABIAAAAJAAU
 tile_set = SubResource("TileSet_7t2s5")
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=2134543567]
-position = Vector2(576, 320)
+position = Vector2(576, 127)
 
 [node name="EntryPrev" type="Marker2D" parent="." unique_id=1927562629]
 position = Vector2(576, 88)
@@ -388,10 +391,10 @@ texture = SubResource("CanvasTexture_e4krc")
 shape = SubResource("RectangleShape2D_f31wf")
 
 [node name="EntryNext" type="Marker2D" parent="." unique_id=1596436046]
-position = Vector2(111, 320)
+position = Vector2(112, 409)
 
 [node name="DoorNext" type="Area2D" parent="." unique_id=989934581]
-position = Vector2(40, 320)
+position = Vector2(40, 409)
 script = ExtResource("2_oce6v")
 target_scene = "res://rooms/floor_1/F1_room3.tscn"
 entry_marker = "EntryPrev"
@@ -403,3 +406,31 @@ texture = SubResource("CanvasTexture_e4krc")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorNext" unique_id=1354349579]
 shape = SubResource("RectangleShape2D_k056n")
+
+[node name="Pitfall" parent="." unique_id=317542892 instance=ExtResource("3_oce6v")]
+position = Vector2(192, 32)
+scale = Vector2(4, 6.5)
+
+[node name="Pitfall2" parent="." unique_id=1137809921 instance=ExtResource("3_oce6v")]
+position = Vector2(736.00006, 32)
+scale = Vector2(2, 9)
+
+[node name="Pitfall3" parent="." unique_id=653950001 instance=ExtResource("3_oce6v")]
+position = Vector2(864, 192)
+scale = Vector2(4, 2)
+
+[node name="Pitfall4" parent="." unique_id=267255462 instance=ExtResource("3_oce6v")]
+position = Vector2(448, 192.00002)
+scale = Vector2(4.5, 4)
+
+[node name="Pitfall5" parent="." unique_id=959322171 instance=ExtResource("3_oce6v")]
+position = Vector2(192, 448)
+scale = Vector2(2, 2.5)
+
+[node name="Pitfall6" parent="." unique_id=573559625 instance=ExtResource("3_oce6v")]
+position = Vector2(32, 160.00002)
+scale = Vector2(2.5, 2.5)
+
+[node name="Pitfall7" parent="." unique_id=797139854 instance=ExtResource("3_oce6v")]
+position = Vector2(465, 448)
+scale = Vector2(2, 2.5)

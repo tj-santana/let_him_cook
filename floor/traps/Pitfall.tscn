@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://ceweh02bircdb"]
+
+[ext_resource type="Script" uid="uid://ct6wnfn5qpy0f" path="res://floor/traps/hazard.gd" id="1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_26mcb"]
+size = Vector2(40, 40)
+
+[node name="Pitfall" type="Area2D" unique_id=317542892]
+collision_layer = 8
+collision_mask = 2
+script = ExtResource("1")
+damage_amount = 0.0
+one_shot = false
+reset_player_to_start = true
+hazard_name = "pitfall"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=246987694]
+position = Vector2(32, 32)
+shape = SubResource("RectangleShape2D_26mcb")
+
+[node name="Polygon2D" type="Polygon2D" parent="." unique_id=1547556214]
+position = Vector2(2, -2)
+scale = Vector2(1.0454545, 0.95454544)
+color = Color(0.08, 0.08, 0.08, 1)
+polygon = PackedVector2Array(59.304348, 2.095238, 59.304348, 69.14285, -1.9130435, 69.14285, -1.9130435, 2.095238)

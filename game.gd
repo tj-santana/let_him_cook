@@ -6,6 +6,7 @@ extends Node
 @export var hit_max_health_damage = 5.0
 @export var min_max_health = 25.0
 @export var game_over_timer = 2.0
+@export var use_room_spawn_points := true
 
 var score
 var ingredients
@@ -152,6 +153,27 @@ func _get_marker_global_position(room_root: Node, marker_name: String) -> Vector
 	return Vector2.INF
 
 
+func _spawn_room_mobs(room_root: Node) -> void:
+	if not use_room_spawn_points:
+		return
+	if room_root == null or room_root == self:
+		return
+	if mob_scene == null or not room_root.has_method("get_spawn_positions"):
+		return
+
+	var spawn_positions: Array = room_root.get_spawn_positions("MobSpawn")
+	if spawn_positions.is_empty():
+		return
+
+	mobs_alive = 0
+	for spawn_position in spawn_positions:
+		var mob = mob_scene.instantiate()
+		room_root.add_child(mob)
+		mob.global_position = spawn_position
+		mob.defeated.connect(_on_mob_defeated)
+		mobs_alive += 1
+
+
 func _get_current_room_scene_path() -> String:
 	if active_room_instance != null and is_instance_valid(active_room_instance):
 		var scene_path = active_room_instance.scene_file_path
@@ -180,6 +202,11 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 	room_transitioning = true
 	if use_fade:
 		await _fade_to(1.0)
+
+	if use_room_spawn_points:
+		$MobTimer.stop()
+		mobs_left_to_spawn = 0
+	mobs_alive = 0
 
 	if active_room_instance != null and is_instance_valid(active_room_instance):
 		active_room_instance.queue_free()
@@ -211,10 +238,15 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 		target_position = _get_marker_global_position(_get_active_room_root(), entry_marker)
 	if target_position != Vector2.INF:
 		player.global_position = target_position
+	if player.has_method("grant_room_entry_invulnerability"):
+		player.grant_room_entry_invulnerability(0.25)
 	if show_player:
 		player.show()
 	else:
 		player.hide()
+
+	if is_playing:
+		_spawn_room_mobs(active_room_root)
 
 	_configure_player_camera()
 	if use_fade:
@@ -283,9 +315,12 @@ func _ready():
 
 		# Restart timers if the game was playing
 		if s.get("is_playing", false):
-			$MobTimer.start()
-			$ScoreTimer.start()
 			is_playing = true
+			if use_room_spawn_points:
+				_spawn_room_mobs(_get_active_room_root())
+			if not use_room_spawn_points:
+				$MobTimer.start()
+			$ScoreTimer.start()
 			$Player.is_playing = true
 
 		# Clear saved state
@@ -379,6 +414,8 @@ func new_game():
 	_configure_player_camera()
 
 func _on_mob_timer_timeout():
+	if use_room_spawn_points:
+		return
 	var room_root = _get_active_room_root()
 	var mob_spawn_location = null
 	if room_root != null and room_root.has_node("MobPath/MobSpawnLocation"):
@@ -436,6 +473,8 @@ func _on_mob_defeated(drop_type: String = "Sus Meat"):
 
 	# track alive mobs for wave progression
 	mobs_alive = max(0, mobs_alive - 1)
+	if use_room_spawn_points:
+		return
 	if mobs_left_to_spawn == 0 and mobs_alive == 0:
 		_advance_wave()
 
@@ -444,24 +483,33 @@ func _on_mob_defeated(drop_type: String = "Sus Meat"):
 		GameManager.inventario_jogador = player_inventory.duplicate()
 
 
-func _on_player_hit():
+func _on_player_hit(damage: float = hit_health_damage):
 	if is_game_over:
 		return
 
-	max_health = max(max_health - hit_max_health_damage, min_max_health)
-	if health != 100.0:
-		health = min(health, max_health)
-	health = max(health - hit_health_damage, 0.0)
+	var applied_damage = max(damage, 0.0)
+	if applied_damage > 0.0:
+		max_health = max(max_health - hit_max_health_damage, min_max_health)
+		if health != 100.0:
+			health = min(health, max_health)
+		health = max(health - applied_damage, 0.0)
 	$HUD.update_health(health, max_health)
 	if health <= 0:
 		game_over()
 
+
+func take_damage_from_enemy(damage: float = hit_health_damage) -> void:
+	_on_player_hit(damage)
+
 func _on_start_timer_timeout():
-	$MobTimer.start()
 	$ScoreTimer.start()
 	is_playing = true
 	$Player.is_playing = true
-	# Start first wave
+	if use_room_spawn_points:
+		_spawn_room_mobs(_get_active_room_root())
+	if not use_room_spawn_points:
+		$MobTimer.start()
+		# Start first wave
 	_start_wave(current_wave)
 
 

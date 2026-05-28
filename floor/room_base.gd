@@ -103,6 +103,29 @@ func get_entry_position(marker_name: String) -> Vector2:
 	# fallback to room origin
 	return global_position
 
+
+func _collect_marker_positions(node: Node, marker_prefix: String, positions: Array) -> void:
+	for child in node.get_children():
+		if child is Marker2D and child.name.begins_with(marker_prefix):
+			positions.append(child.global_position)
+		if child is Node:
+			_collect_marker_positions(child, marker_prefix, positions)
+
+
+func get_spawn_positions(marker_prefix: String = "MobSpawn") -> Array:
+	var positions: Array = []
+	_collect_marker_positions(self, marker_prefix, positions)
+	return positions
+
+
+func take_damage_from_enemy(damage_amount: float) -> void:
+	var current_parent := get_parent()
+	while current_parent != null:
+		if current_parent.has_method("take_damage_from_enemy"):
+			current_parent.call_deferred("take_damage_from_enemy", damage_amount)
+			return
+		current_parent = current_parent.get_parent()
+
 # Snapshot hooks (optional for each room to implement state save/restore)
 func get_snapshot() -> Dictionary:
 	return {}

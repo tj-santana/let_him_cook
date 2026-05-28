@@ -1,5 +1,6 @@
 [gd_scene format=4 uid="uid://c2c6dxhw7ktsk"]
 
+[ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_55n5b"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="1_ivqff"]
 [ext_resource type="PackedScene" path="res://floor/Campfire.tscn" id="2_55n5b"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="3_3dqwt"]
@@ -348,6 +349,7 @@ sources/0 = SubResource("TileSetAtlasSource_14v3h")
 size = Vector2(48, 104)
 
 [node name="F1End" type="Node2D" unique_id=1712125545]
+script = ExtResource("1_55n5b")
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=861440159]
 y_sort_enabled = true

@@ -10,8 +10,8 @@ signal hit(dmg: float)
 @export var attack_range = 70.0
 @export var attack_offset = 42.0
 @export var attack_cooldown = 0.5
-@export var dash_speed = 1100.0
-@export var dash_duration = 0.16
+@export var dash_speed = 1200.0
+@export var dash_duration = 0.2
 @export var dash_cooldown = 0.7
 @export var hit_invulnerability = 0.6
 @export var debug_attack_preview = true
@@ -28,6 +28,31 @@ var current_health = 100.0
 var show_attack_preview = false
 var facing = Vector2.RIGHT
 var screen_size 
+var _room_invulnerability_token := 0
+var _pitfall_sequence_token := 0
+var is_in_pitfall_sequence := false
+
+
+func _apply_damage(dmg: float, can_kill: bool = true) -> void:
+	if is_dashing or not can_take_hit:
+		return
+
+	can_take_hit = false
+	var applied_damage = dmg
+	if not can_kill:
+		applied_damage = min(applied_damage, max(0.0, current_health - 1.0))
+
+	current_health -= applied_damage
+	hit.emit(applied_damage)
+	if can_kill and current_health <= 0:
+		die()
+	else:
+		if get_tree():
+			await get_tree().create_timer(hit_invulnerability).timeout
+		else:
+			die()
+		if visible:
+			can_take_hit = true
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -164,36 +189,82 @@ func dash():
 	can_dash = true
 
 func _on_hitbox_body_entered(body):
-	if is_dashing or not can_take_hit:
-		return
 	if body.has_method("take_hit") or body.has_method("damage_player"):
-		can_take_hit = false
 		var dmg = body.damage_amount if "damage_amount" in body else 10.0
-		current_health -= dmg
-		hit.emit()
-		if current_health <= 0:
-			die()
-		else:
-			if get_tree():
-				await get_tree().create_timer(hit_invulnerability).timeout
-			else:
-				die()
-			if visible:
-				can_take_hit = true
+		_apply_damage(dmg)
 
 func _on_body_entered(_body):
-	if is_dashing or not can_take_hit:
-		return
+	_apply_damage(10.0)
 
+
+func apply_damage(dmg: float) -> void:
+	_apply_damage(dmg)
+
+
+func apply_nonlethal_damage(dmg: float) -> void:
+	_apply_damage(dmg, false)
+
+
+func reset_to_position(target_position: Vector2) -> void:
+	call_deferred("_complete_reset_to_position", target_position)
+
+
+func _complete_reset_to_position(target_position: Vector2) -> void:
+	global_position = target_position
+	velocity = Vector2.ZERO
+	can_take_hit = true
+	can_dash = true
+	is_dashing = false
+	is_attacking = false
+	show_attack_preview = false
+	current_health = max(current_health, 1.0)
+
+
+func grant_room_entry_invulnerability(duration: float = 0.25) -> void:
+	_room_invulnerability_token += 1
+	var token = _room_invulnerability_token
 	can_take_hit = false
-	hit.emit()
-	if get_tree():
-		await get_tree().create_timer(hit_invulnerability).timeout
-	else:
-		die()
-	if visible:
+	call_deferred("_finish_room_entry_invulnerability", duration, token)
+
+
+func _finish_room_entry_invulnerability(duration: float, token: int) -> void:
+	await get_tree().create_timer(duration).timeout
+	if token != _room_invulnerability_token:
+		return
+	if is_inside_tree() and visible:
 		can_take_hit = true
-	
+	else:
+		can_take_hit = true
+
+
+func begin_pitfall_sequence(target_position: Vector2, freeze_duration: float = 0.35) -> void:
+	if is_in_pitfall_sequence:
+		return
+	is_in_pitfall_sequence = true
+	can_take_hit = false
+	can_dash = false
+	_pitfall_sequence_token += 1
+	var token = _pitfall_sequence_token
+	call_deferred("_finish_pitfall_sequence", target_position, freeze_duration, token)
+
+
+func _finish_pitfall_sequence(target_position: Vector2, freeze_duration: float, token: int) -> void:
+	var was_playing = is_playing
+	is_playing = false
+	velocity = Vector2.ZERO
+	is_dashing = false
+	is_attacking = false
+	show_attack_preview = false
+	await get_tree().create_timer(freeze_duration).timeout
+	if token != _pitfall_sequence_token:
+		return
+	global_position = target_position
+	if was_playing:
+		is_playing = true
+	can_take_hit = true
+	can_dash = true
+	is_in_pitfall_sequence = false
+		
 func start(pos):
 	position = pos
 	show()

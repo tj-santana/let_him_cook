@@ -1,6 +1,7 @@
 [gd_scene format=4 uid="uid://fqbd6cobi5nr"]
 
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="1_6dx55"]
+[ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_m81pk"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="2_m81pk"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_70r06"]
@@ -350,6 +351,7 @@ size = Vector2(48, 104)
 size = Vector2(102, 48)
 
 [node name="F1Room3" type="Node2D" unique_id=1742220866]
+script = ExtResource("1_m81pk")
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=67678387]
 y_sort_enabled = true
@@ -369,7 +371,16 @@ tile_map_data = PackedByteArray("AAABAAEAAAAJAAQAAAABABIAAAAJAAQAAAACABIAAAAJAAU
 tile_set = SubResource("TileSet_tv4yd")
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=1439927798]
-position = Vector2(576, 320)
+position = Vector2(992, 320)
+
+[node name="MobSpawn1" type="Marker2D" parent="." unique_id=2087741331]
+position = Vector2(384, 320)
+
+[node name="MobSpawn2" type="Marker2D" parent="." unique_id=2087741332]
+position = Vector2(192, 192)
+
+[node name="MobSpawn3" type="Marker2D" parent="." unique_id=508955656]
+position = Vector2(192, 448)
 
 [node name="EntryPrev" type="Marker2D" parent="." unique_id=1004511474]
 position = Vector2(1048, 320)

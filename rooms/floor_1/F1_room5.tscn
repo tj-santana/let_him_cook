@@ -1,7 +1,10 @@
 [gd_scene format=4 uid="uid://byqpoa581rnud"]
 
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="1_h7aor"]
+[ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_thv3o"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="2_thv3o"]
+[ext_resource type="PackedScene" uid="uid://ceweh02bircdb" path="res://floor/traps/Pitfall.tscn" id="4_t28je"]
+[ext_resource type="PackedScene" uid="uid://65ftny3rbk7b" path="res://floor/traps/SpikeTrap.tscn" id="5_hi5i0"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_kyasl"]
 texture = ExtResource("1_h7aor")
@@ -347,6 +350,7 @@ sources/0 = SubResource("TileSetAtlasSource_wcjlu")
 size = Vector2(48, 104)
 
 [node name="F1Room5" type="Node2D" unique_id=1375949922]
+script = ExtResource("1_thv3o")
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=2057896940]
 y_sort_enabled = true
@@ -366,7 +370,7 @@ tile_map_data = PackedByteArray("AAABAAEAAAAJAAQAAAABABIAAAAJAAQAAAACABIAAAAJAAU
 tile_set = SubResource("TileSet_nstbq")
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=47707579]
-position = Vector2(576, 320)
+position = Vector2(128, 320)
 
 [node name="EntryPrev" type="Marker2D" parent="." unique_id=272616856]
 position = Vector2(104, 320)
@@ -403,3 +407,360 @@ texture = SubResource("CanvasTexture_g0oit")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorNext" unique_id=2029192808]
 shape = SubResource("RectangleShape2D_nfe3j")
+
+[node name="Pitfall1" parent="." unique_id=317542892 instance=ExtResource("4_t28je")]
+position = Vector2(32, 32)
+scale = Vector2(41, 1.5)
+
+[node name="Pitfall2" parent="." unique_id=936879805 instance=ExtResource("4_t28je")]
+position = Vector2(32, 511.99997)
+scale = Vector2(41, 1.5)
+
+[node name="SpikeTrap" parent="." unique_id=1474454901 instance=ExtResource("5_hi5i0")]
+position = Vector2(248, 456)
+
+[node name="SpikeTrap2" parent="." unique_id=1974454902 instance=ExtResource("5_hi5i0")]
+position = Vector2(344, 456)
+start_delay = 0.25
+
+[node name="SpikeTrap3" parent="." unique_id=1974454903 instance=ExtResource("5_hi5i0")]
+position = Vector2(440, 456)
+start_delay = 0.5
+
+[node name="SpikeTrap4" parent="." unique_id=1974454904 instance=ExtResource("5_hi5i0")]
+position = Vector2(536, 456)
+start_delay = 0.75
+
+[node name="SpikeTrap5" parent="." unique_id=1974454905 instance=ExtResource("5_hi5i0")]
+position = Vector2(632, 456)
+start_delay = 1.0
+
+[node name="SpikeTrap6" parent="." unique_id=716954072 instance=ExtResource("5_hi5i0")]
+position = Vector2(632, 176)
+
+[node name="SpikeTrap7" parent="." unique_id=1647035399 instance=ExtResource("5_hi5i0")]
+position = Vector2(536, 176)
+start_delay = 0.25
+
+[node name="SpikeTrap8" parent="." unique_id=1185853543 instance=ExtResource("5_hi5i0")]
+position = Vector2(440, 176)
+start_delay = 0.5
+
+[node name="SpikeTrap9" parent="." unique_id=2026198290 instance=ExtResource("5_hi5i0")]
+position = Vector2(344, 176)
+start_delay = 0.75
+
+[node name="SpikeTrap10" parent="." unique_id=397497805 instance=ExtResource("5_hi5i0")]
+position = Vector2(248, 176)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap11" parent="." unique_id=655019588 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 456)
+
+[node name="SpikeTrap12" parent="." unique_id=1308648022 instance=ExtResource("5_hi5i0")]
+position = Vector2(1056, 456)
+start_delay = 0.25
+
+[node name="SpikeTrap13" parent="." unique_id=663296531 instance=ExtResource("5_hi5i0")]
+position = Vector2(1152, 456)
+start_delay = 0.5
+
+[node name="SpikeTrap14" parent="." unique_id=1498390771 instance=ExtResource("5_hi5i0")]
+position = Vector2(1248, 456)
+start_delay = 0.75
+
+[node name="SpikeTrap15" parent="." unique_id=814576646 instance=ExtResource("5_hi5i0")]
+position = Vector2(1344, 456)
+start_delay = 1.0
+
+[node name="SpikeTrap16" parent="." unique_id=1113093941 instance=ExtResource("5_hi5i0")]
+position = Vector2(1440, 456)
+start_delay = 1.25
+
+[node name="SpikeTrap17" parent="." unique_id=631009041 instance=ExtResource("5_hi5i0")]
+position = Vector2(1536, 456)
+start_delay = 1.5
+
+[node name="SpikeTrap18" parent="." unique_id=371771080 instance=ExtResource("5_hi5i0")]
+position = Vector2(1536, 400)
+start_delay = 1.75
+
+[node name="SpikeTrap19" parent="." unique_id=106507249 instance=ExtResource("5_hi5i0")]
+position = Vector2(1536, 344)
+start_delay = 2.0
+
+[node name="SpikeTrap20" parent="." unique_id=1902840277 instance=ExtResource("5_hi5i0")]
+position = Vector2(1536, 288)
+start_delay = 2.25
+
+[node name="SpikeTrap21" parent="." unique_id=1068552071 instance=ExtResource("5_hi5i0")]
+position = Vector2(1536, 232)
+start_delay = 2.5
+
+[node name="SpikeTrap22" parent="." unique_id=439430871 instance=ExtResource("5_hi5i0")]
+position = Vector2(1536, 176)
+
+[node name="SpikeTrap23" parent="." unique_id=2103309900 instance=ExtResource("5_hi5i0")]
+position = Vector2(1440, 176)
+start_delay = 0.25
+
+[node name="SpikeTrap24" parent="." unique_id=172176203 instance=ExtResource("5_hi5i0")]
+position = Vector2(1344, 176)
+start_delay = 0.5
+
+[node name="SpikeTrap25" parent="." unique_id=1504581334 instance=ExtResource("5_hi5i0")]
+position = Vector2(1248, 176)
+start_delay = 0.75
+
+[node name="SpikeTrap26" parent="." unique_id=801442154 instance=ExtResource("5_hi5i0")]
+position = Vector2(1152, 176)
+start_delay = 1.0
+
+[node name="SpikeTrap27" parent="." unique_id=942276464 instance=ExtResource("5_hi5i0")]
+position = Vector2(1056, 176)
+start_delay = 1.25
+
+[node name="SpikeTrap28" parent="." unique_id=75818221 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 176)
+start_delay = 1.5
+
+[node name="SpikeTrap29" parent="." unique_id=1242419547 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 232)
+start_delay = 1.75
+
+[node name="SpikeTrap30" parent="." unique_id=1168379537 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 288)
+start_delay = 2.0
+
+[node name="SpikeTrap31" parent="." unique_id=1856494485 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 344)
+start_delay = 2.25
+
+[node name="SpikeTrap32" parent="." unique_id=587226709 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 400)
+start_delay = 2.5
+
+[node name="SpikeTrap33" parent="." unique_id=206650620 instance=ExtResource("5_hi5i0")]
+position = Vector2(1904, 456)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap34" parent="." unique_id=979756923 instance=ExtResource("5_hi5i0")]
+position = Vector2(1904, 400)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap35" parent="." unique_id=1561388396 instance=ExtResource("5_hi5i0")]
+position = Vector2(1904, 344)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap36" parent="." unique_id=1540977338 instance=ExtResource("5_hi5i0")]
+position = Vector2(1904, 288)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap37" parent="." unique_id=432467477 instance=ExtResource("5_hi5i0")]
+position = Vector2(1904, 232)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap38" parent="." unique_id=1453335894 instance=ExtResource("5_hi5i0")]
+position = Vector2(1904, 176)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap39" parent="." unique_id=63979290 instance=ExtResource("5_hi5i0")]
+position = Vector2(2040, 456)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap40" parent="." unique_id=1976650804 instance=ExtResource("5_hi5i0")]
+position = Vector2(2040, 400)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap41" parent="." unique_id=1925012061 instance=ExtResource("5_hi5i0")]
+position = Vector2(2040, 344)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap42" parent="." unique_id=325517017 instance=ExtResource("5_hi5i0")]
+position = Vector2(2040, 288)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap43" parent="." unique_id=681977032 instance=ExtResource("5_hi5i0")]
+position = Vector2(2040, 232)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap44" parent="." unique_id=1132797184 instance=ExtResource("5_hi5i0")]
+position = Vector2(2040, 176)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap45" parent="." unique_id=1756892566 instance=ExtResource("5_hi5i0")]
+position = Vector2(2176, 456)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap46" parent="." unique_id=862694171 instance=ExtResource("5_hi5i0")]
+position = Vector2(2176, 400)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap47" parent="." unique_id=1662586096 instance=ExtResource("5_hi5i0")]
+position = Vector2(2176, 344)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap48" parent="." unique_id=1547963741 instance=ExtResource("5_hi5i0")]
+position = Vector2(2176, 288)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap49" parent="." unique_id=302266927 instance=ExtResource("5_hi5i0")]
+position = Vector2(2176, 232)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap50" parent="." unique_id=973288825 instance=ExtResource("5_hi5i0")]
+position = Vector2(2176, 176)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap51" parent="." unique_id=843459027 instance=ExtResource("5_hi5i0")]
+position = Vector2(2312, 456)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap52" parent="." unique_id=479393629 instance=ExtResource("5_hi5i0")]
+position = Vector2(2312, 400)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap53" parent="." unique_id=1164076948 instance=ExtResource("5_hi5i0")]
+position = Vector2(2312, 344)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap54" parent="." unique_id=999952425 instance=ExtResource("5_hi5i0")]
+position = Vector2(2312, 288)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap55" parent="." unique_id=697610491 instance=ExtResource("5_hi5i0")]
+position = Vector2(2312, 232)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap56" parent="." unique_id=846159413 instance=ExtResource("5_hi5i0")]
+position = Vector2(2312, 176)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap57" parent="." unique_id=1668154511 instance=ExtResource("5_hi5i0")]
+position = Vector2(2448, 456)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap58" parent="." unique_id=64966096 instance=ExtResource("5_hi5i0")]
+position = Vector2(2448, 400)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap59" parent="." unique_id=352099088 instance=ExtResource("5_hi5i0")]
+position = Vector2(2448, 344)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap60" parent="." unique_id=2139624686 instance=ExtResource("5_hi5i0")]
+position = Vector2(2448, 288)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap61" parent="." unique_id=1471264593 instance=ExtResource("5_hi5i0")]
+position = Vector2(2448, 232)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0
+
+[node name="SpikeTrap62" parent="." unique_id=220358652 instance=ExtResource("5_hi5i0")]
+position = Vector2(2448, 176)
+scale = Vector2(1.4, 1)
+warning_duration = 1.0
+active_duration = 0.5
+cooldown_duration = 1.0

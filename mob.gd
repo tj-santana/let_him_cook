@@ -15,6 +15,15 @@ var _player = null
 var _state: String = "idle" 
 var _attack_ready: bool = true
 
+
+func _resolve_player() -> Node:
+	var current_parent := get_parent()
+	while current_parent != null:
+		if current_parent.has_node("Player"):
+			return current_parent.get_node("Player")
+		current_parent = current_parent.get_parent()
+	return null
+
 func _ready():
 	z_index = 1
 	var mob_types = Array($AnimatedSprite2D.sprite_frames.get_animation_names())
@@ -22,9 +31,7 @@ func _ready():
 	$AnimatedSprite2D.play()
 	$HealthBar.value = health
 	$HealthBar.max_value = health
-	_player = null
-	if get_parent() and get_parent().has_node("Player"):
-		_player = get_parent().get_node("Player")
+	_player = _resolve_player()
 	match $AnimatedSprite2D.animation:
 		"walk":
 			drop_type = "Sus Meat"
@@ -35,8 +42,7 @@ func _ready():
 
 func _physics_process(delta: float) -> void:
 	if _player == null:
-		if get_parent() and get_parent().has_node("Player"):
-			_player = get_parent().get_node("Player")
+		_player = _resolve_player()
 		return
 
 	var to_player = _player.global_position - global_position
