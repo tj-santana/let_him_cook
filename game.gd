@@ -1,12 +1,14 @@
 extends Node
 
 @export var mob_scene: PackedScene
-@export var hunger_drain_rate = 3.0
+@export var hunger_drain_rate = 2.0
 @export var hit_health_damage = 10.0
 @export var hit_max_health_damage = 5.0
 @export var min_max_health = 25.0
 @export var game_over_timer = 2.0
 @export var use_room_spawn_points := true
+@export var require_room_clear_to_exit := true
+@export var in_safe_room := false
 
 var score
 var ingredients
@@ -31,6 +33,7 @@ var waves = [
 var current_wave = 0
 var mobs_left_to_spawn = 0
 var mobs_alive = 0
+var room_snapshots: Dictionary = {}
 var room_host: Node2D = null
 var active_room_root: Node = null
 var active_room_instance: Node = null
@@ -174,6 +177,66 @@ func _spawn_room_mobs(room_root: Node) -> void:
 		mobs_alive += 1
 
 
+func can_leave_current_room() -> bool:
+	if not require_room_clear_to_exit:
+		return true
+	if is_game_over or not is_playing:
+		return true
+	return mobs_alive <= 0
+
+
+func _notify_room_locked() -> void:
+	print("[game.gd] Room is locked until all enemies are defeated.")
+
+
+func _get_room_snapshot_key(scene_path: String, room_root: Node = null) -> String:
+	if scene_path != "":
+		return scene_path
+	if room_root != null and room_root.has_method("room_id"):
+		return str(room_root.room_id)
+	return DEFAULT_ROOM_SCENE
+
+
+func _save_active_room_snapshot() -> void:
+	if active_room_instance == null or not is_instance_valid(active_room_instance):
+		return
+	if not active_room_instance.has_method("get_snapshot"):
+		return
+	var scene_path = active_room_instance.scene_file_path
+	var snapshot_key = _get_room_snapshot_key(scene_path, active_room_instance)
+	room_snapshots[snapshot_key] = active_room_instance.get_snapshot()
+	if room_snapshots[snapshot_key] is Dictionary:
+		room_snapshots[snapshot_key]["mob_count"] = int(room_snapshots[snapshot_key].get("mobs", []).size())
+
+
+func _restore_room_snapshot(room_root: Node, snapshot: Dictionary) -> void:
+	if room_root == null or snapshot.is_empty():
+		return
+	if mob_scene == null:
+		return
+
+	for child in room_root.get_children():
+		if child.is_in_group("mobs"):
+			child.queue_free()
+
+	var mob_snapshots: Array = snapshot.get("mobs", [])
+	if mob_snapshots.is_empty():
+		return
+
+	mobs_alive = 0
+	for mob_snapshot in mob_snapshots:
+		if mob_snapshot is not Dictionary:
+			continue
+		var mob = mob_scene.instantiate()
+		room_root.add_child(mob)
+		if mob.has_method("apply_snapshot"):
+			mob.apply_snapshot(mob_snapshot)
+		else:
+			mob.global_position = mob_snapshot.get("position", mob.global_position)
+		mob.defeated.connect(_on_mob_defeated)
+		mobs_alive += 1
+
+
 func _get_current_room_scene_path() -> String:
 	if active_room_instance != null and is_instance_valid(active_room_instance):
 		var scene_path = active_room_instance.scene_file_path
@@ -206,6 +269,7 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 	if use_room_spawn_points:
 		$MobTimer.stop()
 		mobs_left_to_spawn = 0
+	_save_active_room_snapshot()
 	mobs_alive = 0
 
 	if active_room_instance != null and is_instance_valid(active_room_instance):
@@ -215,6 +279,7 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 	if scene_path == "":
 		scene_path = DEFAULT_ROOM_SCENE
 
+	var room = null
 	if scene_path == SHELL_SCENE:
 		active_room_root = self
 		_set_base_room_visible(true)
@@ -226,13 +291,17 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 			active_room_root = self
 			_set_base_room_visible(true)
 		else:
-			var room = packed_room.instantiate()
+			room = packed_room.instantiate()
 			room_host.add_child(room)
 			active_room_instance = room
 			active_room_root = room
 			_set_base_room_visible(false)
 
 	var player = $Player
+	if room.is_safe_room:
+		in_safe_room = true
+	else:
+		in_safe_room = false
 	var target_position = player_position
 	if target_position == Vector2.INF:
 		target_position = _get_marker_global_position(_get_active_room_root(), entry_marker)
@@ -245,8 +314,12 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 	else:
 		player.hide()
 
+	var room_snapshot = room_snapshots.get(scene_path, null)
 	if is_playing:
-		_spawn_room_mobs(active_room_root)
+		if room_snapshot is Dictionary and not room_snapshot.is_empty():
+			_restore_room_snapshot(active_room_root, room_snapshot)
+		elif use_room_spawn_points:
+			_spawn_room_mobs(active_room_root)
 
 	_configure_player_camera()
 	if use_fade:
@@ -267,6 +340,11 @@ func _ready():
 		hunger = s.get("hunger", max_hunger)
 		max_hunger = s.get("max_hunger", max_hunger)
 		player_inventory = s.get("player_inventory", player_inventory).duplicate()
+		room_snapshots = s.get("room_snapshots", room_snapshots)
+		if room_snapshots == null:
+			room_snapshots = {}
+		elif room_snapshots is Dictionary:
+			room_snapshots = room_snapshots.duplicate(true)
 
 		# Update HUD
 		$HUD.update_score(score)
@@ -304,6 +382,7 @@ func _ready():
 		if saved_room_scene == "" or saved_room_scene == SHELL_SCENE:
 			saved_room_scene = DEFAULT_ROOM_SCENE
 		var saved_player_pos = s.get("player_pos", Vector2.INF)
+		var saved_room_snapshot = room_snapshots.get(saved_room_scene, null)
 		await enter_room(
 			saved_room_scene,
 			s.get("entry_marker", "StartPosition"),
@@ -317,7 +396,10 @@ func _ready():
 		if s.get("is_playing", false):
 			is_playing = true
 			if use_room_spawn_points:
-				_spawn_room_mobs(_get_active_room_root())
+				if saved_room_snapshot is Dictionary and not saved_room_snapshot.is_empty():
+					_restore_room_snapshot(_get_active_room_root(), saved_room_snapshot)
+				else:
+					_spawn_room_mobs(_get_active_room_root())
 			if not use_room_spawn_points:
 				$MobTimer.start()
 			$ScoreTimer.start()
@@ -336,7 +418,7 @@ func _process(delta: float) -> void:
 	if is_game_over:
 		return
 
-	if is_playing and hunger > 0:
+	if is_playing and hunger > 0 and not in_safe_room:
 		hunger -= hunger_drain_rate * delta
 		hunger = max(hunger, 0.0)
 		$HUD.update_hunger(hunger, max_hunger)
@@ -374,6 +456,7 @@ func game_over():
 func new_game():
 	is_game_over = false
 	is_playing = false
+	room_snapshots.clear()
 	active_room_root = self
 	if active_room_instance != null and is_instance_valid(active_room_instance):
 		active_room_instance.queue_free()
@@ -537,6 +620,9 @@ func _advance_wave() -> void:
 func open_cooking() -> void:
 	if is_game_over or room_transitioning or not is_playing:
 		return
+	if not can_leave_current_room():
+		_notify_room_locked()
+		return
 
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.cena_principal_path = SHELL_SCENE
@@ -550,13 +636,15 @@ func open_cooking() -> void:
 			"player_pos": $Player.global_position,
 			"room_scene": _get_current_room_scene_path(),
 			"is_playing": is_playing,
-			"player_inventory": player_inventory.duplicate()
+			"player_inventory": player_inventory.duplicate(),
+			"room_snapshots": room_snapshots.duplicate(true)
 		})
 
 	is_playing = false
 	$MobTimer.stop()
 	$ScoreTimer.stop()
 	$Player.is_playing = false
+	_save_active_room_snapshot()
 	get_tree().change_scene_to_file(_get_cooking_menu_scene_path())
 
 

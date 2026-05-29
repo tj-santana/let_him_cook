@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var room_id: String = ""
+@export var is_safe_room: bool = false
 @export var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(1024, 768))
 
 func _rect_from_points(points: PackedVector2Array, transform: Transform2D) -> Rect2:
@@ -118,6 +119,34 @@ func get_spawn_positions(marker_prefix: String = "MobSpawn") -> Array:
 	return positions
 
 
+func _collect_mob_snapshots(node: Node, snapshots: Array) -> void:
+	for child in node.get_children():
+		if child.is_in_group("mobs") and child.has_method("get_snapshot"):
+			var mob_snapshot = child.get_snapshot()
+			if mob_snapshot is Dictionary:
+				snapshots.append(mob_snapshot)
+		if child is Node:
+			_collect_mob_snapshots(child, snapshots)
+
+
+func get_snapshot() -> Dictionary:
+	var mob_snapshots: Array = []
+	_collect_mob_snapshots(self, mob_snapshots)
+	return {
+		"mob_count": mob_snapshots.size(),
+		"mobs": mob_snapshots
+	}
+
+
+func apply_snapshot(snapshot: Dictionary) -> void:
+	var current_parent := get_parent()
+	while current_parent != null:
+		if current_parent.has_method("_restore_room_snapshot"):
+			current_parent.call_deferred("_restore_room_snapshot", self, snapshot)
+			return
+		current_parent = current_parent.get_parent()
+
+
 func take_damage_from_enemy(damage_amount: float) -> void:
 	var current_parent := get_parent()
 	while current_parent != null:
@@ -125,13 +154,6 @@ func take_damage_from_enemy(damage_amount: float) -> void:
 			current_parent.call_deferred("take_damage_from_enemy", damage_amount)
 			return
 		current_parent = current_parent.get_parent()
-
-# Snapshot hooks (optional for each room to implement state save/restore)
-func get_snapshot() -> Dictionary:
-	return {}
-
-func apply_snapshot(snapshot: Dictionary) -> void:
-	pass
 
 func on_enter(from_room: String, entry_marker: String) -> void:
 	# override in specific rooms if needed

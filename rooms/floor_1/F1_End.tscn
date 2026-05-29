@@ -350,6 +350,7 @@ size = Vector2(48, 104)
 
 [node name="F1End" type="Node2D" unique_id=1712125545]
 script = ExtResource("1_55n5b")
+is_safe_room = true
 
 [node name="Floor" type="TileMapLayer" parent="." unique_id=861440159]
 y_sort_enabled = true

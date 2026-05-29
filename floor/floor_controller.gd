@@ -67,6 +67,10 @@ func enter_room(scene_path: String, entry_marker: String = "") -> void:
 	var game_node = get_parent()
 	if game_node and game_node.has_node("Player"):
 		var player = game_node.get_node("Player")
+		if room.is_safe_room:
+			game_node.in_safe_room = true
+		else:
+			game_node.in_safe_room = false
 		if room.has_method("get_entry_position") and entry_marker != "":
 			var pos = room.get_entry_position(entry_marker)
 			player.global_position = pos

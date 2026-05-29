@@ -99,3 +99,31 @@ func play_attack_animation():
 func _on_visible_on_screen_notifier_2d_screen_exited():
 	# Keep enemies alive when they leave the screen so they can return when the camera comes back.
 	pass
+
+
+func get_snapshot() -> Dictionary:
+	return {
+		"position": global_position,
+		"health": health,
+		"state": _state,
+		"attack_ready": _attack_ready,
+		"flip_h": $AnimatedSprite2D.flip_h,
+		"animation": $AnimatedSprite2D.animation,
+		"drop_type": drop_type
+	}
+
+
+func apply_snapshot(snapshot: Dictionary) -> void:
+	global_position = snapshot.get("position", global_position)
+	health = float(snapshot.get("health", health))
+	_state = str(snapshot.get("state", _state))
+	_attack_ready = bool(snapshot.get("attack_ready", _attack_ready))
+	drop_type = str(snapshot.get("drop_type", drop_type))
+	$HealthBar.value = health
+	$HealthBar.max_value = max($HealthBar.max_value, health)
+	if snapshot.has("flip_h"):
+		$AnimatedSprite2D.flip_h = bool(snapshot.get("flip_h", false))
+	var animation_name = str(snapshot.get("animation", ""))
+	if animation_name != "" and $AnimatedSprite2D.sprite_frames and $AnimatedSprite2D.sprite_frames.has_animation(animation_name):
+		$AnimatedSprite2D.animation = animation_name
+		$AnimatedSprite2D.play()
