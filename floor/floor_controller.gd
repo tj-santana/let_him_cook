@@ -24,11 +24,6 @@ func _ready():
 	overlay_rect.anchor_bottom = 1
 	layer.add_child(overlay_rect)
 
-	# If there is a default test room, try loading it (non-blocking)
-	# Developers can call enter_room(...) to change rooms at runtime
-	# Example: enter_room("res://rooms/floor_1/F1_EntryHall.tscn", "Entry_Left")
-	pass
-
 func _fade_in(time := 0.25) -> void:
 	overlay_rect.modulate.a = 0.0
 	var tw = create_tween()
