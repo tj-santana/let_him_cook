@@ -18,6 +18,7 @@ var jogo_ganho: bool = false
 # --- NOVAS VARIÁVEIS DE TEMPO ---
 var tempo_limite: float = 5.0
 var tempo_restante: float = 5.0
+var jogo_cancelado: bool = false
 
 func _ready():
 	# Começa o jogo com o tempo inicializado
@@ -49,6 +50,10 @@ func _ready():
 
 # O _process corre dezenas de vezes por segundo para ler o termómetro
 func _process(delta):
+	if Input.is_action_just_pressed("escape"):
+		cancelar_minijogo()
+		return
+
 	# Se já ganhámos ou perdemos, ignora o resto do código
 	if jogo_ganho:
 		return
@@ -101,6 +106,8 @@ func _process(delta):
 # --- CÁLCULO DE PONTUAÇÃO (VITÓRIA) ---
 func vencer_jogo():
 	jogo_ganho = true
+	if jogo_cancelado:
+		return
 	
 	# Mostra a glória do arco-íris
 	arco_iris.visible = true
@@ -118,6 +125,8 @@ func vencer_jogo():
 	
 	# Pausa de 1 segundo para o jogador festejar antes de mudar de cena
 	await get_tree().create_timer(1.0).timeout
+	if jogo_cancelado:
+		return
 	GameManager.registar_pontuacao_e_avancar(pontuacao_final)
 
 func mostrar_arco_iris():
@@ -133,12 +142,25 @@ func mostrar_arco_iris():
 # --- CÁLCULO DE PONTUAÇÃO (DERROTA / TEMPO ESGOTADO) ---
 func finalizar_por_tempo():
 	jogo_ganho = true # Usamos a mesma variável para parar a lógica do _process
+	if jogo_cancelado:
+		return
 	
 	print("Tempo esgotado! A mistura arruinou-se! (+0.0 pts)")
 	
 	# Pausa de 1 segundo para o jogador perceber que perdeu antes de mudar
 	await get_tree().create_timer(1.0).timeout
+	if jogo_cancelado:
+		return
 	GameManager.registar_pontuacao_e_avancar(0.0)
+
+
+func cancelar_minijogo() -> void:
+	if jogo_cancelado:
+		return
+
+	jogo_cancelado = true
+	jogo_ganho = true
+	GameManager.cancelar_sequencia_minijogos()
 
 # --- FUNÇÃO DE ANIMAÇÃO DO TEXTO ---
 func animar_texto():

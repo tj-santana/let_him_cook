@@ -14,6 +14,7 @@ var max_cliques: float = 15.0 # Tem de clicar 15 vezes em 3 segundos!
 var tempo_limite: float = 3.0
 var tempo_restante: float = 3.0
 var jogo_ativo: bool = true
+var jogo_cancelado: bool = false
 
 func _ready():
 	tempo_restante = tempo_limite
@@ -29,6 +30,10 @@ func _ready():
 	animar_texto()
 	
 func _process(delta):
+	if Input.is_action_just_pressed("escape"):
+		cancelar_minijogo()
+		return
+
 	if not jogo_ativo:
 		return
 		
@@ -70,6 +75,8 @@ func amassar_slime():
 
 func finalizar_jogo():
 	jogo_ativo = false
+	if jogo_cancelado:
+		return
 	
 	var desempenho = cliques / max_cliques
 	if desempenho > 1.0:
@@ -82,7 +89,18 @@ func finalizar_jogo():
 		print("Fim do tempo! Conseguiste ", int(desempenho * 100), "% da massa. (+", snapped(desempenho, 0.01), " pts)")
 		
 	await get_tree().create_timer(1.5).timeout
+	if jogo_cancelado:
+		return
 	GameManager.registar_pontuacao_e_avancar(desempenho)
+
+
+func cancelar_minijogo() -> void:
+	if jogo_cancelado:
+		return
+
+	jogo_cancelado = true
+	jogo_ativo = false
+	GameManager.cancelar_sequencia_minijogos()
 
 func mostrar_arco_iris():
 	arco_iris.visible = true

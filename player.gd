@@ -17,7 +17,21 @@ signal hit(dmg: float)
 @export var debug_attack_preview = true
 @export var is_playing = false
 @export var attack_collision_mask: int = 4
+@export var spork_speed_bonus = 120.0
+@export var spork_attack_dmg_bonus = 5.0
+@export var spork_attack_cooldown_reduction = 0.15
+@export var spork_dash_speed_bonus = 200.0
+@export var spork_visual_tint = Color(1.0, 0.92, 0.72, 1.0)
 
+var base_speed = 400.0
+var base_attack_dmg = 10.0
+var base_attack_cooldown = 0.5
+var base_dash_speed = 1200.0
+var temp_speed_bonus := 0.0
+var temp_attack_dmg_bonus := 0.0
+var temp_attack_cooldown_reduction := 0.0
+var temp_dash_speed_bonus := 0.0
+var spork_mode_active := false
 var can_attack = true
 var can_dash = true
 var can_take_hit = true
@@ -57,6 +71,11 @@ func _apply_damage(dmg: float, can_kill: bool = true) -> void:
 func _ready():
 	screen_size = get_viewport_rect().size
 	hide()
+	base_speed = speed
+	base_attack_dmg = attack_dmg
+	base_attack_cooldown = attack_cooldown
+	base_dash_speed = dash_speed
+	_recalculate_combat_stats()
 
 	# Ensure the player's current health starts at the configured max
 	current_health = max_health
@@ -70,18 +89,31 @@ func _ready():
 		if typeof(scene_mask) == TYPE_INT and scene_mask != 0:
 			attack_collision_mask = int(scene_mask)
 
+
+func _recalculate_combat_stats() -> void:
+	speed = max(0.0, base_speed + temp_speed_bonus + (spork_speed_bonus if spork_mode_active else 0.0))
+	attack_dmg = max(0.0, base_attack_dmg + temp_attack_dmg_bonus + (spork_attack_dmg_bonus if spork_mode_active else 0.0))
+	attack_cooldown = max(0.1, base_attack_cooldown - temp_attack_cooldown_reduction - (spork_attack_cooldown_reduction if spork_mode_active else 0.0))
+	dash_speed = max(0.0, base_dash_speed + temp_dash_speed_bonus + (spork_dash_speed_bonus if spork_mode_active else 0.0))
+	if has_node("AnimatedSprite2D"):
+		$AnimatedSprite2D.modulate = spork_visual_tint if spork_mode_active else Color.WHITE
+
+
+func set_spork_mode_active(active: bool) -> void:
+	if spork_mode_active == active:
+		return
+	spork_mode_active = active
+	_recalculate_combat_stats()
+
+
+func toggle_spork_mode() -> bool:
+	set_spork_mode_active(not spork_mode_active)
+	return spork_mode_active
+
 func _physics_process(delta):
 	if not is_playing:
 		return
-	var input_vector = Vector2.ZERO 
-	if Input.is_action_pressed("move_right"):
-		input_vector.x += 1
-	if Input.is_action_pressed("move_left"):
-		input_vector.x -= 1
-	if Input.is_action_pressed("move_down"):
-		input_vector.y += 1
-	if Input.is_action_pressed("move_up"):
-		input_vector.y -= 1
+	var input_vector = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 
 	if input_vector.length() > 0:
 		facing = input_vector.normalized()
@@ -285,17 +317,16 @@ func _draw():
 		draw_circle(center, attack_range, Color(1.0, 0.2, 0.2, 0.2))
 
 func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float):
-	speed += bonus_velocidade
-	attack_cooldown -= reducao_cooldown
+	temp_speed_bonus += bonus_velocidade
+	temp_attack_cooldown_reduction += reducao_cooldown
+	_recalculate_combat_stats()
 	
-	if attack_cooldown < 0.1:
-		attack_cooldown = 0.1
-		
 	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown)
 	
 	await get_tree().create_timer(duracao).timeout
 	
-	speed -= bonus_velocidade
-	attack_cooldown += reducao_cooldown
+	temp_speed_bonus -= bonus_velocidade
+	temp_attack_cooldown_reduction -= reducao_cooldown
+	_recalculate_combat_stats()
 	
 	print("O Buff acabou! Voltaste ao normal.")

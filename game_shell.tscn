@@ -1,29 +1,34 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://btaaqfxrkntqc"]
 
 [ext_resource type="PackedScene" uid="uid://c0vow7slq7hen" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://jt3ouyxnp6nj" path="res://game.gd" id="1_feb5d"]
 [ext_resource type="PackedScene" uid="uid://bko6et6myb4v7" path="res://mob.tscn" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://cdv2ga1h6objp" path="res://hud.tscn" id="4_fc0e3"]
+[ext_resource type="PackedScene" path="res://pause_menu.tscn" id="5_pause"]
+[ext_resource type="PackedScene" path="res://inventory_menu.tscn" id="6_inventory"]
 
-[node name="Game" type="Node"]
+[node name="Game" type="Node" unique_id=1575222087]
 script = ExtResource("1_feb5d")
 mob_scene = ExtResource("2_fc0e3")
 
-[node name="Player" parent="." instance=ExtResource("1_80nbo")]
+[node name="Player" parent="." unique_id=578278772 instance=ExtResource("1_80nbo")]
 y_sort_enabled = true
-position = Vector2(0, 0)
 
-[node name="Camera2D" type="Camera2D" parent="Player"]
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=1476385613]
 
-[node name="MobTimer" type="Timer" parent="."]
+[node name="MobTimer" type="Timer" parent="." unique_id=188491468]
 wait_time = 0.5
 
-[node name="ScoreTimer" type="Timer" parent="."]
+[node name="ScoreTimer" type="Timer" parent="." unique_id=58300507]
 
-[node name="StartTimer" type="Timer" parent="."]
+[node name="StartTimer" type="Timer" parent="." unique_id=1532345031]
 one_shot = true
 
-[node name="HUD" parent="." instance=ExtResource("4_fc0e3")]
+[node name="HUD" parent="." unique_id=1570063326 instance=ExtResource("4_fc0e3")]
+
+[node name="PauseMenu" parent="." unique_id=918701890 instance=ExtResource("5_pause")]
+
+[node name="InventoryMenu" parent="." unique_id=1629078941 instance=ExtResource("6_inventory")]
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]

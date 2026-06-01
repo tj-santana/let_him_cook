@@ -1,9 +1,19 @@
 extends Control
 
+@onready var start_button: Button = $StartButton
+
 func _ready() -> void:
 	$Message.text = "Let Him Cook"
 	$Message.show()
-	$StartButton.show()
+	start_button.show()
+	start_button.focus_mode = Control.FOCUS_ALL
+	start_button.grab_focus.call_deferred()
+
+
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed("ui_accept"):
+		get_viewport().set_input_as_handled()
+		_on_start_button_pressed()
 
 
 func _on_start_button_pressed() -> void:

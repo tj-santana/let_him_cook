@@ -10,6 +10,7 @@ extends Node2D
 var tempo_limite: float = 3.0
 var tempo_restante: float = 4.0
 var jogo_ativo: bool = true
+var jogo_cancelado: bool = false
 
 # --- VARIÁVEIS DA MISTURA ---
 var voltas_necessarias: float = 10.0
@@ -29,6 +30,10 @@ func _ready():
 	angulo_anterior = panela_visual.global_position.angle_to_point(rato_pos)
 
 func _process(delta):
+	if Input.is_action_just_pressed("escape"):
+		cancelar_minijogo()
+		return
+
 	if not jogo_ativo:
 		return
 		
@@ -69,6 +74,8 @@ func _process(delta):
 
 func finalizar_jogo():
 	jogo_ativo = false
+	if jogo_cancelado:
+		return
 	
 	var voltas_dadas = rotacao_acumulada / TAU
 	var desempenho = voltas_dadas / voltas_necessarias
@@ -82,7 +89,18 @@ func finalizar_jogo():
 		print("Fim do tempo! Misturaste ", int(desempenho * 100), "%. (+", snapped(desempenho, 0.01), " pts)")
 		
 	await get_tree().create_timer(1.0).timeout
+	if jogo_cancelado:
+		return
 	GameManager.registar_pontuacao_e_avancar(desempenho)
+
+
+func cancelar_minijogo() -> void:
+	if jogo_cancelado:
+		return
+
+	jogo_cancelado = true
+	jogo_ativo = false
+	GameManager.cancelar_sequencia_minijogos()
 
 func animar_texto():
 	if texto_ajuda:

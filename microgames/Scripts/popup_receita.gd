@@ -8,6 +8,15 @@ extends Control
 
 func _ready():
 	pass
+
+
+func _unhandled_input(event):
+	if event.is_action_pressed("escape"):
+		GameManager.popup_ativo = false
+		var viewport = get_viewport()
+		if viewport != null:
+			viewport.set_input_as_handled()
+		fechar_popup()
 	
 func mostrar_resultado(nome_prato: String, nota_final: float, buffs: String, e_nova: bool):
 	# Calcula as estrelas ou a percentagem
@@ -30,3 +39,9 @@ func mostrar_resultado(nome_prato: String, nota_final: float, buffs: String, e_n
 	
 	# Mostra o ecrã
 	show()
+
+
+func fechar_popup() -> void:
+	var camada_popup = get_parent()
+	if camada_popup != null:
+		camada_popup.queue_free()

@@ -19,6 +19,7 @@ var moscas_restantes = 0
 var tempo_maximo = 5.0
 var tempo_atual = 5.0
 var jogo_ativo = true # Para o tempo parar quando ganhas ou perdes
+var jogo_cancelado := false
 
 func _ready():
 	moscas_restantes = numero_de_moscas
@@ -35,6 +36,10 @@ func _ready():
 
 # O Godot chama esta função dezenas de vezes por segundo
 func _process(delta):
+	if Input.is_action_just_pressed("escape"):
+		cancelar_minijogo()
+		return
+
 	if jogo_ativo:
 		# Subtrai o tempo que passou e atualiza a barra verde
 		tempo_atual -= delta
@@ -46,6 +51,8 @@ func _process(delta):
 
 func perdeu_jogo():
 	jogo_ativo = false
+	if jogo_cancelado:
+		return
 	print("Tempo esgotado! A carne ficou cheia de moscas...")
 	
 	# Dá 0 pontos e avança para o próximo minijogo
@@ -53,12 +60,25 @@ func perdeu_jogo():
 
 func ganhou_jogo():
 	jogo_ativo = false
+	if jogo_cancelado:
+		return
 	mostrar_arco_iris()
 	print("Sucesso! Carne limpa a tempo!")
 	
 	# Dá 1 ponto e avança para o próximo minijogo
 	await get_tree().create_timer(1.5).timeout
+	if jogo_cancelado:
+		return
 	GameManager.registar_pontuacao_e_avancar(1.0)
+
+
+func cancelar_minijogo() -> void:
+	if jogo_cancelado:
+		return
+
+	jogo_cancelado = true
+	jogo_ativo = false
+	GameManager.cancelar_sequencia_minijogos()
 
 func mostrar_arco_iris():
 	arco_iris.visible = true

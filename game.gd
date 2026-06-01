@@ -9,6 +9,10 @@ extends Node
 @export var use_room_spawn_points := true
 @export var require_room_clear_to_exit := true
 @export var in_safe_room := false
+@export var spork_hunger_drain_multiplier := 2.0
+
+@onready var pause_menu: CanvasLayer = $PauseMenu
+@onready var inventory_menu: CanvasLayer = $InventoryMenu
 
 var score
 var ingredients
@@ -39,6 +43,7 @@ var active_room_root: Node = null
 var active_room_instance: Node = null
 var room_transitioning = false
 var transition_rect: ColorRect = null
+var spork_mode_active := false
 const DEFAULT_ROOM_SCENE := "res://rooms/floor_1/F1_Entry.tscn"
 const SHELL_SCENE := "res://game_shell.tscn"
 
@@ -329,10 +334,17 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	if pause_menu != null:
+		pause_menu.hide_menu()
+	if inventory_menu != null:
+		inventory_menu.hide_menu()
 	# If there's a saved state from the cooking flow, restore it.
 	if typeof(GameManager) != TYPE_NIL and GameManager.obter_estado_principal() != null:
 		var s = GameManager.obter_estado_principal()
 		var saved_room_scene = s.get("room_scene", DEFAULT_ROOM_SCENE)
+		spork_mode_active = bool(s.get("spork_mode_active", false))
+		if $Player.has_method("set_spork_mode_active"):
+			$Player.set_spork_mode_active(spork_mode_active)
 		# Restore numeric state
 		score = s.get("score", 0)
 		health = s.get("health", max_health)
@@ -415,11 +427,15 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	if get_tree().paused:
+		return
+
 	if is_game_over:
 		return
 
 	if is_playing and hunger > 0 and not in_safe_room:
-		hunger -= hunger_drain_rate * delta
+		var drain_rate = hunger_drain_rate * (spork_hunger_drain_multiplier if spork_mode_active else 1.0)
+		hunger -= drain_rate * delta
 		hunger = max(hunger, 0.0)
 		$HUD.update_hunger(hunger, max_hunger)
 
@@ -442,6 +458,13 @@ func game_over():
 
 	is_game_over = true
 	is_playing = false
+	spork_mode_active = false
+	if $Player.has_method("set_spork_mode_active"):
+		$Player.set_spork_mode_active(false)
+	if pause_menu != null:
+		pause_menu.hide_menu()
+	if inventory_menu != null:
+		inventory_menu.hide_menu()
 	$Player.is_playing = false
 	$ScoreTimer.stop()
 	$MobTimer.stop()
@@ -456,6 +479,13 @@ func game_over():
 func new_game():
 	is_game_over = false
 	is_playing = false
+	spork_mode_active = false
+	if $Player.has_method("set_spork_mode_active"):
+		$Player.set_spork_mode_active(false)
+	if pause_menu != null:
+		pause_menu.hide_menu()
+	if inventory_menu != null:
+		inventory_menu.hide_menu()
 	room_snapshots.clear()
 	active_room_root = self
 	if active_room_instance != null and is_instance_valid(active_room_instance):
@@ -620,6 +650,10 @@ func _advance_wave() -> void:
 func open_cooking() -> void:
 	if is_game_over or room_transitioning or not is_playing:
 		return
+	if pause_menu != null:
+		pause_menu.hide_menu()
+	if inventory_menu != null:
+		inventory_menu.hide_menu()
 	if not can_leave_current_room():
 		_notify_room_locked()
 		return
@@ -633,6 +667,7 @@ func open_cooking() -> void:
 			"max_health": max_health,
 			"hunger": hunger,
 			"max_hunger": max_hunger,
+			"spork_mode_active": spork_mode_active,
 			"player_pos": $Player.global_position,
 			"room_scene": _get_current_room_scene_path(),
 			"is_playing": is_playing,
@@ -649,4 +684,20 @@ func open_cooking() -> void:
 
 
 func _input(event):
-	pass
+	if event.is_action_pressed("pause") and not get_tree().paused and is_playing and not is_game_over and not room_transitioning:
+		if inventory_menu != null:
+			inventory_menu.hide_menu()
+		if pause_menu != null:
+			pause_menu.show_menu()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("inventory") and not get_tree().paused and is_playing and not is_game_over and not room_transitioning:
+		if pause_menu != null:
+			pause_menu.hide_menu()
+		if inventory_menu != null:
+			inventory_menu.show_menu()
+		get_viewport().set_input_as_handled()
+	elif event.is_action_pressed("transform") and not get_tree().paused and is_playing and not is_game_over and not room_transitioning:
+		spork_mode_active = not spork_mode_active
+		if $Player.has_method("set_spork_mode_active"):
+			$Player.set_spork_mode_active(spork_mode_active)
+		get_viewport().set_input_as_handled()

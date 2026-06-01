@@ -5,6 +5,8 @@ var cena_principal_path = "res://game_shell.tscn"
 # --- NOVA LÓGICA DE SEQUÊNCIA ---
 var fila_de_minijogos: Array = []
 var pontuacao_total: float = 0.0
+var sequencia_minijogos_cancelada := false
+var popup_ativo := false
 var buff_pendente = false
 var buff_velocidade = 0
 var buff_cooldown = 0.0
@@ -39,6 +41,7 @@ func obter_fila_minijogos_disponiveis() -> Array:
 
 func iniciar_sequencia_minijogos():
 	pontuacao_total = 0.0 # Reinicia a pontuação
+	sequencia_minijogos_cancelada = false
 	
 	# CRIAR A FILA: Copiamos a lista mestre para a fila de jogo atual
 	fila_de_minijogos = obter_fila_minijogos_disponiveis()
@@ -46,10 +49,40 @@ func iniciar_sequencia_minijogos():
 	# Arranca para o primeiro da lista
 	avancar_para_proximo_minijogo()
 	
+func devolver_ingredientes_para_inventario(ingredientes: Array) -> void:
+	if typeof(ingredientes) != TYPE_ARRAY:
+		return
+
+	for ingrediente in ingredientes:
+		if typeof(ingrediente) != TYPE_STRING:
+			continue
+		inventario_jogador[ingrediente] = inventario_jogador.get(ingrediente, 0) + 1
+
+
+func cancelar_sequencia_minijogos() -> void:
+	if sequencia_minijogos_cancelada:
+		return
+
+	sequencia_minijogos_cancelada = true
+	devolver_ingredientes_para_inventario(ingredientes_atuais)
+	limpar_dados()
+	fila_de_minijogos.clear()
+	pontuacao_total = 0.0
+	get_tree().change_scene_to_file(obter_cena_cozinha_principal())
+
+
 func registar_pontuacao_e_avancar(nota: float):
+	if sequencia_minijogos_cancelada:
+		return
+
 	pontuacao_total += nota
 	avancar_para_proximo_minijogo()
+
+
 func avancar_para_proximo_minijogo():
+	if sequencia_minijogos_cancelada:
+		return
+
 	if fila_de_minijogos.size() > 0:
 		# Tira o primeiro minijogo da FILA e carrega-o
 		var proxima_cena = fila_de_minijogos.pop_front() 
@@ -65,6 +98,7 @@ func mostrar_popup_resultado():
 	# 1. Carrega a cena do Popup (Atenção: verifica se este caminho está correto no teu projeto!)
 	var cena_popup = load("res://microgames/Cenas/popup_receita.tscn")
 	var popup = cena_popup.instantiate()
+	popup_ativo = true
 	
 	# 2. Cria uma "Camada Superior" para o popup ficar por cima de tudo na cozinha
 	var canvas = CanvasLayer.new()
@@ -98,6 +132,7 @@ func mostrar_popup_resultado():
 	
 	# 7. Quando o jogador clicar em "Delicioso!", apagamos o popup inteiro
 	popup.botao_continuar.pressed.connect(func(): canvas.queue_free())
+	popup.botao_continuar.pressed.connect(func(): popup_ativo = false)
 	
 	# Limpa a panela para a próxima receita
 	limpar_dados()

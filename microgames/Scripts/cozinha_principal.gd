@@ -23,10 +23,15 @@ func _ready():
 	atualizar_ecra()
 	atualizar_textos_inventario() # Garante que os números aparecem certos logo ao iniciar!
 	
-func _process(delta):
-	if Input.is_action_just_pressed("escape"):
-		for i in range(ingredientes_na_panela.size(), -1, -1):
+func _unhandled_input(event):
+	if event.is_action_pressed("escape") and not GameManager.popup_ativo:
+		var viewport = get_viewport()
+		if viewport != null:
+			viewport.set_input_as_handled()
+		for i in range(ingredientes_na_panela.size() - 1, -1, -1):
 			tentar_remover_ingrediente(i)
+		if typeof(GameManager) != TYPE_NIL:
+			GameManager.limpar_dados()
 		var cena_retorno = "res://game_shell.tscn"
 		if typeof(GameManager) != TYPE_NIL and GameManager.cena_principal_path != "":
 			cena_retorno = GameManager.cena_principal_path
