@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://brveffnuo0h1g"]
+
+[ext_resource type="Texture2D" uid="uid://qo4exaev4rh0" path="res://microgames/Assets/Food/raw meats.png" id="1_h3tko"]
+
+[resource]
+atlas = ExtResource("1_h3tko")
+region = Rect2(160.022, 0, 32, 32)

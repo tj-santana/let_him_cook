@@ -1,12 +1,39 @@
 extends Node2D
 
 var ingredientes_na_panela: Array = []
-var limite_ingredientes: int = 2
+var limite_ingredientes: int = 4
 
-# --- TEXTURAS ---
-var textura_sus_meat = preload("res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres")
-var textura_slime = preload("res://microgames/Assets/Food/Isolated Food/icon_slime.tres")
-var textura_essence = preload("res://microgames/Assets/Food/Isolated Food/icon_essence.tres")
+# --- LÓGICA DE TEXTURAS E CORES DINÂMICAS ---
+func obter_textura_ingrediente(nome: String) -> Texture2D:
+	var path_base = "res://microgames/Assets/Food/Isolated Food/"
+	match nome:
+		"Sus Meat", "Suspicious Meat":
+			return load(path_base + "icon_sus_meat.tres")
+		"Slime":
+			return load(path_base + "icon_slime.tres")
+		"Essence":
+			return load(path_base + "icon_essence.tres")
+		"Bat Wings":
+			return load(path_base + "asa_morcego.png")
+		"Bat Meat":
+			return load(path_base + "BatCarne.tres")
+		"Bones":
+			return load(path_base + "osso.png")
+		_:
+			# Fallback
+			return load(path_base + "icon_essence.tres")
+
+func obter_cor_ingrediente(nome: String) -> Color:
+	# Categoria Veggies:
+	if nome in ["Big Leaf", "Roots", "Moss", "Carrots", "Potatoes", "Onions", "Garlic", "Cabbage", "Lettuce", "Broccoli", "Apple"]:
+		return Color(0.5, 0.9, 0.5) # Verde claro agradável
+	# Categoria Proteins:
+	elif nome in ["Suspicious Meat", "Sus Meat", "Bat Wings", "Bat Meat", "Fish Meat", "Bones", "Spider Eyes", "Mush Meat", "Orc Meat", "Mimic Eye", "Mimic Tongue"]:
+		return Color(0.9, 0.5, 0.5) # Vermelho suave
+	# Outros / Pão
+	else:
+		return Color(0.95, 0.8, 0.4) # Amarelo/Laranja suave
+
 
 @onready var slots_visuais = [
 	$CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot1,
@@ -16,10 +43,6 @@ var textura_essence = preload("res://microgames/Assets/Food/Isolated Food/icon_e
 ]
 
 func _ready():
-	# Se tivermos ingredientes guardados no GameManager, significa que acabámos de voltar dos minijogos!
-	if GameManager.ingredientes_atuais.size() > 0:
-		avaliar_resultado()
-		
 	atualizar_ecra()
 	atualizar_textos_inventario() # Garante que os números aparecem certos logo ao iniciar!
 	
@@ -31,19 +54,64 @@ func _unhandled_input(event):
 		for i in range(ingredientes_na_panela.size() - 1, -1, -1):
 			tentar_remover_ingrediente(i)
 		if typeof(GameManager) != TYPE_NIL:
+			var s = GameManager.obter_estado_principal()
+			if s != null:
+				s["player_inventory"] = GameManager.inventario_jogador.duplicate()
 			GameManager.limpar_dados()
 		var cena_retorno = "res://game_shell.tscn"
 		if typeof(GameManager) != TYPE_NIL and GameManager.cena_principal_path != "":
 			cena_retorno = GameManager.cena_principal_path
 		get_tree().change_scene_to_file(cena_retorno)
 
-# --- ATUALIZAR OS TEXTOS DOS NÚMEROS ---
+# --- ATUALIZAR OS TEXTOS DOS NÚMEROS (DINÂMICO) ---
 func atualizar_textos_inventario():
-	var caminho_base = $CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogador
-	
-	caminho_base.get_node("InvSlot_Carne/QtdTexto").text = str(GameManager.inventario_jogador["Sus Meat"])
-	caminho_base.get_node("InvSlot_Slime/QtdTexto").text = str(GameManager.inventario_jogador["Slime"])
-	caminho_base.get_node("InvSlot_Essence/QtdTexto").text = str(GameManager.inventario_jogador["Essence"])
+	var grelha = get_node_or_null("CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogadorScroll/GrelhaInventario")
+	if not grelha:
+		return
+		
+	# Limpa os botões anteriores
+	for child in grelha.get_children():
+		child.queue_free()
+		
+	# Popula a grelha de forma dinâmica
+	for ingrediente in GameManager.inventario_jogador.keys():
+		var qtd = GameManager.inventario_jogador[ingrediente]
+		if qtd <= 0:
+			continue
+			
+		var botao = Button.new()
+		botao.custom_minimum_size = Vector2(100, 100)
+		botao.expand_icon = true
+		
+		# Ícone e Modulação
+		botao.icon = obter_textura_ingrediente(ingrediente)
+		botao.modulate = obter_cor_ingrediente(ingrediente)
+		botao.tooltip_text = ingrediente + " (" + str(qtd) + ")"
+		
+		# Label de Nome (Top-Left)
+		var label_nome = Label.new()
+		label_nome.text = ingrediente
+		label_nome.position = Vector2(5, 5)
+		label_nome.add_theme_constant_override("outline_size", 4)
+		label_nome.add_theme_font_size_override("font_size", 10)
+		botao.add_child(label_nome)
+		
+		# Label de Quantidade (Bottom-Right)
+		var label_qtd = Label.new()
+		label_qtd.text = str(qtd)
+		label_qtd.position = Vector2(75, 70)
+		label_qtd.add_theme_constant_override("outline_size", 4)
+		label_qtd.add_theme_font_size_override("font_size", 16)
+		botao.add_child(label_qtd)
+		
+		# Conexão de sinal ao clicar usando lambda multilinha correta
+		botao.pressed.connect(func():
+			tentar_adicionar_ingrediente(ingrediente)
+		)
+		
+		grelha.add_child(botao)
+
+
 
 # --- ADICIONAR E REMOVER DA PANELA ---
 func tentar_adicionar_ingrediente(ingrediente: String):
@@ -69,82 +137,103 @@ func tentar_remover_ingrediente(indice_slot: int):
 		atualizar_ecra()
 		atualizar_textos_inventario()
 
-func _on_inv_slot_carne_pressed(): tentar_adicionar_ingrediente("Sus Meat")
-func _on_inv_slot_slime_pressed(): tentar_adicionar_ingrediente("Slime")
-func _on_inv_slot_essence_pressed(): tentar_adicionar_ingrediente("Essence")
 
-# --- BOTÃO DE COZINHAR ---
-func _on_botao_cozinhar_pressed():
-	# 1. Verifica se a panela tem os ingredientes necessários
-	if ingredientes_na_panela.size() == limite_ingredientes:
-		
-		# 2. Testa se a receita existe antes de ir para os minijogos
-		var ingredientes_teste = ingredientes_na_panela.duplicate()
-		ingredientes_teste.sort()
-		
-		if GameManager.livro_de_receitas.has(ingredientes_teste):
-			print("A começar o preparo do prato...")
-			GameManager.ingredientes_atuais = ingredientes_na_panela.duplicate()
-			GameManager.iniciar_sequencia_minijogos()
-		else:
-			print("ERRO: Essa combinação não existe no livro de receitas!")
+
+# --- BOTÃO DE COZINHAR E MÉTODOS ---
+func cozinhar_com_metodo(metodo: String):
+	if ingredientes_na_panela.size() >= 2:
+		print("A começar o preparo do prato com o método ", metodo, "...")
+		GameManager.ingredientes_atuais = ingredientes_na_panela.duplicate()
+		GameManager.iniciar_sequencia_minijogos(metodo)
 	else:
-		print("Precisas de 2 ingredientes na panela primeiro!")
+		print("Precisas de pelo menos 2 ingredientes na panela primeiro!")
 
-# --- AVALIAÇÃO DE RECEITAS ---
-# Altera a tua função avaliar_resultado() para incluir o GameManager.buff_fome:
+func _on_botao_ferver_pressed():
+	cozinhar_com_metodo("boil")
 
-func avaliar_resultado():
-	var pontuacao = GameManager.pontuacao_total
-	var ingredientes = GameManager.ingredientes_atuais
-	ingredientes.sort()
-	
-	if GameManager.livro_de_receitas.has(ingredientes):
-		var nome_do_prato = GameManager.livro_de_receitas[ingredientes]
+func _on_botao_fritar_pressed():
+	cozinhar_com_metodo("fry")
+
+func _on_botao_assar_pressed():
+	cozinhar_com_metodo("roast")
+
+# --- LIVRO DE RECEITAS ---
+func _on_botao_livro_pressed():
+	var overlay = get_node_or_null("CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay")
+	if overlay:
+		overlay.visible = true
+		atualizar_livro_receitas()
+
+func _on_botao_fechar_livro_pressed():
+	var overlay = get_node_or_null("CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay")
+	if overlay:
+		overlay.visible = false
+
+func atualizar_livro_receitas():
+	var lista_recipiente = get_node_or_null("CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro/ScrollContainer/ListaReceitas")
+	if not lista_recipiente:
+		return
 		
-		if pontuacao >= 2.5: 
-			print("SUCESSO PERFEITO! Criaste um(a) ", nome_do_prato, " ★★★")
-			GameManager.buff_pendente = true
-			GameManager.buff_velocidade = 200
-			GameManager.buff_cooldown = 0.15
-			GameManager.buff_duracao = 30.0
-			GameManager.buff_fome = 10.0 # <--- ADICIONADO
-
-		elif pontuacao >= 1.5: 
-			print("SUCESSO! Criaste um(a) ", nome_do_prato, " ★★")
-			GameManager.buff_pendente = true
-			GameManager.buff_velocidade = 100
-			GameManager.buff_cooldown = 0.05
-			GameManager.buff_duracao = 15.0
-			GameManager.buff_fome = 10.0 # <--- ADICIONADO
+	# Limpa a lista existente de receitas
+	for child in lista_recipiente.get_children():
+		child.queue_free()
+		
+	# Percorre todas as receitas possíveis do livro de receitas
+	for chave in GameManager.livro_de_receitas.keys():
+		var nome_prato = GameManager.livro_de_receitas[chave]
+		
+		# Vamos criar um painel simples para cada receita para ficar super premium
+		var item_panel = PanelContainer.new()
+		var margin_container = MarginContainer.new()
+		margin_container.add_theme_constant_override("margin_left", 15)
+		margin_container.add_theme_constant_override("margin_right", 15)
+		margin_container.add_theme_constant_override("margin_top", 10)
+		margin_container.add_theme_constant_override("margin_bottom", 10)
+		
+		var item_hbox = HBoxContainer.new()
+		item_hbox.add_theme_constant_override("separation", 20)
+		
+		var label_status = Label.new()
+		var label_nome = Label.new()
+		
+		label_status.add_theme_font_size_override("font_size", 18)
+		label_nome.add_theme_font_size_override("font_size", 18)
+		
+		if GameManager.receitas_desbloqueadas.has(nome_prato):
+			# Receita Desbloqueada
+			label_status.text = "📖"
+			label_status.modulate = Color(0.2, 0.9, 0.2) # Verde neon
 			
-		else: 
-			print("POR POUCO! O teu(a) ", nome_do_prato, " ficou meio queimado ★")
-			GameManager.buff_pendente = true
-			GameManager.buff_velocidade = 50
-			GameManager.buff_cooldown = 0.0
-			GameManager.buff_duracao = 10.0
-			GameManager.buff_fome = 10.0 # <--- ADICIONADO
-		
-		pontuacao = 0.0 # Reseta a pontuação para o próximo prato	
-		GameManager.pontuacao_total = 0.0
-		GameManager.ingredientes_atuais = [] # Limpa os ingredientes atuais		
-		
+			var ing_texto = " + ".join(chave)
+			label_nome.text = nome_prato + " (" + ing_texto + ")"
+			label_nome.modulate = Color(0.95, 0.95, 0.9) # Bege claro
+		else:
+			# Receita Bloqueada
+			label_status.text = "🔒"
+			label_status.modulate = Color(0.6, 0.6, 0.6) # Cinzento
+			
+			label_nome.text = "??? (Bloqueado)"
+			label_nome.modulate = Color(0.5, 0.5, 0.5) # Cinzento escuro
+			
+		item_hbox.add_child(label_status)
+		item_hbox.add_child(label_nome)
+		margin_container.add_child(item_hbox)
+		item_panel.add_child(margin_container)
+		lista_recipiente.add_child(item_panel)
+
 # --- MAGIA VISUAL ---
 func atualizar_ecra():
 	for i in range(slots_visuais.size()):
 		var icon_do_slot = slots_visuais[i].get_node("Icon")
 		
 		if i < ingredientes_na_panela.size():
-			if ingredientes_na_panela[i] == "Sus Meat":
-				icon_do_slot.texture = textura_sus_meat
-			elif ingredientes_na_panela[i] == "Slime":
-				icon_do_slot.texture = textura_slime
-			elif ingredientes_na_panela[i] == "Essence":
-				icon_do_slot.texture = textura_essence
+			var ingrediente = ingredientes_na_panela[i]
+			icon_do_slot.texture = obter_textura_ingrediente(ingrediente)
+			icon_do_slot.modulate = obter_cor_ingrediente(ingrediente)
 			slots_visuais[i].color = Color.DARK_GRAY
 		else:
 			icon_do_slot.texture = null
+			icon_do_slot.modulate = Color.WHITE
 			slots_visuais[i].color = Color.DARK_GRAY
 
 # --- SINAIS PARA REMOVER (CLIQUES NOS SLOTS DA PANELA) ---

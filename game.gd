@@ -364,32 +364,7 @@ func _ready():
 		$HUD.update_hunger(hunger, max_hunger)
 		_refresh_inventory_hud()
 
-		# Apply any pending food buffs from cooking
-		if typeof(GameManager) != TYPE_NIL:
-			var pending = false
-			if GameManager.has_method("get"):
-				pending = GameManager.get("buff_pendente")
-			print("[game.gd] Checking for pending buff:", pending)
-			if pending:
-				print("--- APPLYING FOOD BUFFS ---")
-				print("[game.gd] Buff values -> vel:", GameManager.get("buff_velocidade"), ", cooldown:", GameManager.get("buff_cooldown"), ", dur:", GameManager.get("buff_duracao"))
-				if $Player.has_method("aplicar_buff_comida"):
-					$Player.aplicar_buff_comida(
-						GameManager.get("buff_velocidade"),
-						GameManager.get("buff_cooldown"),
-						GameManager.get("buff_duracao")
-					)
-					# Recover some health and hunger from eating
-					hunger = min(hunger + 10.0, max_hunger)
-					health = min(health + 20.0, max_health)
-					$HUD.update_hunger(hunger, max_hunger)
-					$HUD.update_health(health, max_health)
-			else:
-				print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
-						
-			# Clear the pending buff flag
-			GameManager.buff_pendente = false
-			print("Buffs aplicados com sucesso!")
+		# Food buffs are now stored in inventory and consumed manually.
 		
 		if saved_room_scene == "" or saved_room_scene == SHELL_SCENE:
 			saved_room_scene = DEFAULT_ROOM_SCENE
@@ -523,6 +498,7 @@ func new_game():
 	_refresh_inventory_hud()
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
+		GameManager.pratos_cozinhados.clear()
 
 	_configure_player_camera()
 
@@ -645,6 +621,35 @@ func _advance_wave() -> void:
 		# all waves complete -- for now, restart waves
 		current_wave = 0
 		get_tree().create_timer(2.0).timeout.connect(func(): _start_wave(current_wave))
+
+
+func consumir_prato(dados_do_prato: Dictionary) -> void:
+	print("Consumindo prato: ", dados_do_prato["nome"])
+	var vel = dados_do_prato.get("velocidade", 0)
+	var cooldown = dados_do_prato.get("cooldown", 0.0)
+	var dur = dados_do_prato.get("duracao", 0.0)
+	var vida_rec = dados_do_prato.get("vida", 0.0)
+	var max_vida_rec = dados_do_prato.get("max_vida", 0.0)
+	var fome_rec = dados_do_prato.get("fome", 0.0)
+	var dano_causado = dados_do_prato.get("dano_causado", 0.0)
+	var dano_recebido = dados_do_prato.get("dano_recebido", 1.0)
+	
+	if $Player.has_method("aplicar_buff_comida"):
+		$Player.aplicar_buff_comida(vel, cooldown, dur, dano_causado, dano_recebido)
+		
+		# Recover MaxHP, health and hunger
+		if max_vida_rec > 0.0:
+			max_health = min(max_health + max_vida_rec, 100.0)
+		
+		hunger = min(hunger + fome_rec, max_hunger)
+		health = min(health + vida_rec, max_health)
+		
+		$HUD.update_health(health, max_health)
+		$HUD.update_hunger(hunger, max_hunger)
+		_refresh_inventory_hud()
+		print("Prato consumido com sucesso! Status atualizados.")
+	else:
+		print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
 
 
 func open_cooking() -> void:

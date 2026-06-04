@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://dw1a5tddvk2bc"]
+
+[ext_resource type="Texture2D" uid="uid://dgh1yl41uu58d" path="res://microgames/Assets/Food/FOOD NL.png" id="1_8j38o"]
+
+[resource]
+atlas = ExtResource("1_8j38o")
+region = Rect2(143.76768, 97.251236, 24.730194, 24.730202)

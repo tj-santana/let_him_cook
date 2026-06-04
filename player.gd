@@ -31,6 +31,7 @@ var temp_speed_bonus := 0.0
 var temp_attack_dmg_bonus := 0.0
 var temp_attack_cooldown_reduction := 0.0
 var temp_dash_speed_bonus := 0.0
+var temp_damage_taken_multiplier := 1.0
 var spork_mode_active := false
 var can_attack = true
 var can_dash = true
@@ -52,7 +53,7 @@ func _apply_damage(dmg: float, can_kill: bool = true) -> void:
 		return
 
 	can_take_hit = false
-	var applied_damage = dmg
+	var applied_damage = dmg * temp_damage_taken_multiplier
 	if not can_kill:
 		applied_damage = min(applied_damage, max(0.0, current_health - 1.0))
 
@@ -316,17 +317,21 @@ func _draw():
 		var center = facing.normalized() * attack_offset
 		draw_circle(center, attack_range, Color(1.0, 0.2, 0.2, 0.2))
 
-func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float):
+func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float, bonus_dano: float = 0.0, mult_dano_recebido: float = 1.0):
 	temp_speed_bonus += bonus_velocidade
 	temp_attack_cooldown_reduction += reducao_cooldown
+	temp_attack_dmg_bonus += bonus_dano
+	temp_damage_taken_multiplier = mult_dano_recebido
 	_recalculate_combat_stats()
 	
-	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown)
+	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown, " | Dano: ", attack_dmg, " | Mult Dano Recebido: ", temp_damage_taken_multiplier)
 	
 	await get_tree().create_timer(duracao).timeout
 	
 	temp_speed_bonus -= bonus_velocidade
 	temp_attack_cooldown_reduction -= reducao_cooldown
+	temp_attack_dmg_bonus -= bonus_dano
+	temp_damage_taken_multiplier = 1.0
 	_recalculate_combat_stats()
 	
 	print("O Buff acabou! Voltaste ao normal.")

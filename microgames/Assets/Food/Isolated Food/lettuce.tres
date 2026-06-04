@@ -1,0 +1,7 @@
+[gd_resource type="AtlasTexture" format=3 uid="uid://duebv8ghhmt0i"]
+
+[ext_resource type="Texture2D" uid="uid://byhg3p1dg5li4" path="res://microgames/Assets/Food/Legumes.png" id="1_pug3f"]
+
+[resource]
+atlas = ExtResource("1_pug3f")
+region = Rect2(74.991135, 103.554825, 40.98802, 40.61769)
