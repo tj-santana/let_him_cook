@@ -25,17 +25,20 @@ var pratos_cozinhados: Array = []
 # Métodos de Culinária e os seus respetivos microgames
 var microgames_boil: Array = [
 	"res://microgames/Cenas/Microgames/Microgame_Cozinhar.tscn",
-	"res://microgames/Cenas/Microgames/Microgame_Temperatura.tscn"
+	"res://microgames/Cenas/Microgames/Microgame_Temperatura.tscn",
+	"res://microgames/Cenas/Microgames/Microgame_Apanhar.tscn"
 ]
 var microgames_fry: Array = [
 	"res://microgames/Cenas/Microgames/Microgame_Geleia.tscn",
 	"res://microgames/Cenas/Microgames/microgame_peixe.tscn",
-	"res://microgames/Cenas/Microgames/Microgame_Bone.tscn"
+	"res://microgames/Cenas/Microgames/Microgame_Bone.tscn",
+	"res://microgames/Cenas/Microgames/Microgame_Corte.tscn"
 ]
 var microgames_roast: Array = [
 	"res://microgames/Cenas/Microgames/Microgame_Carne.tscn",
 	"res://microgames/Cenas/Microgames/Microgame_Bat_Wing.tscn",
-	"res://microgames/Cenas/Microgames/microgame_bat_carne.tscn"
+	"res://microgames/Cenas/Microgames/microgame_bat_carne.tscn",
+	"res://microgames/Cenas/Microgames/Microgame_Corte.tscn"
 ]
 var metodo_atual: String = ""
 
@@ -44,7 +47,9 @@ var todas_as_cenas_minijogos: Array = [
 	"res://microgames/Cenas/Microgames/Microgame_Cozinhar.tscn",
 	"res://microgames/Cenas/Microgames/Microgame_Temperatura.tscn",
 	"res://microgames/Cenas/Microgames/Microgame_Geleia.tscn",
-	"res://microgames/Cenas/Microgames/Microgame_Carne.tscn"
+	"res://microgames/Cenas/Microgames/Microgame_Carne.tscn",
+	"res://microgames/Cenas/Microgames/Microgame_Corte.tscn",
+	"res://microgames/Cenas/Microgames/Microgame_Apanhar.tscn"
 ]
 
 
