@@ -10,6 +10,11 @@ extends Node
 @export var require_room_clear_to_exit := true
 @export var in_safe_room := false
 @export var spork_hunger_drain_multiplier := 2.0
+@export var near_death_drain_rate = 5.0
+@export var near_death_min_health = -50.0
+@export var starvation_drain_rate = 3.0
+var near_death_active = false
+var near_death_overlay: CanvasLayer = null
 
 @onready var pause_menu: CanvasLayer = $PauseMenu
 @onready var inventory_menu: CanvasLayer = $InventoryMenu
@@ -351,6 +356,12 @@ func _ready():
 		max_health = s.get("max_health", max_health)
 		hunger = s.get("hunger", max_hunger)
 		max_hunger = s.get("max_hunger", max_hunger)
+		near_death_active = bool(s.get("near_death_active", false))
+		$Player.current_health = health
+		if $Player.has_method("set_near_death_active"):
+			$Player.set_near_death_active(near_death_active)
+		if near_death_active:
+			enter_near_death()
 		player_inventory = s.get("player_inventory", player_inventory).duplicate()
 		room_snapshots = s.get("room_snapshots", room_snapshots)
 		if room_snapshots == null:
@@ -414,8 +425,27 @@ func _process(delta: float) -> void:
 		hunger = max(hunger, 0.0)
 		$HUD.update_hunger(hunger, max_hunger)
 
-	if hunger <= 0 or health <= 0:
-		game_over()
+	if $Player.has_method("set_starving_active"):
+		$Player.set_starving_active(is_playing and hunger <= 0.0)
+
+	# Continuous HP depletion during near death
+	if is_playing and near_death_active and not in_safe_room:
+		health -= near_death_drain_rate * delta
+		health = max(health, near_death_min_health)
+		$HUD.update_health(health, max_health)
+		$Player.current_health = health
+		if health <= near_death_min_health:
+			game_over()
+			return
+
+	# Continuous HP depletion during starvation (hunger reaches 0)
+	elif is_playing and hunger <= 0.0 and not in_safe_room:
+		health -= starvation_drain_rate * delta
+		if health <= 0.0:
+			health = 0.0
+			enter_near_death()
+		$HUD.update_health(health, max_health)
+		$Player.current_health = health
 
 	# If we returned from the cooking scene, the autoload GameManager may
 	# carry an updated inventory. Merge it into our local inventory and
@@ -432,6 +462,8 @@ func game_over():
 		return
 
 	is_game_over = true
+	if near_death_active:
+		exit_near_death()
 	is_playing = false
 	spork_mode_active = false
 	if $Player.has_method("set_spork_mode_active"):
@@ -457,6 +489,12 @@ func new_game():
 	spork_mode_active = false
 	if $Player.has_method("set_spork_mode_active"):
 		$Player.set_spork_mode_active(false)
+	near_death_active = false
+	if $Player.has_method("set_near_death_active"):
+		$Player.set_near_death_active(false)
+	if near_death_overlay != null and is_instance_valid(near_death_overlay):
+		near_death_overlay.queue_free()
+		near_death_overlay = null
 	if pause_menu != null:
 		pause_menu.hide_menu()
 	if inventory_menu != null:
@@ -471,6 +509,7 @@ func new_game():
 	ingredients = 0
 	max_health = 100.0
 	health = max_health
+	$Player.current_health = health
 	hunger = max_hunger
 	player_inventory = {
 		"Sus Meat": 0,
@@ -581,10 +620,20 @@ func _on_player_hit(damage: float = hit_health_damage):
 		max_health = max(max_health - hit_max_health_damage, min_max_health)
 		if health != 100.0:
 			health = min(health, max_health)
-		health = max(health - applied_damage, 0.0)
+		health = health - applied_damage
+	
+	if health <= 0.0:
+		if not near_death_active:
+			enter_near_death()
+		if health <= near_death_min_health:
+			health = near_death_min_health
+			$HUD.update_health(health, max_health)
+			$Player.current_health = health
+			game_over()
+			return
+
 	$HUD.update_health(health, max_health)
-	if health <= 0:
-		game_over()
+	$Player.current_health = health
 
 
 func take_damage_from_enemy(damage: float = hit_health_damage) -> void:
@@ -643,6 +692,10 @@ func consumir_prato(dados_do_prato: Dictionary) -> void:
 		
 		hunger = min(hunger + fome_rec, max_hunger)
 		health = min(health + vida_rec, max_health)
+		$Player.current_health = health
+		
+		if health > 0.0 and near_death_active:
+			exit_near_death()
 		
 		$HUD.update_health(health, max_health)
 		$HUD.update_hunger(hunger, max_hunger)
@@ -673,6 +726,7 @@ func open_cooking() -> void:
 			"hunger": hunger,
 			"max_hunger": max_hunger,
 			"spork_mode_active": spork_mode_active,
+			"near_death_active": near_death_active,
 			"player_pos": $Player.global_position,
 			"room_scene": _get_current_room_scene_path(),
 			"is_playing": is_playing,
@@ -706,3 +760,45 @@ func _input(event):
 		if $Player.has_method("set_spork_mode_active"):
 			$Player.set_spork_mode_active(spork_mode_active)
 		get_viewport().set_input_as_handled()
+
+
+func enter_near_death() -> void:
+	if near_death_active:
+		return
+	near_death_active = true
+	if $Player.has_method("set_near_death_active"):
+		$Player.set_near_death_active(true)
+	
+	# Premium visual feedback: pulsing red overlay screen
+	if near_death_overlay == null or not is_instance_valid(near_death_overlay):
+		near_death_overlay = CanvasLayer.new()
+		near_death_overlay.name = "NearDeathOverlay"
+		near_death_overlay.layer = 99
+		add_child(near_death_overlay)
+		
+		var color_rect = ColorRect.new()
+		color_rect.name = "RedVignette"
+		color_rect.color = Color(1.0, 0.0, 0.0, 0.0) # Start transparent
+		color_rect.anchor_left = 0
+		color_rect.anchor_top = 0
+		color_rect.anchor_right = 1
+		color_rect.anchor_bottom = 1
+		near_death_overlay.add_child(color_rect)
+		
+		# Animate the overlay opacity (pulsing red)
+		var tween = create_tween().set_loops()
+		tween.tween_property(color_rect, "color:a", 0.22, 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+		tween.tween_property(color_rect, "color:a", 0.05, 0.75).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT)
+
+
+func exit_near_death() -> void:
+	if not near_death_active:
+		return
+	near_death_active = false
+	if $Player.has_method("set_near_death_active"):
+		$Player.set_near_death_active(false)
+		
+	# Clean up overlay
+	if near_death_overlay != null and is_instance_valid(near_death_overlay):
+		near_death_overlay.queue_free()
+		near_death_overlay = null

@@ -46,6 +46,8 @@ var screen_size
 var _room_invulnerability_token := 0
 var _pitfall_sequence_token := 0
 var is_in_pitfall_sequence := false
+var near_death_active := false
+var starving_active := false
 
 
 func _apply_damage(dmg: float, can_kill: bool = true) -> void:
@@ -59,15 +61,13 @@ func _apply_damage(dmg: float, can_kill: bool = true) -> void:
 
 	current_health -= applied_damage
 	hit.emit(applied_damage)
-	if can_kill and current_health <= 0:
-		die()
-	else:
-		if get_tree():
-			await get_tree().create_timer(hit_invulnerability).timeout
-		else:
-			die()
-		if visible:
-			can_take_hit = true
+	
+	# Death is managed by the master game script (game.gd).
+	# The player remains active in near death state until game_over is triggered.
+	if get_tree():
+		await get_tree().create_timer(hit_invulnerability).timeout
+	if visible:
+		can_take_hit = true
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -96,8 +96,34 @@ func _recalculate_combat_stats() -> void:
 	attack_dmg = max(0.0, base_attack_dmg + temp_attack_dmg_bonus + (spork_attack_dmg_bonus if spork_mode_active else 0.0))
 	attack_cooldown = max(0.1, base_attack_cooldown - temp_attack_cooldown_reduction - (spork_attack_cooldown_reduction if spork_mode_active else 0.0))
 	dash_speed = max(0.0, base_dash_speed + temp_dash_speed_bonus + (spork_dash_speed_bonus if spork_mode_active else 0.0))
+	
+	if near_death_active:
+		speed *= 0.5
+		attack_dmg *= 0.5
+	elif starving_active:
+		speed *= 0.8
+
 	if has_node("AnimatedSprite2D"):
-		$AnimatedSprite2D.modulate = spork_visual_tint if spork_mode_active else Color.WHITE
+		if near_death_active:
+			$AnimatedSprite2D.modulate = Color(1.0, 0.3, 0.3, 1.0)
+		elif spork_mode_active:
+			$AnimatedSprite2D.modulate = spork_visual_tint
+		else:
+			$AnimatedSprite2D.modulate = Color.WHITE
+
+
+func set_near_death_active(active: bool) -> void:
+	if near_death_active == active:
+		return
+	near_death_active = active
+	_recalculate_combat_stats()
+
+
+func set_starving_active(active: bool) -> void:
+	if starving_active == active:
+		return
+	starving_active = active
+	_recalculate_combat_stats()
 
 
 func set_spork_mode_active(active: bool) -> void:
@@ -212,7 +238,7 @@ func attack():
 	is_attacking = false
 
 func dash():
-	if not can_dash:
+	if not can_dash or near_death_active:
 		return
 
 	can_dash = false

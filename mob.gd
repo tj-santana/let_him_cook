@@ -32,13 +32,7 @@ func _ready():
 	$HealthBar.value = health
 	$HealthBar.max_value = health
 	_player = _resolve_player()
-	match $AnimatedSprite2D.animation:
-		"walk":
-			drop_type = "Sus Meat"
-		"swim":
-			drop_type = "Slime"
-		"fly":
-			drop_type = "Essence"
+	drop_type = "Sus Meat"
 
 func _physics_process(delta: float) -> void:
 	if _player == null:
