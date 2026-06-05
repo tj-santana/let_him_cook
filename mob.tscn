@@ -1,221 +1,79 @@
-[gd_scene format=3 uid="uid://bko6et6myb4v7"]
+[gd_scene load_steps=11 format=3]
 
-[ext_resource type="Script" uid="uid://dbie5p75y14ng" path="res://mob.gd" id="1_1qmh0"]
-[ext_resource type="Texture2D" uid="uid://btcwo261r5raq" path="res://assets/Orc/Orc/Orc-Attack01.png" id="2_p11y5"]
-[ext_resource type="Texture2D" uid="uid://ddeut3gsmnav7" path="res://assets/Orc/Orc/Orc-Idle.png" id="3_s5nov"]
-[ext_resource type="Texture2D" uid="uid://bxjuul75pabc6" path="res://assets/Orc/Orc/Orc-Walk.png" id="4_b3mxk"]
+[ext_resource type="Script" path="res://mob.gd" id="1_mob"]
+[ext_resource type="Texture2D" uid="uid://cgob_i0" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f0.png" id="2_i0"]
+[ext_resource type="Texture2D" uid="uid://cgob_i1" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f1.png" id="3_i1"]
+[ext_resource type="Texture2D" uid="uid://cgob_i2" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f2.png" id="4_i2"]
+[ext_resource type="Texture2D" uid="uid://cgob_i3" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f3.png" id="5_i3"]
+[ext_resource type="Texture2D" uid="uid://cgob_r0" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://cgob_r1" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://cgob_r2" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://cgob_r3" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f3.png" id="9_r3"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_1qmh0"]
-atlas = ExtResource("2_p11y5")
-region = Rect2(0, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gfurk"]
-atlas = ExtResource("2_p11y5")
-region = Rect2(100, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ieysi"]
-atlas = ExtResource("2_p11y5")
-region = Rect2(200, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_cixyi"]
-atlas = ExtResource("2_p11y5")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7ulmv"]
-atlas = ExtResource("2_p11y5")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_pcqmr"]
-atlas = ExtResource("2_p11y5")
-region = Rect2(500, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jbnni"]
-atlas = ExtResource("3_s5nov")
-region = Rect2(0, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_yscv0"]
-atlas = ExtResource("3_s5nov")
-region = Rect2(100, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_eqsov"]
-atlas = ExtResource("3_s5nov")
-region = Rect2(200, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wvrms"]
-atlas = ExtResource("3_s5nov")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h0ign"]
-atlas = ExtResource("3_s5nov")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_6ak38"]
-atlas = ExtResource("3_s5nov")
-region = Rect2(500, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_rxhkm"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(0, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_mhy1y"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(100, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_gy8bd"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(200, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_srff1"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(300, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hpl8x"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(400, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_10kxg"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(500, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5en0g"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(600, 0, 100, 100)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n647c"]
-atlas = ExtResource("4_b3mxk")
-region = Rect2(700, 0, 100, 100)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_yscv0"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_goblin"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1qmh0")
+"texture": ExtResource("2_i0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gfurk")
+"texture": ExtResource("3_i1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ieysi")
+"texture": ExtResource("4_i2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cixyi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7ulmv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pcqmr")
+"texture": ExtResource("5_i3")
 }],
 "loop": true,
 "name": &"attack",
-"speed": 3.0
+"speed": 6.0
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_1qmh0")
+"texture": ExtResource("6_r0")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_gfurk")
+"texture": ExtResource("7_r1")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ieysi")
+"texture": ExtResource("8_r2")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cixyi")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7ulmv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_pcqmr")
-}],
-"loop": true,
-"name": &"fly",
-"speed": 3.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_jbnni")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_yscv0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_eqsov")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_wvrms")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h0ign")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_6ak38")
-}],
-"loop": true,
-"name": &"swim",
-"speed": 3.0
-}, {
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_rxhkm")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_mhy1y")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_gy8bd")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_srff1")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hpl8x")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_10kxg")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5en0g")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n647c")
+"texture": ExtResource("9_r3")
 }],
 "loop": true,
 "name": &"walk",
-"speed": 3.0
+"speed": 6.0
 }]
 
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_eqsov"]
-radius = 21.0
-height = 58.0
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_goblin"]
+radius = 11.0
+height = 24.0
 
-[node name="Mob" type="CharacterBody2D" unique_id=1116736431 groups=["mobs"]]
+[node name="Mob" type="CharacterBody2D" groups=["mobs"]]
 z_index = 1
 collision_layer = 4
-script = ExtResource("1_1qmh0")
+script = ExtResource("1_mob")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=929967219]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
-sprite_frames = SubResource("SpriteFrames_yscv0")
-animation = &"attack"
+sprite_frames = SubResource("SpriteFrames_goblin")
+animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1725461507]
-position = Vector2(11, -1)
-rotation = 1.5707964
-shape = SubResource("CapsuleShape2D_eqsov")
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CapsuleShape2D_goblin")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1213439017]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
-[node name="HealthBar" type="ProgressBar" parent="." unique_id=1076663201]
+[node name="HealthBar" type="ProgressBar" parent="."]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = -24.0
-offset_top = -34.0
+offset_top = -24.0
 offset_right = 27.0
-offset_bottom = -23.0
-max_value = 20.0
-value = 20.0
+offset_bottom = -13.0
+max_value = 10.0
+value = 10.0
 show_percentage = false
-
-[connection signal="screen_exited" from="VisibleOnScreenNotifier2D" to="." method="_on_visible_on_screen_notifier_2d_screen_exited"]

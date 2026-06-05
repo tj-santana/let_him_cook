@@ -83,23 +83,26 @@ func atualizar_textos_inventario():
 		botao.custom_minimum_size = Vector2(100, 100)
 		botao.expand_icon = true
 		
-		# Ícone e Modulação
+		# Ícone (sem modular o botão para preservar a cor original do sprite)
 		botao.icon = obter_textura_ingrediente(ingrediente)
-		botao.modulate = obter_cor_ingrediente(ingrediente)
 		botao.tooltip_text = ingrediente + " (" + str(qtd) + ")"
 		
-		# Label de Nome (Top-Left)
+		var cor = obter_cor_ingrediente(ingrediente)
+		
+		# Label de Nome (Top-Left, com a cor da categoria)
 		var label_nome = Label.new()
 		label_nome.text = ingrediente
 		label_nome.position = Vector2(5, 5)
+		label_nome.add_theme_color_override("font_color", cor)
 		label_nome.add_theme_constant_override("outline_size", 4)
 		label_nome.add_theme_font_size_override("font_size", 10)
 		botao.add_child(label_nome)
 		
-		# Label de Quantidade (Bottom-Right)
+		# Label de Quantidade (Bottom-Right, com a cor da categoria)
 		var label_qtd = Label.new()
 		label_qtd.text = str(qtd)
 		label_qtd.position = Vector2(75, 70)
+		label_qtd.add_theme_color_override("font_color", cor)
 		label_qtd.add_theme_constant_override("outline_size", 4)
 		label_qtd.add_theme_font_size_override("font_size", 16)
 		botao.add_child(label_qtd)
@@ -229,7 +232,7 @@ func atualizar_ecra():
 		if i < ingredientes_na_panela.size():
 			var ingrediente = ingredientes_na_panela[i]
 			icon_do_slot.texture = obter_textura_ingrediente(ingrediente)
-			icon_do_slot.modulate = obter_cor_ingrediente(ingrediente)
+			icon_do_slot.modulate = Color.WHITE
 			slots_visuais[i].color = Color.DARK_GRAY
 		else:
 			icon_do_slot.texture = null

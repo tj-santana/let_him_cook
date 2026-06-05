@@ -2,19 +2,18 @@ extends CharacterBody2D
 
 signal defeated(drop_type: String)
 
-@export var damage_amount = 10.0
-@export var drop_type: String = "Sus Meat"
-@export var speed: float = 120.0
-@export var chase_speed: float = 200.0
-@export var detection_radius: float = 180.0
+@export var damage_amount = 12.0
+@export var drop_type: String = "Bones"
+@export var speed: float = 50.0
+@export var chase_speed: float = 80.0
+@export var detection_radius: float = 160.0
 @export var attack_range: float = 15.0
 @export var attack_cooldown: float = 1.0
-@export var health: float = 10.0
+@export var health: float = 20.0
 
 var _player = null
 var _state: String = "idle" 
 var _attack_ready: bool = true
-
 
 func _resolve_player() -> Node:
 	var current_parent := get_parent()
@@ -26,14 +25,10 @@ func _resolve_player() -> Node:
 
 func _ready():
 	z_index = 1
-	if $AnimatedSprite2D.sprite_frames.has_animation("walk"):
-		$AnimatedSprite2D.play("walk")
-	else:
-		$AnimatedSprite2D.play()
+	$AnimatedSprite2D.play("walk")
 	$HealthBar.value = health
 	$HealthBar.max_value = health
 	_player = _resolve_player()
-	drop_type = "Sus Meat"
 
 func _physics_process(delta: float) -> void:
 	if _player == null:
@@ -83,19 +78,6 @@ func damage_player():
 			$AnimatedSprite2D.play()
 		get_parent().call_deferred("take_damage_from_enemy", damage_amount)
 
-func play_attack_animation():
-	if $AnimatedSprite2D and $AnimatedSprite2D.sprite_frames and $AnimatedSprite2D.sprite_frames.has_animation("attack"):
-		$AnimatedSprite2D.animation = "attack"
-		$AnimatedSprite2D.play()
-	elif get_parent() and get_parent().has_method("_on_player_hit"):
-		if _player and _player.has_method("_on_body_entered"):
-			_player.call_deferred("_on_body_entered", self)
-
-func _on_visible_on_screen_notifier_2d_screen_exited():
-	# Keep enemies alive when they leave the screen so they can return when the camera comes back.
-	pass
-
-
 func get_snapshot() -> Dictionary:
 	return {
 		"scene_file_path": scene_file_path,
@@ -104,10 +86,8 @@ func get_snapshot() -> Dictionary:
 		"state": _state,
 		"attack_ready": _attack_ready,
 		"flip_h": $AnimatedSprite2D.flip_h,
-		"animation": $AnimatedSprite2D.animation,
 		"drop_type": drop_type
 	}
-
 
 func apply_snapshot(snapshot: Dictionary) -> void:
 	global_position = snapshot.get("position", global_position)
@@ -119,7 +99,3 @@ func apply_snapshot(snapshot: Dictionary) -> void:
 	$HealthBar.max_value = max($HealthBar.max_value, health)
 	if snapshot.has("flip_h"):
 		$AnimatedSprite2D.flip_h = bool(snapshot.get("flip_h", false))
-	var animation_name = str(snapshot.get("animation", ""))
-	if animation_name != "" and $AnimatedSprite2D.sprite_frames and $AnimatedSprite2D.sprite_frames.has_animation(animation_name):
-		$AnimatedSprite2D.animation = animation_name
-		$AnimatedSprite2D.play()

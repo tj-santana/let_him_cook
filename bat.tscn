@@ -1,0 +1,74 @@
+[gd_scene load_steps=13 format=3]
+
+[ext_resource type="Script" path="res://bat.gd" id="1_bat"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f0" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f0.png" id="2_f0"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f1" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f1.png" id="3_f1"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f2" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f2.png" id="4_f2"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f3" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f3.png" id="5_f3"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f4" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f5" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f6" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://c6f4b5f7" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f3.png" id="9_r3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_bat"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_f1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_f2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_f3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_r0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_r1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_r3")
+}],
+"loop": true,
+"name": &"fly",
+"speed": 8.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bat"]
+radius = 10.0
+height = 20.0
+
+[node name="Bat" type="CharacterBody2D" groups=["mobs"]]
+z_index = 1
+collision_layer = 4
+script = ExtResource("1_bat")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(2.5, 2.5)
+sprite_frames = SubResource("SpriteFrames_bat")
+animation = &"fly"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 0)
+shape = SubResource("CapsuleShape2D_bat")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+self_modulate = Color(0, 1, 0, 1)
+offset_left = -24.0
+offset_top = -24.0
+offset_right = 27.0
+offset_bottom = -13.0
+max_value = 6.0
+value = 6.0
+show_percentage = false

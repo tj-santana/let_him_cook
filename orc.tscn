@@ -1,0 +1,79 @@
+[gd_scene load_steps=11 format=3]
+
+[ext_resource type="Script" path="res://orc.gd" id="1_orc"]
+[ext_resource type="Texture2D" uid="uid://corc_i0" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f0.png" id="2_i0"]
+[ext_resource type="Texture2D" uid="uid://corc_i1" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f1.png" id="3_i1"]
+[ext_resource type="Texture2D" uid="uid://corc_i2" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f2.png" id="4_i2"]
+[ext_resource type="Texture2D" uid="uid://corc_i3" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f3.png" id="5_i3"]
+[ext_resource type="Texture2D" uid="uid://corc_r0" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://corc_r1" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://corc_r2" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://corc_r3" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f3.png" id="9_r3"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_orc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_i0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_i2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_i3")
+}],
+"loop": true,
+"name": &"attack",
+"speed": 6.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_r0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_r1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_r2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_r3")
+}],
+"loop": true,
+"name": &"walk",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_orc"]
+radius = 18.0
+height = 36.0
+
+[node name="Orc" type="CharacterBody2D" groups=["mobs"]]
+z_index = 1
+collision_layer = 4
+script = ExtResource("1_orc")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+scale = Vector2(4.0, 4.0)
+sprite_frames = SubResource("SpriteFrames_orc")
+animation = &"walk"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 3)
+shape = SubResource("CapsuleShape2D_orc")
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+self_modulate = Color(0, 1, 0, 1)
+offset_left = -30.0
+offset_top = -38.0
+offset_right = 31.0
+offset_bottom = -27.0
+max_value = 30.0
+value = 30.0
+show_percentage = false

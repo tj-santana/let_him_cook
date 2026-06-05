@@ -2,6 +2,9 @@ extends Node
 
 @export var mob_scene: PackedScene
 @export var slime_scene: PackedScene = preload("res://slime.tscn")
+@export var bat_scene: PackedScene = preload("res://bat.tscn")
+@export var skeleton_scene: PackedScene = preload("res://skeleton_warrior.tscn")
+@export var orc_scene: PackedScene = preload("res://orc.tscn")
 @export var hunger_drain_rate = 2.0
 @export var hit_health_damage = 10.0
 @export var hit_max_health_damage = 5.0
@@ -31,7 +34,11 @@ var is_playing = false
 var player_inventory = {
 	"Sus Meat": 0,
 	"Slime": 0,
-	"Essence": 0
+	"Essence": 0,
+	"Bat Wings": 0,
+	"Bat Meat": 0,
+	"Bones": 0,
+	"Orc Meat": 0
 }
 
 # Simple wave system: list of dictionaries {count, interval}
@@ -182,8 +189,15 @@ func _spawn_room_mobs(room_root: Node) -> void:
 	mobs_alive = 0
 	for spawn_position in spawn_positions:
 		var spawn_scene = mob_scene
-		if slime_scene != null and randf() < 0.35:
+		var roll = randf()
+		if roll < 0.20 and slime_scene != null:
 			spawn_scene = slime_scene
+		elif roll < 0.40 and bat_scene != null:
+			spawn_scene = bat_scene
+		elif roll < 0.60 and skeleton_scene != null:
+			spawn_scene = skeleton_scene
+		elif roll < 0.75 and orc_scene != null:
+			spawn_scene = orc_scene
 		var mob = spawn_scene.instantiate()
 		room_root.add_child(mob)
 		mob.global_position = spawn_position
@@ -523,7 +537,11 @@ func new_game():
 	player_inventory = {
 		"Sus Meat": 0,
 		"Slime": 0,
-		"Essence": 0
+		"Essence": 0,
+		"Bat Wings": 0,
+		"Bat Meat": 0,
+		"Bones": 0,
+		"Orc Meat": 0
 	}
 	$HUD.update_score(score)
 	$HUD.update_health(health, max_health)
@@ -559,8 +577,15 @@ func _on_mob_timer_timeout():
 		mob_spawn_location = room_root.get_node("MobPath/MobSpawnLocation")
 
 	var spawn_scene = mob_scene
-	if slime_scene != null and randf() < 0.35:
+	var roll = randf()
+	if roll < 0.20 and slime_scene != null:
 		spawn_scene = slime_scene
+	elif roll < 0.40 and bat_scene != null:
+		spawn_scene = bat_scene
+	elif roll < 0.60 and skeleton_scene != null:
+		spawn_scene = skeleton_scene
+	elif roll < 0.75 and orc_scene != null:
+		spawn_scene = orc_scene
 	var mob = spawn_scene.instantiate()
 	if mob_spawn_location != null:
 		mob_spawn_location.progress_ratio = randf()
@@ -597,9 +622,16 @@ func _on_score_timer_timeout():
 
 func _on_mob_defeated(drop_type: String = "Sus Meat"):
 
-	# Add the dropped ingredient type to the player's inventory
-	var key = drop_type if typeof(drop_type) == TYPE_STRING and drop_type != "" else "Sus Meat"
-	player_inventory[key] = player_inventory.get(key, 0) + 1
+	# Add the dropped ingredient type to the player's inventory (supports comma-separated list of items)
+	var raw_type = drop_type if typeof(drop_type) == TYPE_STRING and drop_type != "" else "Sus Meat"
+	if "," in raw_type:
+		var parts = raw_type.split(",")
+		for part in parts:
+			var key = part.strip_edges()
+			if key != "":
+				player_inventory[key] = player_inventory.get(key, 0) + 1
+	else:
+		player_inventory[raw_type] = player_inventory.get(raw_type, 0) + 1
 
 	# Update the visible ingredient count (sum of all ingredient types)
 	_refresh_inventory_hud()
