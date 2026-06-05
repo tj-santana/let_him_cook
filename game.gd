@@ -1,6 +1,7 @@
 extends Node
 
 @export var mob_scene: PackedScene
+@export var slime_scene: PackedScene = preload("res://slime.tscn")
 @export var hunger_drain_rate = 2.0
 @export var hit_health_damage = 10.0
 @export var hit_max_health_damage = 5.0
@@ -180,7 +181,10 @@ func _spawn_room_mobs(room_root: Node) -> void:
 
 	mobs_alive = 0
 	for spawn_position in spawn_positions:
-		var mob = mob_scene.instantiate()
+		var spawn_scene = mob_scene
+		if slime_scene != null and randf() < 0.35:
+			spawn_scene = slime_scene
+		var mob = spawn_scene.instantiate()
 		room_root.add_child(mob)
 		mob.global_position = spawn_position
 		mob.defeated.connect(_on_mob_defeated)
@@ -237,7 +241,12 @@ func _restore_room_snapshot(room_root: Node, snapshot: Dictionary) -> void:
 	for mob_snapshot in mob_snapshots:
 		if mob_snapshot is not Dictionary:
 			continue
-		var mob = mob_scene.instantiate()
+		var mob_path = mob_snapshot.get("scene_file_path", "")
+		var mob_scene_to_instantiate = mob_scene
+		if mob_path != "" and mob_path != mob_scene.resource_path:
+			if ResourceLoader.exists(mob_path):
+				mob_scene_to_instantiate = load(mob_path)
+		var mob = mob_scene_to_instantiate.instantiate()
 		room_root.add_child(mob)
 		if mob.has_method("apply_snapshot"):
 			mob.apply_snapshot(mob_snapshot)
@@ -549,7 +558,10 @@ func _on_mob_timer_timeout():
 	if room_root != null and room_root.has_node("MobPath/MobSpawnLocation"):
 		mob_spawn_location = room_root.get_node("MobPath/MobSpawnLocation")
 
-	var mob = mob_scene.instantiate()
+	var spawn_scene = mob_scene
+	if slime_scene != null and randf() < 0.35:
+		spawn_scene = slime_scene
+	var mob = spawn_scene.instantiate()
 	if mob_spawn_location != null:
 		mob_spawn_location.progress_ratio = randf()
 		mob.global_position = mob_spawn_location.global_position
