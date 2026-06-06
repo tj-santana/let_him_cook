@@ -1,9 +1,9 @@
-[gd_scene load_steps=7 format=3]
+[gd_scene format=3]
 
-[ext_resource type="Script" path="res://microgames/Scripts/Microgame_Corte.gd" id="1_corte_script"]
-[ext_resource type="Texture2D" uid="uid://cwood_board" path="res://microgames/Assets/tábua_de_madeira.webp" id="2_wood"]
-[ext_resource type="Texture2D" uid="uid://cknife" path="res://microgames/Assets/faca.png" id="3_knife"]
-[ext_resource type="Texture2D" uid="uid://cfood_default" path="res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres" id="4_food"]
+[ext_resource type="Script" uid="uid://co28qvfk5qbaw" path="res://microgames/Scripts/Microgame_Corte.gd" id="1_corte_script"]
+[ext_resource type="Texture2D" uid="uid://6hp08q25doeo" path="res://microgames/Assets/tábua_de_madeira.webp" id="2_wood"]
+[ext_resource type="Texture2D" uid="uid://b5pmccjhq8gll" path="res://microgames/Assets/faca.png" id="3_knife"]
+[ext_resource type="Texture2D" uid="uid://u8jmjlfugbug" path="res://microgames/Assets/Food/Isolated Food/orc_meat.tres" id="4_food"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_time"]
 bg_color = Color(0, 0.85, 0.2, 1)

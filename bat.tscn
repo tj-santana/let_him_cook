@@ -1,14 +1,14 @@
-[gd_scene load_steps=13 format=3]
+[gd_scene format=3 uid="uid://crctg4mkvfh3"]
 
-[ext_resource type="Script" path="res://bat.gd" id="1_bat"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f0" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f0.png" id="2_f0"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f1" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f1.png" id="3_f1"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f2" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f2.png" id="4_f2"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f3" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f3.png" id="5_f3"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f4" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f0.png" id="6_r0"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f5" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f1.png" id="7_r1"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f6" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f2.png" id="8_r2"]
-[ext_resource type="Texture2D" uid="uid://c6f4b5f7" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f3.png" id="9_r3"]
+[ext_resource type="Script" uid="uid://vmqfkjtm3vmb" path="res://bat.gd" id="1_bat"]
+[ext_resource type="Texture2D" uid="uid://d0bq067v7sxhs" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f0.png" id="2_f0"]
+[ext_resource type="Texture2D" uid="uid://6703tipmhis1" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f1.png" id="3_f1"]
+[ext_resource type="Texture2D" uid="uid://dwwv5nm3ov7j0" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f2.png" id="4_f2"]
+[ext_resource type="Texture2D" uid="uid://b6l0o5gqiixeq" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f3.png" id="5_f3"]
+[ext_resource type="Texture2D" uid="uid://rgg46va7pyrd" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://cs6nytkpns460" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://doo6s13g5b2qb" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://b60w2lniwe071" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f3.png" id="9_r3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bat"]
 animations = [{
@@ -43,27 +43,25 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bat"]
-radius = 10.0
 height = 20.0
 
-[node name="Bat" type="CharacterBody2D" groups=["mobs"]]
+[node name="Bat" type="CharacterBody2D" unique_id=1012702958 groups=["mobs"]]
 z_index = 1
 collision_layer = 4
 script = ExtResource("1_bat")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1565469336]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_bat")
 animation = &"fly"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, 0)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=835076932]
 shape = SubResource("CapsuleShape2D_bat")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=392222196]
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1452275683]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = -24.0
 offset_top = -24.0

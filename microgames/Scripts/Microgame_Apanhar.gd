@@ -16,9 +16,9 @@ var spawn_interval: float = 0.4
 
 # Good ingredients pool (meats and veggies only)
 var good_textures = [
-	"res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres",
+	"res://microgames/Assets/Food/Isolated Food/sus_meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/BatCarne.tres",
-	"res://microgames/Assets/Food/Isolated Food/Orc_Meat.tres",
+	"res://microgames/Assets/Food/Isolated Food/orc_Meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/fish_meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/mush_meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/Big_Leaf.tres",

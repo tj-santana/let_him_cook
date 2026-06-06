@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=3]
+[gd_scene format=3 uid="uid://bkg5dr055t2h0"]
 
-[ext_resource type="Script" path="res://slime.gd" id="1_slime"]
-[ext_resource type="Texture2D" uid="uid://c5f4b5f4" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f0.png" id="2_f0"]
-[ext_resource type="Texture2D" uid="uid://c5f4b5f5" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f1.png" id="3_f1"]
-[ext_resource type="Texture2D" uid="uid://c5f4b5f6" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f2.png" id="4_f2"]
-[ext_resource type="Texture2D" uid="uid://c5f4b5f7" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f3.png" id="5_f3"]
+[ext_resource type="Script" uid="uid://cdl1j0uwbvibp" path="res://slime.gd" id="1_slime"]
+[ext_resource type="Texture2D" uid="uid://db3cmviki24me" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f0.png" id="2_f0"]
+[ext_resource type="Texture2D" uid="uid://bsbgnvq7kt8sf" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f1.png" id="3_f1"]
+[ext_resource type="Texture2D" uid="uid://d3xrskqwxanjy" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f2.png" id="4_f2"]
+[ext_resource type="Texture2D" uid="uid://dyg7bv5yypwqe" path="res://assets/Dungeon_Tileset/frames/tiny_slug_anim_f3.png" id="5_f3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_slime"]
 animations = [{
@@ -30,25 +30,25 @@ animations = [{
 radius = 12.0
 height = 24.0
 
-[node name="Slime" type="CharacterBody2D" groups=["mobs"]]
+[node name="Slime" type="CharacterBody2D" unique_id=1384734099 groups=["mobs"]]
 z_index = 1
 collision_layer = 4
 script = ExtResource("1_slime")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=61363007]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_slime")
 animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1010298174]
 position = Vector2(0, 4)
 rotation = 1.5707964
 shape = SubResource("CapsuleShape2D_slime")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1018204205]
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1392864942]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = -24.0
 offset_top = -24.0

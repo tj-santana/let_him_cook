@@ -48,7 +48,7 @@ func _process(delta):
 		finalizar_jogo()
 
 # --- A NOVA FUNÇÃO DE CLIQUE NO SLIME ---
-func _on_slime_area_input_event(viewport, event, shape_idx):
+func _on_slime_area_input_event(_viewport, event, shape_idx):
 	if not jogo_ativo:
 		return
 		

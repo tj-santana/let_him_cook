@@ -2,6 +2,8 @@ extends Node
 
 var cena_principal_path = "res://game_shell.tscn"
 
+var limite_ingredientes: int = 2
+
 # --- NOVA LÓGICA DE SEQUÊNCIA ---
 var fila_de_minijogos: Array = []
 var pontuacao_total: float = 0.0
@@ -53,6 +55,13 @@ var todas_as_cenas_minijogos: Array = [
 ]
 
 
+var collected_items: Array = []
+
+func mark_item_collected(item_id: String) -> void:
+	if not collected_items.has(item_id):
+		collected_items.append(item_id)
+
+
 func obter_cena_cozinha_principal() -> String:
 	var caminho_novo = "res://microgames/Cenas/CozinhaPrincipal.tscn"
 	if FileAccess.file_exists(caminho_novo):
@@ -76,11 +85,11 @@ func iniciar_sequencia_minijogos(metodo: String = ""):
 	metodo_atual = metodo
 	
 	var todas_cenas = []
-	if metodo == "boil":
+	if metodo == "Boil":
 		todas_cenas = microgames_boil
-	elif metodo == "fry":
+	elif metodo == "Fry":
 		todas_cenas = microgames_fry
-	elif metodo == "roast":
+	elif metodo == "Roast":
 		todas_cenas = microgames_roast
 	else:
 		todas_cenas = todas_as_cenas_minijogos
@@ -134,7 +143,6 @@ func avancar_para_proximo_minijogo():
 		get_tree().change_scene_to_file(proxima_cena)
 	else:
 		# A fila acabou! Volta para a cozinha e mostra o Popup
-		print("Prato Terminado! Pontuação Total: ", pontuacao_total)
 		get_tree().change_scene_to_file(obter_cena_cozinha_principal())
 		mostrar_popup_resultado()
 
@@ -153,14 +161,15 @@ func mostrar_popup_resultado():
 	
 	# 3. Calcula a nota média (Pontuação a dividir pelo nº total de jogos da receita)
 	var max_minijogos = todas_as_cenas_minijogos.size()
-	if metodo_atual == "boil":
+	if metodo_atual == "Boil":
 		max_minijogos = microgames_boil.size()
-	elif metodo_atual == "fry":
+	elif metodo_atual == "Fry":
 		max_minijogos = microgames_fry.size()
-	elif metodo_atual == "roast":
+	elif metodo_atual == "Roast":
 		max_minijogos = microgames_roast.size()
 		
 	var nota_media = pontuacao_total / float(max_minijogos)
+	print("Prato Terminado! Pontuação Total: ", nota_media * 100, "%")
 	
 	# 4. Descobre a Receita e os Buffs!
 	var prato_info = obter_prato_e_buffs(ingredientes_atuais)
@@ -177,20 +186,20 @@ func mostrar_popup_resultado():
 	
 	# Ajusta os buffs consoante a nota média
 	if nome_prato != "Mistake":
-		if nota_media >= 2.5:
+		if nota_media >= 0.8:
 			vel += 100
 			cooldown += 0.1
 			dur *= 2.0
 			vida += 10.0
 			fome += 10.0
 			nome_prato += " (★★★)"
-		elif nota_media >= 1.5:
+		elif nota_media >= 0.5:
 			nome_prato += " (★★)"
 		else:
-			vel = int(vel * 0.5)
+			vel = int(vel * 0.25)
 			cooldown = 0.0
 			dur *= 0.6
-			vida = max(1.0, vida - 10.0)
+			vida = max(1.0, vida - 5.0)
 			fome = max(1.0, fome - 5.0)
 			nome_prato += " (★)"
 			
@@ -216,17 +225,17 @@ func mostrar_popup_resultado():
 	print("Prato cozinhado guardado no inventário: ", novo_prato)
 			
 	# 5. Formata o texto dos Buffs para mostrar na UI
-	var texto_dos_buffs = "Fome: +" + str(fome)
+	var texto_dos_buffs = "Hunger: +" + str(fome)
 	if vida > 0:
-		texto_dos_buffs += " | Vida: +" + str(vida)
+		texto_dos_buffs += " | HP: +" + str(vida)
 	if max_vida > 0:
 		texto_dos_buffs += " | MaxHP: +" + str(max_vida)
 	if vel > 0:
-		texto_dos_buffs += " | Vel: +" + str(vel)
+		texto_dos_buffs += " | Speed: +" + str(vel)
 	if dano_causado > 0:
-		texto_dos_buffs += " | Dano: +" + str(dano_causado)
+		texto_dos_buffs += " | Damage: +" + str(dano_causado)
 	if dano_recebido < 1.0:
-		texto_dos_buffs += " | Def: +" + str(int((1.0 - dano_recebido) * 100)) + "%"
+		texto_dos_buffs += " | Defense: +" + str(int((1.0 - dano_recebido) * 100)) + "%"
 		
 	# 6. Manda as informações todas para o script do teu Popup
 	popup.mostrar_resultado(nome_prato, nota_media, texto_dos_buffs, true)
@@ -277,9 +286,36 @@ var inventario_jogador: Dictionary = {
 
 # O NOSSO LIVRO DE RECEITAS
 var livro_de_receitas: Dictionary = {
-	["Slime", "Sus Meat"]: "Shady Jelly",
-	["Essence", "Sus Meat"]: "Arcane Roast",
-	["Sus Meat", "Sus Meat"]: "Suspicious Stew",
+	# 1. Sus Meat + Sus Meat (The Carnivore)
+	["Boil", "Sus Meat", "Sus Meat"]: "Suspicious Stew",
+	["Fry", "Sus Meat", "Sus Meat"]: "Crispy Meat Bites",
+	["Roast", "Sus Meat", "Sus Meat"]: "Charred Jerky",
+
+	# 2. Slime + Slime (The Weird Alchemist)
+	["Boil", "Slime", "Slime"]: "Slime Broth",
+	["Fry", "Slime", "Slime"]: "Fried Jelly",
+	["Roast", "Slime", "Slime"]: "Roasted Ooze",
+
+	# 3. Moss + Moss (The Forager)
+	["Boil", "Moss", "Moss"]: "Herbal Tea",
+	["Fry", "Moss", "Moss"]: "Tempura Moss",
+	["Roast", "Moss", "Moss"]: "Smoked Herbs",
+
+	# 4. Sus Meat + Slime
+	["Boil", "Slime", "Sus Meat"]: "Shady Jelly", 
+	["Fry", "Slime", "Sus Meat"]: "Glazed Meatballs",
+	["Roast", "Slime", "Sus Meat"]: "Sticky Kabob",
+
+	# 5. Sus Meat + Moss
+	["Boil", "Moss", "Sus Meat"]: "Hunter's Pot",
+	["Fry", "Moss", "Sus Meat"]: "Herb-Crusted Cutlet",
+	["Roast", "Moss", "Sus Meat"]: "Mossy Roast",
+
+	# 6. Slime + Moss
+	["Boil", "Moss", "Slime"]: "Swamp Soup",
+	["Fry", "Moss", "Slime"]: "Crispy Algae",
+	["Roast", "Moss", "Slime"]: "Baked Slime Cake",
+
 	["Bat Wings", "Bat Wings"]: "Roasted Bat Wings",
 	["Bones", "Bones"]: "Bone Broth",
 	["Mimic Eye", "Any", "Any", "Any"]: "Mimic Eye Rock Soup",
@@ -302,7 +338,9 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 		for chave in livro_de_receitas.keys():
 			var chave_ordenada = chave.duplicate()
 			chave_ordenada.sort()
-			if ing_ordenados == chave_ordenada:
+			var metodo = chave[0] # O primeiro item da chave é o método
+			chave_ordenada.remove_at(0) # Remove o método para comparar só os ingredientes
+			if metodo == metodo_atual and ing_ordenados == chave_ordenada: # Compara só os ingredientes, ignorando o método
 				nome_prato = livro_de_receitas[chave]
 				break
 				
@@ -310,10 +348,10 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 	var resultado = {
 		"nome": nome_prato,
 		"vida": 20.0,
-		"max_vida": 0.0,
+		"max_vida": 10.0,
 		"fome": 10.0,
-		"velocidade": 100,
-		"cooldown": 0.05,
+		"velocidade": 0,
+		"cooldown": 0.0,
 		"duracao": 15.0,
 		"dano_causado": 0.0,
 		"dano_recebido": 1.0
@@ -321,47 +359,74 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 	
 	match nome_prato:
 		"Mistake":
+		# Punishing, but heals 1 HP so it's not entirely useless
 			resultado["vida"] = 1.0
 			resultado["max_vida"] = 1.0
-			resultado["fome"] = 1.0
-			resultado["velocidade"] = 0
-			resultado["cooldown"] = 0.0
-			resultado["duracao"] = 0.0
-		"Mimic Eye Rock Soup":
-			resultado["vida"] = 30.0
-			resultado["fome"] = 25.0
-			resultado["velocidade"] = 50
-			resultado["cooldown"] = 0.0
-			resultado["duracao"] = 45.0
-			resultado["dano_recebido"] = 0.3 # 70% de redução de dano!
-		"Mimic Tongue Picanha":
-			resultado["vida"] = 30.0
-			resultado["fome"] = 25.0
-			resultado["velocidade"] = 80
-			resultado["cooldown"] = 0.15 # Menos 0.15s cooldown
-			resultado["duracao"] = 45.0
-			resultado["dano_causado"] = 20.0 # +20 de dano!
-		"Roasted Bat Wings":
-			resultado["velocidade"] = 120
-			resultado["cooldown"] = 0.08
-			resultado["duracao"] = 20.0
-		"Bone Broth":
-			resultado["vida"] = 40.0
-			resultado["fome"] = 20.0
-			resultado["duracao"] = 15.0
-		"Shady Jelly":
-			resultado["velocidade"] = 150
-			resultado["cooldown"] = 0.1
-			resultado["duracao"] = 25.0
-		"Arcane Roast":
-			resultado["velocidade"] = 180
-			resultado["cooldown"] = 0.12
-			resultado["duracao"] = 30.0
+			resultado["fome"] = 1.0 
+
+		# --- SOUPS & STEWS (BOIL) -> High HP & Hunger ---
 		"Suspicious Stew":
-			resultado["vida"] = 50.0
+			resultado["vida"] = 30.0
+			resultado["max_vida"] = 20.0
 			resultado["fome"] = 30.0
 			resultado["duracao"] = 20.0
-			
+		"Hunter's Pot":
+			resultado["vida"] = 25.0
+			resultado["max_vida"] = 20.0
+			resultado["fome"] = 25.0
+			resultado["dano_recebido"] = 0.85 # 15% damage reduction
+			resultado["duracao"] = 30.0
+		"Swamp Soup":
+			resultado["vida"] = 25.0
+			resultado["max_vida"] = 20.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 20
+
+		# --- FRIED FOODS (FRY) -> Speed & Cooldowns ---
+		"Fried Jelly":
+			resultado["vida"] = 10.0
+			resultado["max_vida"] = 5.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 120
+			resultado["cooldown"] = 0.15 # Fast attacks
+			resultado["duracao"] = 15.0 # Short duration (sugar crash!)
+		"Herb-Crusted Cutlet":
+			resultado["vida"] = 20.0
+			resultado["max_vida"] = 10.0
+			resultado["fome"] = 25.0
+			resultado["velocidade"] = 60
+			resultado["cooldown"] = 0.1
+			resultado["duracao"] = 25.0
+		"Glazed Meatballs":
+			resultado["vida"] = 15.0
+			resultado["max_vida"] = 10.0
+			resultado["fome"] = 10.0
+			resultado["velocidade"] = 80
+			resultado["cooldown"] = 0.1
+			resultado["dano_causado"] = 5.0
+			resultado["duracao"] = 20.0
+
+		# --- ROASTED FOODS (ROAST) -> Damage & Duration ---
+		"Charred Jerky":
+			resultado["vida"] = 10.0 # Low HP
+			resultado["max_vida"] = 5.0
+			resultado["fome"] = 20.0
+			resultado["dano_causado"] = 8.0 # High damage
+			resultado["duracao"] = 60.0 # Lasts a full minute
+		"Mossy Roast":
+			resultado["vida"] = 25.0
+			resultado["max_vida"] = 20.0
+			resultado["fome"] = 30.0
+			resultado["dano_causado"] = 5.0
+			resultado["duracao"] = 45.0
+		"Sticky Kabob":
+			resultado["vida"] = 20.0
+			resultado["max_vida"] = 10.0
+			resultado["fome"] = 25.0
+			resultado["dano_causado"] = 15.0
+			resultado["velocidade"] = 30
+			resultado["duracao"] = 20.0
+
 	return resultado
 
 # Limpa os dados temporários da panela/microgame

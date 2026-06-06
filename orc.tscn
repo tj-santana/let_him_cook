@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3 uid="uid://b45qthwynfe3g"]
 
-[ext_resource type="Script" path="res://orc.gd" id="1_orc"]
-[ext_resource type="Texture2D" uid="uid://corc_i0" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f0.png" id="2_i0"]
-[ext_resource type="Texture2D" uid="uid://corc_i1" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f1.png" id="3_i1"]
-[ext_resource type="Texture2D" uid="uid://corc_i2" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f2.png" id="4_i2"]
-[ext_resource type="Texture2D" uid="uid://corc_i3" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f3.png" id="5_i3"]
-[ext_resource type="Texture2D" uid="uid://corc_r0" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f0.png" id="6_r0"]
-[ext_resource type="Texture2D" uid="uid://corc_r1" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f1.png" id="7_r1"]
-[ext_resource type="Texture2D" uid="uid://corc_r2" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f2.png" id="8_r2"]
-[ext_resource type="Texture2D" uid="uid://corc_r3" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f3.png" id="9_r3"]
+[ext_resource type="Script" uid="uid://3febhn6er775" path="res://orc.gd" id="1_orc"]
+[ext_resource type="Texture2D" uid="uid://b42mcwgp7hipt" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f0.png" id="2_i0"]
+[ext_resource type="Texture2D" uid="uid://du2ek0fn3dujk" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f1.png" id="3_i1"]
+[ext_resource type="Texture2D" uid="uid://dluw7i3ah6grl" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f2.png" id="4_i2"]
+[ext_resource type="Texture2D" uid="uid://bx31r2nxebd30" path="res://assets/Dungeon_Tileset/frames/orc_warrior_idle_anim_f3.png" id="5_i3"]
+[ext_resource type="Texture2D" uid="uid://bi7y2t1nhl5fk" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://cdokmf7lwtd8c" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://cf6gv66uh0aet" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://dkkmrm8ov566o" path="res://assets/Dungeon_Tileset/frames/orc_warrior_run_anim_f3.png" id="9_r3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_orc"]
 animations = [{
@@ -51,24 +51,24 @@ animations = [{
 radius = 18.0
 height = 36.0
 
-[node name="Orc" type="CharacterBody2D" groups=["mobs"]]
+[node name="Orc" type="CharacterBody2D" unique_id=530610853 groups=["mobs"]]
 z_index = 1
 collision_layer = 4
 script = ExtResource("1_orc")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1057293382]
 texture_filter = 1
-scale = Vector2(4.0, 4.0)
+scale = Vector2(4, 4)
 sprite_frames = SubResource("SpriteFrames_orc")
 animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1506899936]
 position = Vector2(0, 3)
 shape = SubResource("CapsuleShape2D_orc")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=903762767]
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=1147259389]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = -30.0
 offset_top = -38.0

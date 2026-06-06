@@ -87,7 +87,7 @@ func spawn_mosca():
 	nova_mosca.input_event.connect(_on_mosca_clicada.bind(nova_mosca))
 	add_child(nova_mosca)
 
-func _on_mosca_clicada(viewport, event, shape_idx, mosca_clicada):
+func _on_mosca_clicada(_viewport, event, _shape_idx, mosca_clicada):
 	# O clique só funciona se o jogo ainda estiver a contar o tempo
 	if jogo_ativo and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:
 		mosca_clicada.queue_free()

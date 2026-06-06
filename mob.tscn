@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3 uid="uid://c4gh5xu16jpkq"]
 
-[ext_resource type="Script" path="res://mob.gd" id="1_mob"]
-[ext_resource type="Texture2D" uid="uid://cgob_i0" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f0.png" id="2_i0"]
-[ext_resource type="Texture2D" uid="uid://cgob_i1" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f1.png" id="3_i1"]
-[ext_resource type="Texture2D" uid="uid://cgob_i2" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f2.png" id="4_i2"]
-[ext_resource type="Texture2D" uid="uid://cgob_i3" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f3.png" id="5_i3"]
-[ext_resource type="Texture2D" uid="uid://cgob_r0" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f0.png" id="6_r0"]
-[ext_resource type="Texture2D" uid="uid://cgob_r1" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f1.png" id="7_r1"]
-[ext_resource type="Texture2D" uid="uid://cgob_r2" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f2.png" id="8_r2"]
-[ext_resource type="Texture2D" uid="uid://cgob_r3" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f3.png" id="9_r3"]
+[ext_resource type="Script" uid="uid://dbie5p75y14ng" path="res://mob.gd" id="1_mob"]
+[ext_resource type="Texture2D" uid="uid://6xe0q5qnrb6k" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f0.png" id="2_i0"]
+[ext_resource type="Texture2D" uid="uid://b6tkvqj2wn76" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f1.png" id="3_i1"]
+[ext_resource type="Texture2D" uid="uid://illcejcc5ll" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f2.png" id="4_i2"]
+[ext_resource type="Texture2D" uid="uid://b6wg345fd1cyp" path="res://assets/Dungeon_Tileset/frames/goblin_idle_anim_f3.png" id="5_i3"]
+[ext_resource type="Texture2D" uid="uid://cjdt2g2k1e7r7" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://bqdcds0cwd4c7" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://d2a1pefo0mtbi" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://1dadcvq5ane3" path="res://assets/Dungeon_Tileset/frames/goblin_run_anim_f3.png" id="9_r3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_goblin"]
 animations = [{
@@ -51,24 +51,24 @@ animations = [{
 radius = 11.0
 height = 24.0
 
-[node name="Mob" type="CharacterBody2D" groups=["mobs"]]
+[node name="Mob" type="CharacterBody2D" unique_id=312989416 groups=["mobs"]]
 z_index = 1
 collision_layer = 4
 script = ExtResource("1_mob")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2011216628]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_goblin")
 animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=955316895]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_goblin")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1704881227]
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=841442203]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = -24.0
 offset_top = -24.0

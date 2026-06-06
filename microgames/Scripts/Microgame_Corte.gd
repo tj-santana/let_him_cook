@@ -15,9 +15,9 @@ var speed: float = 350.0
 
 # Pool of textures to pick randomly for ingredients being chopped (meats and veggies only)
 var texturas_comida = [
-	"res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres",
+	"res://microgames/Assets/Food/Isolated Food/sus_meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/BatCarne.tres",
-	"res://microgames/Assets/Food/Isolated Food/Orc_Meat.tres",
+	"res://microgames/Assets/Food/Isolated Food/orc_Meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/fish_meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/mush_meat.tres",
 	"res://microgames/Assets/Food/Isolated Food/Big_Leaf.tres",

@@ -1,13 +1,13 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://cvgj2ye4j48xr"]
 
-[ext_resource type="Script" path="res://inventory_menu.gd" id="1"]
+[ext_resource type="Script" uid="uid://b0vqr21el4p35" path="res://inventory_menu.gd" id="1"]
 
-[node name="InventoryMenu" type="CanvasLayer"]
-layer = 155
+[node name="InventoryMenu" type="CanvasLayer" unique_id=265981923]
 process_mode = 3
+layer = 155
 script = ExtResource("1")
 
-[node name="Menu" type="Control" parent="."]
+[node name="Menu" type="Control" parent="." unique_id=1439125622]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -15,7 +15,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ColorRect" type="ColorRect" parent="Menu"]
+[node name="ColorRect" type="ColorRect" parent="Menu" unique_id=818253028]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,7 +24,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.588235)
 
-[node name="Panel" type="Panel" parent="Menu"]
+[node name="Panel" type="Panel" parent="Menu" unique_id=184280974]
 custom_minimum_size = Vector2(760, 480)
 layout_mode = 1
 anchors_preset = 8
@@ -39,7 +39,7 @@ offset_bottom = 240.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="Menu/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Menu/Panel" unique_id=711486452]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -51,27 +51,27 @@ theme_override_constants/margin_top = 20
 theme_override_constants/margin_right = 20
 theme_override_constants/margin_bottom = 20
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Menu/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Menu/Panel/MarginContainer" unique_id=972931069]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="TitleLabel" type="Label" parent="Menu/Panel/MarginContainer/VBoxContainer"]
+[node name="TitleLabel" type="Label" parent="Menu/Panel/MarginContainer/VBoxContainer" unique_id=1439952349]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Inventário"
+text = "Inventory"
 horizontal_alignment = 1
 
-[node name="SplitContent" type="HBoxContainer" parent="Menu/Panel/MarginContainer/VBoxContainer"]
+[node name="SplitContent" type="HBoxContainer" parent="Menu/Panel/MarginContainer/VBoxContainer" unique_id=1677594706]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/separation = 20
 
-[node name="ScrollList" type="ScrollContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent"]
+[node name="ScrollList" type="ScrollContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent" unique_id=1119969856]
 custom_minimum_size = Vector2(420, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="GridItems" type="GridContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/ScrollList"]
+[node name="GridItems" type="GridContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/ScrollList" unique_id=655046567]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -79,50 +79,50 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 3
 
-[node name="DetailsContainer" type="VBoxContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent"]
+[node name="DetailsContainer" type="VBoxContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent" unique_id=935300275]
 custom_minimum_size = Vector2(280, 0)
 layout_mode = 2
 theme_override_constants/separation = 12
 
-[node name="PanelDetails" type="PanelContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer"]
+[node name="PanelDetails" type="PanelContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer" unique_id=355686477]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="Margin" type="MarginContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails"]
+[node name="Margin" type="MarginContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails" unique_id=1107735289]
 layout_mode = 2
 theme_override_constants/margin_left = 15
 theme_override_constants/margin_top = 15
 theme_override_constants/margin_right = 15
 theme_override_constants/margin_bottom = 15
 
-[node name="InfoVBox" type="VBoxContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin"]
+[node name="InfoVBox" type="VBoxContainer" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin" unique_id=1239676719]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="SelectedNameLabel" type="Label" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin/InfoVBox"]
+[node name="SelectedNameLabel" type="Label" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin/InfoVBox" unique_id=243327626]
 layout_mode = 2
 theme_override_font_sizes/font_size = 22
-text = "Selecionar Item"
+text = "Select Item"
 autowrap_mode = 3
 
-[node name="HSeparator" type="HSeparator" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin/InfoVBox"]
+[node name="HSeparator" type="HSeparator" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin/InfoVBox" unique_id=551340162]
 layout_mode = 2
 
-[node name="SelectedDetailsLabel" type="Label" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin/InfoVBox"]
+[node name="SelectedDetailsLabel" type="Label" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer/PanelDetails/Margin/InfoVBox" unique_id=277844952]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_font_sizes/font_size = 16
-text = "Seleciona um item para veres os seus detalhes e bónus."
+text = "Select an ingredient or cooked dish to view its details and bonuses."
 autowrap_mode = 3
 
-[node name="EatButton" type="Button" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer"]
+[node name="EatButton" type="Button" parent="Menu/Panel/MarginContainer/VBoxContainer/SplitContent/DetailsContainer" unique_id=1561745905]
 custom_minimum_size = Vector2(0, 45)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Comer 🍽️"
+text = "Eat 🍽️"
 
-[node name="CloseButton" type="Button" parent="Menu/Panel/MarginContainer/VBoxContainer"]
+[node name="CloseButton" type="Button" parent="Menu/Panel/MarginContainer/VBoxContainer" unique_id=1760474638]
 custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 theme_override_font_sizes/font_size = 20
-text = "Fechar"
+text = "Close"

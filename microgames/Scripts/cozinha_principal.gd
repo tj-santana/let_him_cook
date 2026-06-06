@@ -1,14 +1,13 @@
 extends Node2D
 
 var ingredientes_na_panela: Array = []
-var limite_ingredientes: int = 4
 
 # --- LÓGICA DE TEXTURAS E CORES DINÂMICAS ---
 func obter_textura_ingrediente(nome: String) -> Texture2D:
 	var path_base = "res://microgames/Assets/Food/Isolated Food/"
 	match nome:
 		"Sus Meat", "Suspicious Meat":
-			return load(path_base + "icon_sus_meat.tres")
+			return load(path_base + "sus_meat.tres")
 		"Slime":
 			return load(path_base + "icon_slime.tres")
 		"Essence":
@@ -19,6 +18,14 @@ func obter_textura_ingrediente(nome: String) -> Texture2D:
 			return load(path_base + "BatCarne.tres")
 		"Bones":
 			return load(path_base + "osso.png")
+		"Orc Meat":
+			return load(path_base + "orc_meat.tres")
+		"Mimic Eye":
+			return load(path_base + "mimic_eye.tres")
+		"Mimic Tongue":
+			return load(path_base + "mimic_tongue.tres")
+		"Moss":
+			return load(path_base + "moss.png")
 		_:
 			# Fallback
 			return load(path_base + "icon_essence.tres")
@@ -45,7 +52,16 @@ func obter_cor_ingrediente(nome: String) -> Color:
 func _ready():
 	atualizar_ecra()
 	atualizar_textos_inventario() # Garante que os números aparecem certos logo ao iniciar!
-	
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var slot_count = 0
+	for slot in slots_visuais:
+		if slot_count < GameManager.limite_ingredientes:
+			slot.get_node("Icon").modulate = Color.WHITE
+			slot.color = Color.DARK_GRAY
+		else:
+			slot.color = Color(0.69, 0.13, 0.1)
+		slot_count += 1
+
 func _unhandled_input(event):
 	if event.is_action_pressed("escape") and not GameManager.popup_ativo:
 		var viewport = get_viewport()
@@ -62,6 +78,7 @@ func _unhandled_input(event):
 		if typeof(GameManager) != TYPE_NIL and GameManager.cena_principal_path != "":
 			cena_retorno = GameManager.cena_principal_path
 		get_tree().change_scene_to_file(cena_retorno)
+		Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
 
 # --- ATUALIZAR OS TEXTOS DOS NÚMEROS (DINÂMICO) ---
 func atualizar_textos_inventario():
@@ -119,7 +136,7 @@ func atualizar_textos_inventario():
 # --- ADICIONAR E REMOVER DA PANELA ---
 func tentar_adicionar_ingrediente(ingrediente: String):
 	if GameManager.inventario_jogador[ingrediente] > 0:
-		if ingredientes_na_panela.size() < limite_ingredientes:
+		if ingredientes_na_panela.size() < GameManager.limite_ingredientes:
 			GameManager.inventario_jogador[ingrediente] -= 1
 			ingredientes_na_panela.append(ingrediente)
 			print(ingrediente, " adicionado!")
@@ -141,7 +158,6 @@ func tentar_remover_ingrediente(indice_slot: int):
 		atualizar_textos_inventario()
 
 
-
 # --- BOTÃO DE COZINHAR E MÉTODOS ---
 func cozinhar_com_metodo(metodo: String):
 	if ingredientes_na_panela.size() >= 2:
@@ -152,13 +168,13 @@ func cozinhar_com_metodo(metodo: String):
 		print("Precisas de pelo menos 2 ingredientes na panela primeiro!")
 
 func _on_botao_ferver_pressed():
-	cozinhar_com_metodo("boil")
+	cozinhar_com_metodo("Boil")
 
 func _on_botao_fritar_pressed():
-	cozinhar_com_metodo("fry")
+	cozinhar_com_metodo("Fry")
 
 func _on_botao_assar_pressed():
-	cozinhar_com_metodo("roast")
+	cozinhar_com_metodo("Roast")
 
 # --- LIVRO DE RECEITAS ---
 func _on_botao_livro_pressed():
@@ -207,7 +223,7 @@ func atualizar_livro_receitas():
 			label_status.text = "📖"
 			label_status.modulate = Color(0.2, 0.9, 0.2) # Verde neon
 			
-			var ing_texto = " + ".join(chave)
+			var ing_texto = chave[0] + ": " + " + ".join(chave.slice(1, chave.size()))
 			label_nome.text = nome_prato + " (" + ing_texto + ")"
 			label_nome.modulate = Color(0.95, 0.95, 0.9) # Bege claro
 		else:
@@ -236,8 +252,6 @@ func atualizar_ecra():
 			slots_visuais[i].color = Color.DARK_GRAY
 		else:
 			icon_do_slot.texture = null
-			icon_do_slot.modulate = Color.WHITE
-			slots_visuais[i].color = Color.DARK_GRAY
 
 # --- SINAIS PARA REMOVER (CLIQUES NOS SLOTS DA PANELA) ---
 func _on_slot_1_gui_input(event):

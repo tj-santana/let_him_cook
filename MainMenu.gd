@@ -8,6 +8,7 @@ func _ready() -> void:
 	start_button.show()
 	start_button.focus_mode = Control.FOCUS_ALL
 	start_button.grab_focus.call_deferred()
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -19,4 +20,4 @@ func _unhandled_input(event: InputEvent) -> void:
 func _on_start_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://game_shell.tscn")
 	#get_tree().change_scene_to_file("res://tutorial.tscn")
-	
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN

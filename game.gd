@@ -61,11 +61,6 @@ const DEFAULT_ROOM_SCENE := "res://rooms/floor_1/F1_Entry.tscn"
 const SHELL_SCENE := "res://game_shell.tscn"
 
 
-func _refresh_inventory_hud() -> void:
-	if $HUD.has_method("update_inventory"):
-		$HUD.update_inventory(player_inventory)
-
-
 func _ensure_room_host() -> void:
 	if room_host != null and is_instance_valid(room_host):
 		return
@@ -84,6 +79,7 @@ func _ensure_transition_overlay() -> void:
 	transition_rect = ColorRect.new()
 	transition_rect.name = "TransitionRect"
 	transition_rect.color = Color(0, 0, 0, 0)
+	transition_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	transition_rect.anchor_left = 0
 	transition_rect.anchor_top = 0
 	transition_rect.anchor_right = 1
@@ -179,30 +175,36 @@ func _spawn_room_mobs(room_root: Node) -> void:
 		return
 	if room_root == null or room_root == self:
 		return
-	if mob_scene == null or not room_root.has_method("get_spawn_positions"):
-		return
-
-	var spawn_positions: Array = room_root.get_spawn_positions("MobSpawn")
-	if spawn_positions.is_empty():
+	if mob_scene == null:
 		return
 
 	mobs_alive = 0
-	for spawn_position in spawn_positions:
-		var spawn_scene = mob_scene
-		var roll = randf()
-		if roll < 0.20 and slime_scene != null:
-			spawn_scene = slime_scene
-		elif roll < 0.40 and bat_scene != null:
-			spawn_scene = bat_scene
-		elif roll < 0.60 and skeleton_scene != null:
-			spawn_scene = skeleton_scene
-		elif roll < 0.75 and orc_scene != null:
-			spawn_scene = orc_scene
-		var mob = spawn_scene.instantiate()
-		room_root.add_child(mob)
-		mob.global_position = spawn_position
-		mob.defeated.connect(_on_mob_defeated)
-		mobs_alive += 1
+	
+	# Look through all children of the room to find MobSpawns directly
+	for child in room_root.get_children():
+		if child is Marker2D and child.name.begins_with("MobSpawn"):
+			var spawn_scene = mob_scene # Default fallback
+			
+			# If the marker has our new script and a specific mob assigned, use it!
+			if "specific_mob" in child and child.specific_mob != null:
+				spawn_scene = child.specific_mob
+			else:
+				# Keep the random logic ONLY as a fallback if you forget to assign a specific mob
+				var roll = randf()
+				if roll < 0.20 and slime_scene != null:
+					spawn_scene = slime_scene
+				elif roll < 0.40 and bat_scene != null:
+					spawn_scene = bat_scene
+				elif roll < 0.60 and skeleton_scene != null:
+					spawn_scene = skeleton_scene
+				elif roll < 0.75 and orc_scene != null:
+					spawn_scene = orc_scene
+					
+			var mob = spawn_scene.instantiate()
+			room_root.add_child(mob)
+			mob.global_position = child.global_position
+			mob.defeated.connect(_on_mob_defeated)
+			mobs_alive += 1
 
 
 func can_leave_current_room() -> bool:
@@ -243,31 +245,60 @@ func _restore_room_snapshot(room_root: Node, snapshot: Dictionary) -> void:
 	if mob_scene == null:
 		return
 
+	# --- 1. HANDLE MOBS ---
 	for child in room_root.get_children():
 		if child.is_in_group("mobs"):
 			child.queue_free()
 
 	var mob_snapshots: Array = snapshot.get("mobs", [])
-	if mob_snapshots.is_empty():
-		return
+	if not mob_snapshots.is_empty():
+		mobs_alive = 0
+		for mob_snapshot in mob_snapshots:
+			if mob_snapshot is not Dictionary:
+				continue
+			var mob_path = mob_snapshot.get("scene_file_path", "")
+			var mob_scene_to_instantiate = mob_scene
+			if mob_path != "" and mob_path != mob_scene.resource_path:
+				if ResourceLoader.exists(mob_path):
+					mob_scene_to_instantiate = load(mob_path)
+			var mob = mob_scene_to_instantiate.instantiate()
+			room_root.add_child(mob)
+			if mob.has_method("apply_snapshot"):
+				mob.apply_snapshot(mob_snapshot)
+			else:
+				mob.global_position = mob_snapshot.get("position", mob.global_position)
+			mob.defeated.connect(_on_mob_defeated)
+			mobs_alive += 1
+	else:
+		mobs_alive = 0
 
-	mobs_alive = 0
-	for mob_snapshot in mob_snapshots:
-		if mob_snapshot is not Dictionary:
-			continue
-		var mob_path = mob_snapshot.get("scene_file_path", "")
-		var mob_scene_to_instantiate = mob_scene
-		if mob_path != "" and mob_path != mob_scene.resource_path:
-			if ResourceLoader.exists(mob_path):
-				mob_scene_to_instantiate = load(mob_path)
-		var mob = mob_scene_to_instantiate.instantiate()
-		room_root.add_child(mob)
-		if mob.has_method("apply_snapshot"):
-			mob.apply_snapshot(mob_snapshot)
-		else:
-			mob.global_position = mob_snapshot.get("position", mob.global_position)
-		mob.defeated.connect(_on_mob_defeated)
-		mobs_alive += 1
+	# --- 2. HANDLE PICKUPS (Fixed Matching Lógica) ---
+	var pickup_snapshots: Array = snapshot.get("pickups", [])
+	
+	# Get all pickups currently placed by default inside the room scene layout
+	var existing_pickups = []
+	for child in room_root.get_children():
+		if child.is_in_group("pickups"):
+			existing_pickups.append(child)
+
+	# We match snapshots to existing items using their starting coordinates/positions
+	for item in existing_pickups:
+		var was_saved_in_snapshot = false
+		
+		for p_snapshot in pickup_snapshots:
+			if p_snapshot is Dictionary:
+				# Check if the snapshot match this item's position (using a small distance threshold for floating animations)
+				var saved_pos = p_snapshot.get("position", Vector2.ZERO)
+				if item.global_position.distance_to(saved_pos) < 5.0:
+					was_saved_in_snapshot = true
+					# Sync properties if they changed dynamically
+					if item.has_method("apply_snapshot"):
+						item.apply_snapshot(p_snapshot)
+					break
+		
+		# If it's NOT found in our snapshot list, it means the player picked it up last visit!
+		if not was_saved_in_snapshot:
+			item.queue_free()
 
 
 func _get_current_room_scene_path() -> String:
@@ -396,8 +427,7 @@ func _ready():
 		$HUD.update_score(score)
 		$HUD.update_health(health, max_health)
 		$HUD.update_hunger(hunger, max_hunger)
-		_refresh_inventory_hud()
-
+	
 		# Food buffs are now stored in inventory and consumed manually.
 		
 		if saved_room_scene == "" or saved_room_scene == SHELL_SCENE:
@@ -476,7 +506,6 @@ func _process(delta: float) -> void:
 	if not Engine.is_editor_hint() and typeof(GameManager) != TYPE_NIL:
 		if GameManager.inventario_jogador:
 			player_inventory = GameManager.inventario_jogador.duplicate()
-			_refresh_inventory_hud()
 
 
 
@@ -560,8 +589,6 @@ func new_game():
 	mobs_alive = 0
 	# prepare first wave when start timer fires
 
-	# refresh HUD for inventory
-	_refresh_inventory_hud()
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
 		GameManager.pratos_cozinhados.clear()
@@ -630,11 +657,12 @@ func _on_mob_defeated(drop_type: String = "Sus Meat"):
 			var key = part.strip_edges()
 			if key != "":
 				player_inventory[key] = player_inventory.get(key, 0) + 1
+				$HUD.show_pickup(key, 1)
 	else:
 		player_inventory[raw_type] = player_inventory.get(raw_type, 0) + 1
+		$HUD.show_pickup(raw_type, 1)
 
 	# Update the visible ingredient count (sum of all ingredient types)
-	_refresh_inventory_hud()
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
 
@@ -651,6 +679,23 @@ func _on_mob_defeated(drop_type: String = "Sus Meat"):
 		_advance_wave()
 
 	# update GameManager inventory snapshot
+	if typeof(GameManager) != TYPE_NIL:
+		GameManager.inventario_jogador = player_inventory.duplicate()
+
+
+# Generic function for collecting environmental items or chest drops
+func collect_item(item_name: String, amount: int = 1) -> void:
+	if not is_playing or is_game_over:
+		return
+		
+	# Add to local inventory
+	player_inventory[item_name] = player_inventory.get(item_name, 0) + amount
+	
+	# Show the green popup notification you added earlier
+	if has_node("HUD") and $HUD.has_method("show_pickup"):
+		$HUD.show_pickup(item_name, amount)
+		
+	# Update the global GameManager so it carries over to the cooking menu
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
 
@@ -743,7 +788,6 @@ func consumir_prato(dados_do_prato: Dictionary) -> void:
 		
 		$HUD.update_health(health, max_health)
 		$HUD.update_hunger(hunger, max_hunger)
-		_refresh_inventory_hud()
 		print("Prato consumido com sucesso! Status atualizados.")
 	else:
 		print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
@@ -823,6 +867,7 @@ func enter_near_death() -> void:
 		var color_rect = ColorRect.new()
 		color_rect.name = "RedVignette"
 		color_rect.color = Color(1.0, 0.0, 0.0, 0.0) # Start transparent
+		color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		color_rect.anchor_left = 0
 		color_rect.anchor_top = 0
 		color_rect.anchor_right = 1

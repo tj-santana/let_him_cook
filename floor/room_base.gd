@@ -4,7 +4,7 @@ extends Node2D
 @export var is_safe_room: bool = false
 @export var bounds: Rect2 = Rect2(Vector2.ZERO, Vector2(1024, 768))
 
-func _rect_from_points(points: PackedVector2Array, transform: Transform2D) -> Rect2:
+func _rect_from_points(points: PackedVector2Array, transform2d: Transform2D) -> Rect2:
 	if points.is_empty():
 		return Rect2()
 
@@ -14,7 +14,7 @@ func _rect_from_points(points: PackedVector2Array, transform: Transform2D) -> Re
 	var max_y = -INF
 
 	for point in points:
-		var global_point = transform * point
+		var global_point = transform2d * point
 		min_x = min(min_x, global_point.x)
 		min_y = min(min_y, global_point.y)
 		max_x = max(max_x, global_point.x)
@@ -129,12 +129,26 @@ func _collect_mob_snapshots(node: Node, snapshots: Array) -> void:
 			_collect_mob_snapshots(child, snapshots)
 
 
+func _collect_pickup_snapshots(node: Node, snapshots: Array) -> void:
+	for child in node.get_children():
+		if child.is_in_group("pickups") and child.has_method("get_snapshot"):
+			var pickup_snapshot = child.get_snapshot()
+			if pickup_snapshot is Dictionary:
+				snapshots.append(pickup_snapshot)
+		if child is Node:
+			_collect_pickup_snapshots(child, snapshots)
+
+
 func get_snapshot() -> Dictionary:
 	var mob_snapshots: Array = []
 	_collect_mob_snapshots(self, mob_snapshots)
+	var pickup_snapshots: Array = []
+	_collect_pickup_snapshots(self, pickup_snapshots)
 	return {
 		"mob_count": mob_snapshots.size(),
-		"mobs": mob_snapshots
+		"mobs": mob_snapshots,
+		"pickup_count": pickup_snapshots.size(),
+		"pickups": pickup_snapshots
 	}
 
 
@@ -155,7 +169,7 @@ func take_damage_from_enemy(damage_amount: float) -> void:
 			return
 		current_parent = current_parent.get_parent()
 
-func on_enter(from_room: String, entry_marker: String) -> void:
+func on_enter(_from_room: String, _entry_marker: String) -> void:
 	# override in specific rooms if needed
 	pass
 

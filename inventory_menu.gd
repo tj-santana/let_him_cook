@@ -39,8 +39,8 @@ func hide_menu() -> void:
 	get_tree().paused = false
 
 func _limpar_detalhes() -> void:
-	selected_name_label.text = "Selecionar Item"
-	selected_details_label.text = "Seleciona um ingrediente ou prato cozinhado para veres os seus detalhes e bónus."
+	selected_name_label.text = "Select Item"
+	selected_details_label.text = "Select an ingredient or cooked dish to view its details and bonuses."
 	eat_button.visible = false
 	item_selecionado = null
 	tipo_selecionado = ""
@@ -93,7 +93,7 @@ func _on_ingrediente_selected(nome: String, qtd: int) -> void:
 	index_prato_selecionado = -1
 	
 	selected_name_label.text = nome
-	selected_details_label.text = "Quantidade: " + str(qtd) + "\n\nUm ingrediente fresco e cru. Leva-o à cozinha para preparares receitas deliciosas com diferentes métodos culinários!"
+	selected_details_label.text = "Quantity: " + str(qtd) + "\n\nA fresh and raw ingredient. Take it to the kitchen to prepare delicious recipes with different culinary methods!"
 	eat_button.visible = false
 
 func _on_prato_selected(prato: Dictionary, index: int) -> void:
@@ -103,21 +103,21 @@ func _on_prato_selected(prato: Dictionary, index: int) -> void:
 	
 	selected_name_label.text = prato["nome"]
 	
-	var detalhes = "Efeitos ao Consumir:\n"
-	detalhes += "• Fome: +" + str(prato.get("fome", 0.0)) + "\n"
+	var detalhes = "Effects:\n"
+	detalhes += "• Hunger: +" + str(prato.get("fome", 0.0)) + "\n"
 	if prato.get("vida", 0.0) > 0:
-		detalhes += "• Vida: +" + str(prato.get("vida", 0.0)) + "\n"
+		detalhes += "• HP: +" + str(prato.get("vida", 0.0)) + "\n"
 	if prato.get("max_vida", 0.0) > 0:
 		detalhes += "• Max HP: +" + str(prato.get("max_vida", 0.0)) + "\n"
 	if prato.get("velocidade", 0) > 0:
-		detalhes += "• Vel. Movimento: +" + str(prato.get("velocidade", 0)) + "\n"
+		detalhes += "• Speed: +" + str(prato.get("velocidade", 0)) + "\n"
 	if prato.get("dano_causado", 0.0) > 0:
-		detalhes += "• Dano de Ataque: +" + str(prato.get("dano_causado", 0.0)) + "\n"
+		detalhes += "• Attack Damage: +" + str(prato.get("dano_causado", 0.0)) + "\n"
 	if prato.get("dano_recebido", 1.0) < 1.0:
 		var def = int((1.0 - prato.get("dano_recebido", 1.0)) * 100)
-		detalhes += "• Proteção: +" + str(def) + "% de Defesa\n"
+		detalhes += "• Protection: +" + str(def) + "% Defense\n"
 	if prato.get("duracao", 0.0) > 0:
-		detalhes += "• Duração dos Buffs: " + str(prato.get("duracao", 0.0)) + "s\n"
+		detalhes += "• Duration of Buffs: " + str(prato.get("duracao", 0.0)) + "s\n"
 		
 	selected_details_label.text = detalhes
 	eat_button.visible = true
@@ -138,8 +138,6 @@ func _on_eat_button_pressed() -> void:
 		_limpar_detalhes()
 		atualizar_inventario_ui()
 		
-		# Opcional: fechar o menu após comer para voltar à ação
-		hide_menu()
 
 func _obter_cor_ingrediente(nome: String) -> Color:
 	# Copiado/adaptado das categorias visuais da cozinha

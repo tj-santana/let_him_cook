@@ -22,15 +22,19 @@ func mostrar_resultado(nome_prato: String, nota_final: float, buffs: String, e_n
 	# Calcula as estrelas ou a percentagem
 	var percentagem = round(nota_final * 100)
 	
-	texto_titulo.text = "Cozinhaste: " + nome_prato
+	texto_titulo.text = "You cooked: " + nome_prato
 	
 	# Mensagem de qualidade
 	if percentagem >= 90:
-		texto_nota.text = "Qualidade: " + str(percentagem) + "% (Obra-prima!)"
+		texto_nota.text = "Quality: " + str(percentagem) + "% (Masterpiece!)"
+	elif percentagem >= 75:
+		texto_nota.text = "Quality: " + str(percentagem) + "% (Delicious!)"
 	elif percentagem >= 50:
-		texto_nota.text = "Qualidade: " + str(percentagem) + "% (Comestível...)"
+		texto_nota.text = "Quality: " + str(percentagem) + "% (Decent!)"
+	elif percentagem >= 25:
+		texto_nota.text = "Quality: " + str(percentagem) + "% (Edible...)"
 	else:
-		texto_nota.text = "Qualidade: " + str(percentagem) + "% (Gororoba Tóxica!)"
+		texto_nota.text = "Quality: " + str(percentagem) + "% (Toxic Garbage!)"
 		
 	texto_buffs.text = buffs
 	

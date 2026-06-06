@@ -1,14 +1,14 @@
-[gd_scene load_steps=11 format=3]
+[gd_scene format=3 uid="uid://c08agr16emote"]
 
-[ext_resource type="Script" path="res://skeleton_warrior.gd" id="1_skelet"]
-[ext_resource type="Texture2D" uid="uid://cskelet_i0" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f0.png" id="2_i0"]
-[ext_resource type="Texture2D" uid="uid://cskelet_i1" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f1.png" id="3_i1"]
-[ext_resource type="Texture2D" uid="uid://cskelet_i2" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f2.png" id="4_i2"]
-[ext_resource type="Texture2D" uid="uid://cskelet_i3" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f3.png" id="5_i3"]
-[ext_resource type="Texture2D" uid="uid://cskelet_r0" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f0.png" id="6_r0"]
-[ext_resource type="Texture2D" uid="uid://cskelet_r1" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f1.png" id="7_r1"]
-[ext_resource type="Texture2D" uid="uid://cskelet_r2" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f2.png" id="8_r2"]
-[ext_resource type="Texture2D" uid="uid://cskelet_r3" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f3.png" id="9_r3"]
+[ext_resource type="Script" uid="uid://dfp282tnsr3rp" path="res://skeleton_warrior.gd" id="1_skelet"]
+[ext_resource type="Texture2D" uid="uid://bgw0ldx0y7aax" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f0.png" id="2_i0"]
+[ext_resource type="Texture2D" uid="uid://b2ncoxigfo4kc" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f1.png" id="3_i1"]
+[ext_resource type="Texture2D" uid="uid://cuifu7pytv00v" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f2.png" id="4_i2"]
+[ext_resource type="Texture2D" uid="uid://dtfrg4nwvvhyp" path="res://assets/Dungeon_Tileset/frames/skelet_idle_anim_f3.png" id="5_i3"]
+[ext_resource type="Texture2D" uid="uid://1befmwudg32y" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f0.png" id="6_r0"]
+[ext_resource type="Texture2D" uid="uid://hvfb8rdysfxi" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f1.png" id="7_r1"]
+[ext_resource type="Texture2D" uid="uid://doyj1ah1ymemn" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f2.png" id="8_r2"]
+[ext_resource type="Texture2D" uid="uid://c67ijhx04qu3" path="res://assets/Dungeon_Tileset/frames/skelet_run_anim_f3.png" id="9_r3"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_skelet"]
 animations = [{
@@ -51,24 +51,24 @@ animations = [{
 radius = 11.0
 height = 24.0
 
-[node name="SkeletonWarrior" type="CharacterBody2D" groups=["mobs"]]
+[node name="SkeletonWarrior" type="CharacterBody2D" unique_id=293500857 groups=["mobs"]]
 z_index = 1
 collision_layer = 4
 script = ExtResource("1_skelet")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=293806497]
 texture_filter = 1
 scale = Vector2(2.5, 2.5)
 sprite_frames = SubResource("SpriteFrames_skelet")
 animation = &"walk"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=572356130]
 position = Vector2(0, 2)
 shape = SubResource("CapsuleShape2D_skelet")
 
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="." unique_id=1179050159]
 
-[node name="HealthBar" type="ProgressBar" parent="."]
+[node name="HealthBar" type="ProgressBar" parent="." unique_id=196977526]
 self_modulate = Color(0, 1, 0, 1)
 offset_left = -24.0
 offset_top = -24.0

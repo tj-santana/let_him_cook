@@ -1,13 +1,40 @@
 extends CanvasLayer
 
+var pickup_container: VBoxContainer
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	pickup_container = VBoxContainer.new()
+	add_child(pickup_container)
+	
+	# Anchor it to the bottom right
+	pickup_container.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
+	pickup_container.offset_right = -20 # 20 pixels away from the right edge
+	pickup_container.offset_bottom = -20 # 20 pixels away from the bottom edge
+	pickup_container.grow_horizontal = Control.GROW_DIRECTION_BEGIN
+	pickup_container.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	pickup_container.alignment = BoxContainer.ALIGNMENT_END
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	pass
+
+func show_pickup(item_name: String, amount: int = 1) -> void:
+	var label = Label.new()
+	label.text = "+%d %s" % [amount, item_name]
+	label.add_theme_font_size_override("font_size", 20)
+	label.add_theme_color_override("font_color", Color(0.6, 1.0, 0.4)) # A nice light green color
+	label.add_theme_color_override("font_outline_color", Color.BLACK)
+	label.add_theme_constant_override("outline_size", 4)
+	
+	pickup_container.add_child(label)
+	
+	# Animate the label: hold for 2 seconds, fade out over 1 second, then delete
+	var tween = create_tween()
+	tween.tween_interval(2.0) 
+	tween.tween_property(label, "modulate:a", 0.0, 1.0) 
+	tween.tween_callback(label.queue_free)	
 	
 func update_health(current_health: float, max_health: float):
 	$HealthBar.value = max(0.0, (current_health / max_health) * 100.0)
@@ -22,31 +49,6 @@ func update_hunger(current_hunger: float, max_hunger: float):
 	$HungerBar.value = (current_hunger / max_hunger) * 100.0
 	$HungerBar/Label.text = "%d" % current_hunger + "/%d" % max_hunger
 
-func update_ingredients(ingredients):
-	# Accept either a dictionary inventory or nothing
-	if typeof(ingredients) != TYPE_DICTIONARY:
-		return
 
-	var sus_meat = int(ingredients.get("Sus Meat", 0))
-	var slime = int(ingredients.get("Slime", 0))
-	var essence = int(ingredients.get("Essence", 0))
-
-	if $InventorySlots.has_node("InvSlot_Carne"):
-		$InventorySlots/InvSlot_Carne/QtdTexto.text = str(sus_meat)
-	if $InventorySlots.has_node("InvSlot_Slime"):
-		$InventorySlots/InvSlot_Slime/QtdTexto.text = str(slime)
-	if $InventorySlots.has_node("InvSlot_Essence"):
-		$InventorySlots/InvSlot_Essence/QtdTexto.text = str(essence)
-
-
-func update_inventory(inventory: Dictionary):
-	var sus_meat = int(inventory.get("Sus Meat", 0))
-	var slime = int(inventory.get("Slime", 0))
-	var essence = int(inventory.get("Essence", 0))
-
-	$InventorySlots/InvSlot_Carne/QtdTexto.text = str(sus_meat)
-	$InventorySlots/InvSlot_Slime/QtdTexto.text = str(slime)
-	$InventorySlots/InvSlot_Essence/QtdTexto.text = str(essence)
-	
 func update_score(score):
 	$ScoreLabel.text = "Time: %s" % score

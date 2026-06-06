@@ -30,7 +30,7 @@ func _ready():
 	$HealthBar.max_value = health
 	_player = _resolve_player()
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if _player == null:
 		_player = _resolve_player()
 		return

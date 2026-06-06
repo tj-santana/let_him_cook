@@ -2,9 +2,6 @@
 
 [ext_resource type="Script" uid="uid://bktxuh8rnu1i6" path="res://microgames/Scripts/cozinha_principal.gd" id="1_ffrgq"]
 [ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="2_4ux4f"]
-[ext_resource type="Texture2D" uid="uid://u8jmjlfugbug" path="res://microgames/Assets/Food/Isolated Food/icon_sus_meat.tres" id="3_mxnnk"]
-[ext_resource type="Texture2D" uid="uid://q3t01qyc1fgp" path="res://microgames/Assets/Food/Isolated Food/icon_slime.tres" id="4_fuams"]
-[ext_resource type="Texture2D" uid="uid://c4d2gbml72pkf" path="res://microgames/Assets/Food/Isolated Food/icon_essence.tres" id="5_3y880"]
 
 [node name="CozinhaPrincipal" type="Node2D" unique_id=271673863]
 script = ExtResource("1_ffrgq")
@@ -61,7 +58,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Slot2" type="ColorRect" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots" unique_id=1867875687]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-color = Color(0.38170326, 0.38170323, 0.38170323, 1)
+color = Color(0.38039216, 0.38039216, 0.38039216, 1)
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot2" unique_id=1682897536]
 layout_mode = 1
@@ -77,7 +74,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Slot3" type="ColorRect" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots" unique_id=1622683830]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-color = Color(0.38170326, 0.38170323, 0.38170323, 1)
+color = Color(0.38039216, 0.38039216, 0.38039216, 1)
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot3" unique_id=366025697]
 layout_mode = 1
@@ -93,7 +90,7 @@ metadata/_edit_use_anchors_ = true
 [node name="Slot4" type="ColorRect" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots" unique_id=684611936]
 custom_minimum_size = Vector2(64, 64)
 layout_mode = 2
-color = Color(0.38170326, 0.38170323, 0.38170323, 1)
+color = Color(0.38039216, 0.38039216, 0.38039216, 1)
 
 [node name="Icon" type="TextureRect" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/ListaSlots/Slot4" unique_id=873039756]
 layout_mode = 1
@@ -106,7 +103,7 @@ expand_mode = 1
 stretch_mode = 5
 metadata/_edit_use_anchors_ = true
 
-[node name="CaixaBotoes" type="HBoxContainer" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal"]
+[node name="CaixaBotoes" type="HBoxContainer" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal" unique_id=1090435312]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -122,27 +119,27 @@ grow_vertical = 2
 theme_override_constants/separation = 15
 alignment = 1
 
-[node name="BotaoFerver" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes"]
+[node name="BotaoFerver" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes" unique_id=724644107]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "BOIL IT"
 
-[node name="BotaoFritar" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes"]
+[node name="BotaoFritar" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes" unique_id=621710358]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "FRY IT"
 
-[node name="BotaoAssar" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes"]
+[node name="BotaoAssar" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes" unique_id=1799452742]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "ROAST IT"
 
-[node name="BotaoLivro" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes"]
+[node name="BotaoLivro" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/CaixaBotoes" unique_id=1424021028]
 custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 text = "RECIPES"
 
-[node name="InventarioJogadorScroll" type="ScrollContainer" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal"]
+[node name="InventarioJogadorScroll" type="ScrollContainer" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal" unique_id=1171008259]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -156,9 +153,8 @@ offset_bottom = -20.0
 grow_horizontal = 2
 grow_vertical = 0
 horizontal_scroll_mode = 0
-vertical_scroll_mode = 1
 
-[node name="GrelhaInventario" type="GridContainer" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogadorScroll"]
+[node name="GrelhaInventario" type="GridContainer" parent="CanvasLayer/MenuCozinha_Overlay/PainelPrincipal/InventarioJogadorScroll" unique_id=1425424354]
 layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -166,7 +162,7 @@ theme_override_constants/h_separation = 10
 theme_override_constants/v_separation = 10
 columns = 8
 
-[node name="LivroReceitas_Overlay" type="Control" parent="CanvasLayer/MenuCozinha_Overlay"]
+[node name="LivroReceitas_Overlay" type="Control" parent="CanvasLayer/MenuCozinha_Overlay" unique_id=958620143]
 visible = false
 layout_mode = 1
 anchors_preset = 15
@@ -175,7 +171,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="FundoEscurecido" type="ColorRect" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay"]
+[node name="FundoEscurecido" type="ColorRect" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay" unique_id=2119531430]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -184,7 +180,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 0.7)
 
-[node name="FundoLivro" type="NinePatchRect" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay"]
+[node name="FundoLivro" type="NinePatchRect" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay" unique_id=990626957]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -204,7 +200,7 @@ patch_margin_top = 12
 patch_margin_right = 12
 patch_margin_bottom = 12
 
-[node name="Titulo" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro"]
+[node name="Titulo" type="Label" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro" unique_id=1951634302]
 layout_mode = 1
 anchors_preset = 5
 anchor_left = 0.5
@@ -219,7 +215,7 @@ theme_override_font_sizes/font_size = 28
 text = "LIVRO DE RECEITAS"
 horizontal_alignment = 1
 
-[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro"]
+[node name="ScrollContainer" type="ScrollContainer" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro" unique_id=241890400]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -231,12 +227,12 @@ offset_bottom = -80.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="ListaReceitas" type="VBoxContainer" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro/ScrollContainer"]
+[node name="ListaReceitas" type="VBoxContainer" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro/ScrollContainer" unique_id=1890547642]
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_constants/separation = 12
 
-[node name="BotaoFecharLivro" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro"]
+[node name="BotaoFecharLivro" type="Button" parent="CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay/FundoLivro" unique_id=730501141]
 layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0

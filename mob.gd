@@ -35,7 +35,7 @@ func _ready():
 	_player = _resolve_player()
 	drop_type = "Sus Meat"
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if _player == null:
 		_player = _resolve_player()
 		return

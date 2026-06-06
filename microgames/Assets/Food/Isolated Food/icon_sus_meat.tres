@@ -1,7 +1,0 @@
-[gd_resource type="AtlasTexture" format=3 uid="uid://u8jmjlfugbug"]
-
-[ext_resource type="Texture2D" uid="uid://qo4exaev4rh0" path="res://Assets/Food/raw meats.png" id="1_xxy2q"]
-
-[resource]
-atlas = ExtResource("1_xxy2q")
-region = Rect2(0, 0, 32, 32)
