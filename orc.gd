@@ -326,4 +326,3 @@ func apply_snapshot(snapshot: Dictionary) -> void:
 		$AnimatedSprite2D.flip_h = bool(snapshot.get("flip_h", false))
 	if bool(snapshot.get("is_raging", false)):
 		_enter_rage_mode()
-
