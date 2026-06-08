@@ -50,6 +50,10 @@ func obter_cor_ingrediente(nome: String) -> Color:
 ]
 
 func _ready():
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_bgm("res://assets/the_mountain-cooking-159122.mp3", -6.0)
+		
 	atualizar_ecra()
 	atualizar_textos_inventario() # Garante que os números aparecem certos logo ao iniciar!
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE

@@ -66,15 +66,23 @@ func _apply_damage(dmg: float, can_kill: bool = true) -> void:
 	
 	var am = get_node_or_null("/root/AudioManager")
 	if am:
-		am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/dropLeather.ogg", 0.0, 0.9)
+		am.play_sfx_path("res://assets/Impact_SFX/Audio/impactSoft_heavy_000.ogg", 4.0, randf_range(0.85, 0.95))
 
+	# Flash red feedback
+	if has_node("AnimatedSprite2D"):
+		var sprite = $AnimatedSprite2D
+		var orig = sprite.modulate
+		var tween = create_tween()
+		tween.tween_property(sprite, "modulate", Color(1.0, 0.1, 0.1, 1.0), 0.1)
+		tween.tween_property(sprite, "modulate", orig, 0.1)
+		tween.tween_property(sprite, "modulate", Color(1.0, 0.1, 0.1, 1.0), 0.1)
+		tween.tween_property(sprite, "modulate", orig, 0.1)
 	
 	# Death is managed by the master game script (game.gd).
 	# The player remains active in near death state until game_over is triggered.
 	if get_tree():
 		await get_tree().create_timer(hit_invulnerability).timeout
-	if visible:
-		can_take_hit = true
+	can_take_hit = true
 
 func _ready():
 	screen_size = get_viewport_rect().size

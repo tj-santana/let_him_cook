@@ -13,7 +13,7 @@ var jogo_ativo: bool = true
 var jogo_cancelado: bool = false
 
 # --- VARIÁVEIS DA MISTURA ---
-var voltas_necessarias: float = 10.0
+var voltas_necessarias: float = 7.0
 var rotacao_acumulada: float = 0.0
 var angulo_anterior: float = 0.0
 
@@ -91,6 +91,12 @@ func finalizar_jogo():
 	await get_tree().create_timer(1.0).timeout
 	if jogo_cancelado:
 		return
+		
+	if GameManager.total_minijogos_na_sequencia == 0:
+		print("[Geleia] Individual Test Mode: Reloading scene.")
+		get_tree().reload_current_scene()
+		return
+		
 	GameManager.registar_pontuacao_e_avancar(desempenho)
 
 

@@ -5,6 +5,7 @@ extends Node
 var _streams = {}
 var _pool = []
 var _pool_size = 12
+var _bgm_player: AudioStreamPlayer = null
 
 func _ready():
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -13,6 +14,10 @@ func _ready():
 		var player = AudioStreamPlayer.new()
 		add_child(player)
 		_pool.append(player)
+		
+	# Create BGM player
+	_bgm_player = AudioStreamPlayer.new()
+	add_child(_bgm_player)
 	
 	# Auto-hook buttons
 	get_tree().node_added.connect(_on_node_added)
@@ -136,3 +141,25 @@ func play_enemy_hit(enemy_name: String):
 	else:
 		path = "res://assets/kenney_rpg-audio/Audio/cloth2.ogg"
 	play_sfx_path(path, 0.0, randf_range(0.9, 1.1))
+
+func play_bgm(path: String, volume_db: float = -6.0) -> void:
+	if _bgm_player == null:
+		return
+	if _bgm_player.playing and _bgm_player.stream and _bgm_player.stream.resource_path == path:
+		return # Already playing this track!
+	
+	if ResourceLoader.exists(path):
+		var stream = load(path)
+		if "loop" in stream:
+			stream.loop = true
+		elif "loop_mode" in stream:
+			stream.loop_mode = 1
+		_bgm_player.stream = stream
+		_bgm_player.volume_db = volume_db
+		_bgm_player.play()
+	else:
+		print("BGM not found: ", path)
+
+func stop_bgm() -> void:
+	if _bgm_player != null and _bgm_player.playing:
+		_bgm_player.stop()

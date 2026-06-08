@@ -393,6 +393,10 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_bgm("res://assets/hexxel-enter-the-dungeon-528617.mp3", -6.0)
+		
 	if pause_menu != null:
 		pause_menu.hide_menu()
 	if inventory_menu != null:
