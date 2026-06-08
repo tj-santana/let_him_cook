@@ -1,41 +1,17 @@
 [gd_scene format=3 uid="uid://crctg4mkvfh3"]
 
 [ext_resource type="Script" uid="uid://vmqfkjtm3vmb" path="res://bat.gd" id="1_bat"]
-[ext_resource type="Texture2D" uid="uid://d0bq067v7sxhs" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f0.png" id="2_f0"]
-[ext_resource type="Texture2D" uid="uid://6703tipmhis1" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f1.png" id="3_f1"]
-[ext_resource type="Texture2D" uid="uid://dwwv5nm3ov7j0" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f2.png" id="4_f2"]
-[ext_resource type="Texture2D" uid="uid://b6l0o5gqiixeq" path="res://assets/Dungeon_Tileset/frames/imp_idle_anim_f3.png" id="5_f3"]
-[ext_resource type="Texture2D" uid="uid://rgg46va7pyrd" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f0.png" id="6_r0"]
-[ext_resource type="Texture2D" uid="uid://cs6nytkpns460" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f1.png" id="7_r1"]
-[ext_resource type="Texture2D" uid="uid://doo6s13g5b2qb" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f2.png" id="8_r2"]
-[ext_resource type="Texture2D" uid="uid://b60w2lniwe071" path="res://assets/Dungeon_Tileset/frames/imp_run_anim_f3.png" id="9_r3"]
+[ext_resource type="Texture2D" uid="uid://dawt255rex0om" path="res://assets/bat_f0.png" id="2_vobq3"]
+[ext_resource type="Texture2D" uid="uid://dh1jiryb01bc1" path="res://assets/bat_f1.png" id="3_1tubu"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_bat"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_f0")
+"texture": ExtResource("2_vobq3")
 }, {
 "duration": 1.0,
-"texture": ExtResource("3_f1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("4_f2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("5_f3")
-}, {
-"duration": 1.0,
-"texture": ExtResource("6_r0")
-}, {
-"duration": 1.0,
-"texture": ExtResource("7_r1")
-}, {
-"duration": 1.0,
-"texture": ExtResource("8_r2")
-}, {
-"duration": 1.0,
-"texture": ExtResource("9_r3")
+"texture": ExtResource("3_1tubu")
 }],
 "loop": true,
 "name": &"fly",
