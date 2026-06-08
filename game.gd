@@ -775,9 +775,10 @@ func consumir_prato(dados_do_prato: Dictionary) -> void:
 	var fome_rec = dados_do_prato.get("fome", 0.0)
 	var dano_causado = dados_do_prato.get("dano_causado", 0.0)
 	var dano_recebido = dados_do_prato.get("dano_recebido", 1.0)
+	var area = dados_do_prato.get("area", 0.0)
 	
 	if $Player.has_method("aplicar_buff_comida"):
-		$Player.aplicar_buff_comida(vel, cooldown, dur, dano_causado, dano_recebido)
+		$Player.aplicar_buff_comida(vel, cooldown, dur, dano_causado, dano_recebido, area)
 		
 		# Recover MaxHP, health and hunger
 		if max_vida_rec > 0.0:

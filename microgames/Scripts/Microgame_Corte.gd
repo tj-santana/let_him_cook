@@ -9,7 +9,7 @@ extends Node2D
 var tempo_restante: float = 7.0
 var jogo_ativo: bool = true
 var hits: int = 0
-var hits_needed: int = 3
+var hits_needed: int = 5
 var direction: float = 1.0
 var speed: float = 350.0
 
@@ -141,4 +141,8 @@ func finalizar_jogo(nota: float):
 		print("Chop microgame ended. Score: ", nota)
 		
 	await get_tree().create_timer(1.0).timeout
+	if GameManager.total_minijogos_na_sequencia == 0:
+		print("[Corte] Individual Test Mode: Reloading scene.")
+		get_tree().reload_current_scene()
+		return
 	GameManager.registar_pontuacao_e_avancar(nota)

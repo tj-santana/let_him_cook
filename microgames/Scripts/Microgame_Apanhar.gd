@@ -133,7 +133,7 @@ func _update_falling_items(delta):
 					am.play_click()
 			else:
 				# GOOD! Caught an ingredient
-				progresso = min(progresso_max, progresso + 20.0)
+				progresso = min(progresso_max, progresso + 15.0)
 				_show_feedback("YUM!", Color.GREEN)
 				_bounce_pot()
 				if am:
@@ -183,6 +183,10 @@ func finalizar_jogo(nota: float):
 		print("Catch microgame ended. Score: ", nota)
 		
 	await get_tree().create_timer(1.0).timeout
+	if GameManager.total_minijogos_na_sequencia == 0:
+		print("[Apanhar] Individual Test Mode: Reloading scene.")
+		get_tree().reload_current_scene()
+		return
 	GameManager.registar_pontuacao_e_avancar(nota)
 
 func jogo_off():

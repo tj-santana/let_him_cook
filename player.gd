@@ -28,10 +28,12 @@ var base_speed = 400.0
 var base_attack_dmg = 10.0
 var base_attack_cooldown = 0.5
 var base_dash_speed = 1200.0
+var base_attack_range = 70.0
 var temp_speed_bonus := 0.0
 var temp_attack_dmg_bonus := 0.0
 var temp_attack_cooldown_reduction := 0.0
 var temp_dash_speed_bonus := 0.0
+var temp_attack_range_bonus := 0.0
 var temp_damage_taken_multiplier := 1.0
 var spork_mode_active := false
 var can_attack = true
@@ -91,6 +93,7 @@ func _ready():
 	base_attack_dmg = attack_dmg
 	base_attack_cooldown = attack_cooldown
 	base_dash_speed = dash_speed
+	base_attack_range = attack_range
 	_recalculate_combat_stats()
 
 	# Ensure the player's current health starts at the configured max
@@ -111,6 +114,7 @@ func _recalculate_combat_stats() -> void:
 	attack_dmg = max(0.0, base_attack_dmg + temp_attack_dmg_bonus + (spork_attack_dmg_bonus if spork_mode_active else 0.0))
 	attack_cooldown = max(0.1, base_attack_cooldown - temp_attack_cooldown_reduction - (spork_attack_cooldown_reduction if spork_mode_active else 0.0))
 	dash_speed = max(0.0, base_dash_speed + temp_dash_speed_bonus + (spork_dash_speed_bonus if spork_mode_active else 0.0))
+	attack_range = max(10.0, base_attack_range + temp_attack_range_bonus)
 	
 	if near_death_active:
 		speed *= 0.5
@@ -384,14 +388,16 @@ func _draw():
 		var center = facing.normalized() * attack_offset
 		draw_circle(center, attack_range, Color(1.0, 0.2, 0.2, 0.2))
 
-func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float, bonus_dano: float = 0.0, mult_dano_recebido: float = 1.0):
+func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao: float, bonus_dano: float = 0.0, mult_dano_recebido: float = 1.0, bonus_area: float = 0.0):
 	temp_speed_bonus += bonus_velocidade
 	temp_attack_cooldown_reduction += reducao_cooldown
 	temp_attack_dmg_bonus += bonus_dano
 	temp_damage_taken_multiplier = mult_dano_recebido
+	temp_attack_range_bonus += bonus_area
 	_recalculate_combat_stats()
+	queue_redraw()
 	
-	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown, " | Dano: ", attack_dmg, " | Mult Dano Recebido: ", temp_damage_taken_multiplier)
+	print("Buff Aplicado! Speed: ", speed, " | Cooldown: ", attack_cooldown, " | Dano: ", attack_dmg, " | Mult Dano Recebido: ", temp_damage_taken_multiplier, " | Area: ", attack_range)
 	
 	await get_tree().create_timer(duracao).timeout
 	
@@ -399,6 +405,8 @@ func aplicar_buff_comida(bonus_velocidade: int, reducao_cooldown: float, duracao
 	temp_attack_cooldown_reduction -= reducao_cooldown
 	temp_attack_dmg_bonus -= bonus_dano
 	temp_damage_taken_multiplier = 1.0
+	temp_attack_range_bonus -= bonus_area
 	_recalculate_combat_stats()
+	queue_redraw()
 	
 	print("O Buff acabou! Voltaste ao normal.")

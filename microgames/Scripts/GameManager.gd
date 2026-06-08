@@ -101,14 +101,24 @@ func iniciar_sequencia_minijogos(metodo: String = ""):
 	
 	fila_de_minijogos = []
 	
+	# 0. Peixe at the start of all cooking types (Boil, Fry, Roast)
+	if metodo == "Boil" or metodo == "Fry" or metodo == "Roast":
+		var peixe_game = "res://microgames/Cenas/Microgames/microgame_peixe.tscn"
+		if FileAccess.file_exists(peixe_game):
+			fila_de_minijogos.append(peixe_game)
+	
 	# 1. Preparação (moscas/limpeza) para os ingredientes escolhidos
+	var prep_added = false
 	for ingrediente in ingredientes_atuais:
 		var prep_game = obter_jogo_preparacao(ingrediente)
 		if FileAccess.file_exists(prep_game) and not fila_de_minijogos.has(prep_game):
 			fila_de_minijogos.append(prep_game)
+			prep_added = true
 			
-	if fila_de_minijogos.is_empty():
-		fila_de_minijogos.append("res://microgames/Cenas/Microgames/Microgame_Carne.tscn")
+	if not prep_added:
+		var fallback_prep = "res://microgames/Cenas/Microgames/Microgame_Carne.tscn"
+		if FileAccess.file_exists(fallback_prep):
+			fila_de_minijogos.append(fallback_prep)
 		
 	# 2. Cortar
 	var corte_game = "res://microgames/Cenas/Microgames/Microgame_Corte.tscn"
@@ -142,6 +152,15 @@ func iniciar_sequencia_minijogos(metodo: String = ""):
 		var cozinhar_game = "res://microgames/Cenas/Microgames/Microgame_Cozinhar.tscn"
 		if FileAccess.file_exists(cozinhar_game):
 			fila_de_minijogos.append(cozinhar_game)
+			
+	# Special insert for Roast: insert Bone game as the 3rd microgame (index 2)
+	if metodo == "Roast":
+		var bone_game = "res://microgames/Cenas/Microgames/Microgame_Bone.tscn"
+		if FileAccess.file_exists(bone_game):
+			if fila_de_minijogos.size() >= 2:
+				fila_de_minijogos.insert(2, bone_game)
+			else:
+				fila_de_minijogos.append(bone_game)
 			
 	total_minijogos_na_sequencia = fila_de_minijogos.size()
 	print("[GameManager] Fila de minijogos gerada: ", fila_de_minijogos)
@@ -326,18 +345,19 @@ var inventario_jogador: Dictionary = {
 }
 
 # O NOSSO LIVRO DE RECEITAS
+# O NOSSO LIVRO DE RECEITAS
 var livro_de_receitas: Dictionary = {
-	# 1. Sus Meat + Sus Meat (The Carnivore)
+	# 1. Sus Meat + Sus Meat
 	["Boil", "Sus Meat", "Sus Meat"]: "Suspicious Stew",
 	["Fry", "Sus Meat", "Sus Meat"]: "Crispy Meat Bites",
 	["Roast", "Sus Meat", "Sus Meat"]: "Charred Jerky",
 
-	# 2. Slime + Slime (The Weird Alchemist)
+	# 2. Slime + Slime
 	["Boil", "Slime", "Slime"]: "Slime Broth",
 	["Fry", "Slime", "Slime"]: "Fried Jelly",
 	["Roast", "Slime", "Slime"]: "Roasted Ooze",
 
-	# 3. Moss + Moss (The Forager)
+	# 3. Moss + Moss
 	["Boil", "Moss", "Moss"]: "Herbal Tea",
 	["Fry", "Moss", "Moss"]: "Tempura Moss",
 	["Roast", "Moss", "Moss"]: "Smoked Herbs",
@@ -357,10 +377,62 @@ var livro_de_receitas: Dictionary = {
 	["Fry", "Moss", "Slime"]: "Crispy Algae",
 	["Roast", "Moss", "Slime"]: "Baked Slime Cake",
 
-	["Bat Wings", "Bat Wings"]: "Roasted Bat Wings",
-	["Bones", "Bones"]: "Bone Broth",
-	["Mimic Eye", "Any", "Any", "Any"]: "Mimic Eye Rock Soup",
-	["Mimic Tongue", "Any", "Any", "Any"]: "Mimic Tongue Picanha"
+	# 7. Bat Wings + Bat Wings
+	["Fry", "Bat Wings", "Bat Wings"]: "Crispy Buffalo Wings",
+	["Roast", "Bat Wings", "Bat Wings"]: "Roasted Bat Wings",
+
+	# 8. Bat Meat + Bat Meat
+	["Fry", "Bat Meat", "Bat Meat"]: "Sweet & Sour Bat Nuggets",
+	["Roast", "Bat Meat", "Bat Meat"]: "BBQ Bat Skewer",
+
+	# 9. Bones + Bones
+	["Boil", "Bones", "Bones"]: "Bone Broth",
+
+	# 10. Orc Meat + Orc Meat
+	["Fry", "Orc Meat", "Orc Meat"]: "Tenderized Orc Schnitzel",
+	["Roast", "Orc Meat", "Orc Meat"]: "Orc Steak",
+
+	# 11. Bat Meat + Moss
+	["Boil", "Bat Meat", "Moss"]: "Cave Medicine",
+	["Fry", "Bat Meat", "Moss"]: "Herb-Fried Bat Wing",
+	["Roast", "Bat Meat", "Moss"]: "Stuffed Bat Roast",
+
+	# 12. Orc Meat + Moss
+	["Boil", "Orc Meat", "Moss"]: "Mountain Stew",
+	["Fry", "Orc Meat", "Moss"]: "Sautéed Orc Strips",
+	["Roast", "Orc Meat", "Moss"]: "Forest Orc Roast",
+
+	# 13. Orc Meat + Slime
+	["Boil", "Orc Meat", "Slime"]: "Gelatinous Stew",
+	["Fry", "Orc Meat", "Slime"]: "Slime-Basted Schnitzel",
+	["Roast", "Orc Meat", "Slime"]: "Glazed Orc Ribs",
+
+	# 14. Bones + Sus Meat
+	["Boil", "Bones", "Sus Meat"]: "Rich Marrow Soup",
+	["Roast", "Bones", "Sus Meat"]: "Rib-Eye Roast",
+
+	# 15. Bones + Orc Meat
+	["Boil", "Bones", "Orc Meat"]: "Orc Marrow Broth",
+	["Roast", "Bones", "Orc Meat"]: "T-Bone Orc Steak",
+
+	# 16. Bat Wings + Slime
+	["Boil", "Bat Wings", "Slime"]: "Bat Wing Slime Pot",
+	["Fry", "Bat Wings", "Slime"]: "Crispy Wing Jelly",
+
+	# 17. Mimic Eye + Sus Meat
+	["Boil", "Mimic Eye", "Sus Meat"]: "Peeping Stew",
+	["Fry", "Mimic Eye", "Sus Meat"]: "Crispy Pupil Pops",
+	["Roast", "Mimic Eye", "Sus Meat"]: "Staring Kabob",
+
+	# 18. Mimic Tongue + Sus Meat
+	["Boil", "Mimic Tongue", "Sus Meat"]: "Licking Broth",
+	["Fry", "Mimic Tongue", "Sus Meat"]: "Chewy Tongue Strips",
+	["Roast", "Mimic Tongue", "Sus Meat"]: "Roasted Tongue Roast",
+
+	# 19. Mimic Eye + Mimic Tongue
+	["Boil", "Mimic Eye", "Mimic Tongue"]: "Mimic Soup",
+	["Fry", "Mimic Eye", "Mimic Tongue"]: "Mimic Tempura",
+	["Roast", "Mimic Eye", "Mimic Tongue"]: "Roasted Mimic Platter"
 }
 
 func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
@@ -395,12 +467,13 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 		"cooldown": 0.0,
 		"duracao": 15.0,
 		"dano_causado": 0.0,
-		"dano_recebido": 1.0
+		"dano_recebido": 1.0,
+		"area": 0.0
 	}
 	
 	match nome_prato:
 		"Mistake":
-		# Punishing, but heals 1 HP so it's not entirely useless
+			# Punishing, but heals 1 HP so it's not entirely useless
 			resultado["vida"] = 1.0
 			resultado["max_vida"] = 1.0
 			resultado["fome"] = 1.0 
@@ -422,21 +495,100 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 			resultado["max_vida"] = 20.0
 			resultado["fome"] = 15.0
 			resultado["velocidade"] = 20
+			resultado["duracao"] = 25.0
+		"Slime Broth":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 40
+			resultado["duracao"] = 20.0
+		"Herbal Tea":
+			resultado["vida"] = 35.0
+			resultado["fome"] = 10.0
+			resultado["cooldown"] = 0.05
+			resultado["duracao"] = 30.0
+		"Shady Jelly":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 20.0
+			resultado["velocidade"] = 50
+			resultado["duracao"] = 20.0
+		"Bone Broth":
+			resultado["vida"] = 40.0
+			resultado["max_vida"] = 30.0
+			resultado["fome"] = 20.0
+			resultado["dano_recebido"] = 0.8 # 20% damage reduction
+			resultado["duracao"] = 40.0
+		"Cave Medicine":
+			resultado["vida"] = 50.0
+			resultado["fome"] = 10.0
+			resultado["duracao"] = 10.0
+		"Mountain Stew":
+			resultado["vida"] = 30.0
+			resultado["max_vida"] = 25.0
+			resultado["fome"] = 30.0
+			resultado["dano_recebido"] = 0.85
+			resultado["duracao"] = 45.0
+		"Gelatinous Stew":
+			resultado["vida"] = 30.0
+			resultado["fome"] = 30.0
+			resultado["velocidade"] = 30
+			resultado["duracao"] = 30.0
+		"Rich Marrow Soup":
+			resultado["vida"] = 35.0
+			resultado["max_vida"] = 25.0
+			resultado["fome"] = 25.0
+			resultado["dano_recebido"] = 0.9
+			resultado["area"] = 20.0
+			resultado["duracao"] = 35.0
+		"Orc Marrow Broth":
+			resultado["vida"] = 45.0
+			resultado["max_vida"] = 35.0
+			resultado["fome"] = 30.0
+			resultado["dano_recebido"] = 0.85
+			resultado["area"] = 30.0
+			resultado["duracao"] = 45.0
+		"Bat Wing Slime Pot":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 80
+			resultado["duracao"] = 20.0
+		"Peeping Stew":
+			resultado["vida"] = 30.0
+			resultado["max_vida"] = 20.0
+			resultado["fome"] = 20.0
+			resultado["velocidade"] = 60
+			resultado["duracao"] = 40.0
+		"Licking Broth":
+			resultado["vida"] = 35.0
+			resultado["max_vida"] = 25.0
+			resultado["fome"] = 25.0
+			resultado["duracao"] = 35.0
+		"Mimic Soup":
+			resultado["vida"] = 60.0
+			resultado["max_vida"] = 40.0
+			resultado["fome"] = 40.0
+			resultado["dano_recebido"] = 0.75 # 25% damage reduction
+			resultado["area"] = 30.0
+			resultado["duracao"] = 60.0
 
 		# --- FRIED FOODS (FRY) -> Speed & Cooldowns ---
+		"Crispy Meat Bites":
+			resultado["vida"] = 15.0
+			resultado["max_vida"] = 5.0
+			resultado["fome"] = 20.0
+			resultado["velocidade"] = 80
+			resultado["cooldown"] = 0.1
+			resultado["duracao"] = 15.0
 		"Fried Jelly":
 			resultado["vida"] = 10.0
 			resultado["max_vida"] = 5.0
 			resultado["fome"] = 15.0
 			resultado["velocidade"] = 120
 			resultado["cooldown"] = 0.15 # Fast attacks
-			resultado["duracao"] = 15.0 # Short duration (sugar crash!)
-		"Herb-Crusted Cutlet":
-			resultado["vida"] = 20.0
-			resultado["max_vida"] = 10.0
-			resultado["fome"] = 25.0
+			resultado["duracao"] = 15.0 # Short duration
+		"Tempura Moss":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 20.0
 			resultado["velocidade"] = 60
-			resultado["cooldown"] = 0.1
 			resultado["duracao"] = 25.0
 		"Glazed Meatballs":
 			resultado["vida"] = 15.0
@@ -446,6 +598,76 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 			resultado["cooldown"] = 0.1
 			resultado["dano_causado"] = 5.0
 			resultado["duracao"] = 20.0
+		"Herb-Crusted Cutlet":
+			resultado["vida"] = 20.0
+			resultado["max_vida"] = 10.0
+			resultado["fome"] = 25.0
+			resultado["velocidade"] = 60
+			resultado["cooldown"] = 0.1
+			resultado["duracao"] = 25.0
+		"Crispy Algae":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 100
+			resultado["duracao"] = 15.0
+		"Crispy Buffalo Wings":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 140
+			resultado["duracao"] = 15.0
+		"Sweet & Sour Bat Nuggets":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 15.0
+			resultado["cooldown"] = 0.2
+			resultado["duracao"] = 20.0
+		"Tenderized Orc Schnitzel":
+			resultado["vida"] = 25.0
+			resultado["fome"] = 30.0
+			resultado["velocidade"] = 50
+			resultado["cooldown"] = 0.1
+			resultado["dano_causado"] = 6.0
+			resultado["duracao"] = 35.0
+		"Herb-Fried Bat Wing":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 20.0
+			resultado["velocidade"] = 110
+			resultado["duracao"] = 20.0
+		"Sautéed Orc Strips":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 25.0
+			resultado["cooldown"] = 0.15
+			resultado["velocidade"] = 40
+			resultado["duracao"] = 30.0
+		"Slime-Basted Schnitzel":
+			resultado["vida"] = 25.0
+			resultado["fome"] = 25.0
+			resultado["velocidade"] = 70
+			resultado["dano_causado"] = 8.0
+			resultado["duracao"] = 25.0
+		"Crispy Wing Jelly":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 15.0
+			resultado["velocidade"] = 130
+			resultado["cooldown"] = 0.12
+			resultado["duracao"] = 20.0
+		"Crispy Pupil Pops":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 15.0
+			resultado["cooldown"] = 0.25
+			resultado["duracao"] = 30.0
+		"Chewy Tongue Strips":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 20.0
+			resultado["velocidade"] = 90
+			resultado["cooldown"] = 0.15
+			resultado["duracao"] = 30.0
+		"Mimic Tempura":
+			resultado["vida"] = 40.0
+			resultado["fome"] = 30.0
+			resultado["velocidade"] = 180
+			resultado["cooldown"] = 0.3
+			resultado["area"] = 20.0
+			resultado["duracao"] = 45.0
 
 		# --- ROASTED FOODS (ROAST) -> Damage & Duration ---
 		"Charred Jerky":
@@ -454,12 +676,16 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 			resultado["fome"] = 20.0
 			resultado["dano_causado"] = 8.0 # High damage
 			resultado["duracao"] = 60.0 # Lasts a full minute
-		"Mossy Roast":
-			resultado["vida"] = 25.0
-			resultado["max_vida"] = 20.0
-			resultado["fome"] = 30.0
-			resultado["dano_causado"] = 5.0
-			resultado["duracao"] = 45.0
+		"Roasted Ooze":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 20.0
+			resultado["dano_causado"] = 4.0
+			resultado["duracao"] = 30.0
+		"Smoked Herbs":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 15.0
+			resultado["dano_causado"] = 3.0
+			resultado["duracao"] = 40.0
 		"Sticky Kabob":
 			resultado["vida"] = 20.0
 			resultado["max_vida"] = 10.0
@@ -467,6 +693,79 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 			resultado["dano_causado"] = 15.0
 			resultado["velocidade"] = 30
 			resultado["duracao"] = 20.0
+		"Mossy Roast":
+			resultado["vida"] = 25.0
+			resultado["max_vida"] = 20.0
+			resultado["fome"] = 30.0
+			resultado["dano_causado"] = 5.0
+			resultado["duracao"] = 45.0
+		"Baked Slime Cake":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 25.0
+			resultado["dano_recebido"] = 0.9
+			resultado["duracao"] = 30.0
+		"Roasted Bat Wings":
+			resultado["vida"] = 15.0
+			resultado["fome"] = 20.0
+			resultado["dano_causado"] = 6.0
+			resultado["duracao"] = 40.0
+		"BBQ Bat Skewer":
+			resultado["vida"] = 20.0
+			resultado["fome"] = 20.0
+			resultado["dano_causado"] = 8.0
+			resultado["duracao"] = 45.0
+		"Orc Steak":
+			resultado["vida"] = 35.0
+			resultado["fome"] = 40.0
+			resultado["dano_causado"] = 12.0
+			resultado["duracao"] = 50.0
+		"Stuffed Bat Roast":
+			resultado["vida"] = 25.0
+			resultado["fome"] = 30.0
+			resultado["dano_causado"] = 7.0
+			resultado["duracao"] = 40.0
+		"Forest Orc Roast":
+			resultado["vida"] = 30.0
+			resultado["fome"] = 35.0
+			resultado["dano_causado"] = 14.0
+			resultado["area"] = 25.0
+			resultado["duracao"] = 45.0
+		"Glazed Orc Ribs":
+			resultado["vida"] = 35.0
+			resultado["max_vida"] = 15.0
+			resultado["fome"] = 35.0
+			resultado["dano_causado"] = 10.0
+			resultado["area"] = 15.0
+			resultado["duracao"] = 40.0
+		"Rib-Eye Roast":
+			resultado["vida"] = 25.0
+			resultado["fome"] = 30.0
+			resultado["dano_causado"] = 7.0
+			resultado["duracao"] = 40.0
+		"T-Bone Orc Steak":
+			resultado["vida"] = 35.0
+			resultado["fome"] = 35.0
+			resultado["dano_causado"] = 15.0
+			resultado["area"] = 20.0
+			resultado["duracao"] = 50.0
+		"Staring Kabob":
+			resultado["vida"] = 25.0
+			resultado["fome"] = 25.0
+			resultado["dano_causado"] = 12.0
+			resultado["area"] = 30.0
+			resultado["duracao"] = 45.0
+		"Roasted Tongue Roast":
+			resultado["vida"] = 30.0
+			resultado["fome"] = 30.0
+			resultado["dano_causado"] = 10.0
+			resultado["duracao"] = 50.0
+		"Roasted Mimic Platter":
+			resultado["vida"] = 50.0
+			resultado["fome"] = 50.0
+			resultado["dano_causado"] = 25.0
+			resultado["velocidade"] = 50
+			resultado["area"] = 40.0
+			resultado["duracao"] = 60.0
 
 	return resultado
 

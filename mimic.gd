@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal defeated(drop_type: String)
 
 @export var damage_amount = 12.0
-@export var drop_type: String = "Orc Meat, Bat Wing, Slime, Bones"
+@export var drop_type: String = "Orc Meat, Bat Wings, Slime, Bones"
 @export var speed: float = 60.0
 @export var chase_speed: float = 110.0
 @export var detection_radius: float = 180.0
