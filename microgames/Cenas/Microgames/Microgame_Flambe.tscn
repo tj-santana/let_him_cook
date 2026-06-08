@@ -1,0 +1,126 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://microgames/Scripts/microgame_flambe.gd" id="1_script"]
+[ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="2_bg"]
+[ext_resource type="Texture2D" uid="uid://by31w4g7v4k7f" path="res://microgames/Assets/Panela.png" id="3_panela"]
+[ext_resource type="Texture2D" uid="uid://by14pa47nfdh4" path="res://microgames/Assets/chama.png" id="4_chama"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bg"]
+bg_color = Color(0.1, 0.1, 0.1, 0.35)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_time"]
+bg_color = Color(0.2, 0.8, 0.2, 1)
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Microgame_Flambe" type="Node2D"]
+script = ExtResource("1_script")
+
+[node name="Fundo" type="TextureRect" parent="."]
+custom_minimum_size = Vector2(200, 200)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 1156.0
+offset_bottom = 650.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_bg")
+expand_mode = 1
+
+[node name="FogoVisual" type="Sprite2D" parent="."]
+position = Vector2(576, 420)
+texture = ExtResource("4_chama")
+
+[node name="PanelaVisual" type="Sprite2D" parent="."]
+position = Vector2(576, 380)
+scale = Vector2(1.5, 1.5)
+texture = ExtResource("3_panela")
+region_enabled = true
+region_rect = Rect2(0, 206, 360, 154)
+
+[node name="TampaVisual" type="Node2D" parent="."]
+position = Vector2(576, 220)
+
+[node name="LidPlate" type="ColorRect" parent="TampaVisual"]
+offset_left = -110.0
+offset_top = -12.0
+offset_right = 110.0
+offset_bottom = 12.0
+color = Color(0.75, 0.78, 0.8, 1)
+
+[node name="LidHandle" type="ColorRect" parent="TampaVisual"]
+offset_left = -25.0
+offset_top = -28.0
+offset_right = 25.0
+offset_bottom = -12.0
+color = Color(0.3, 0.32, 0.35, 1)
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="TextoAjuda" type="Label" parent="UI"]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -300.0
+offset_top = 30.0
+offset_right = 300.0
+offset_bottom = 140.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 70
+text = "SMOTHER!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="BarraTempo" type="ProgressBar" parent="UI"]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -300.0
+offset_top = -60.0
+offset_right = 300.0
+offset_bottom = -40.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/background = SubResource("StyleBoxFlat_bg")
+theme_override_styles/fill = SubResource("StyleBoxFlat_time")
+value = 100.0
+show_percentage = false
+
+[node name="Termometro" type="Control" parent="UI"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 120.0
+offset_top = 200.0
+offset_right = 160.0
+offset_bottom = 500.0
+
+[node name="FundoCinza" type="ColorRect" parent="UI/Termometro"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 300.0
+color = Color(0.2, 0.25, 0.3, 1)
+
+[node name="ZonaVerde" type="ColorRect" parent="UI/Termometro"]
+layout_mode = 0
+offset_top = 120.0
+offset_right = 40.0
+offset_bottom = 180.0
+color = Color(0.15, 0.7, 0.15, 1)
+
+[node name="Indicador" type="ColorRect" parent="UI/Termometro"]
+layout_mode = 0
+offset_left = -10.0
+offset_top = 150.0
+offset_right = 50.0
+offset_bottom = 158.0
+color = Color(0.9, 0.1, 0.1, 1)

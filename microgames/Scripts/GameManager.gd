@@ -7,6 +7,7 @@ var has_key = false
 
 # --- NOVA LÓGICA DE SEQUÊNCIA ---
 var fila_de_minijogos: Array = []
+var total_minijogos_na_sequencia: int = 0
 var pontuacao_total: float = 0.0
 var sequencia_minijogos_cancelada := false
 var popup_ativo := false
@@ -80,28 +81,71 @@ func obter_fila_minijogos_disponiveis() -> Array:
 			fila.append(caminho)
 	return fila
 
+func obter_jogo_preparacao(ingrediente: String) -> String:
+	match ingrediente:
+		"Slime":
+			return "res://microgames/Cenas/Microgames/Microgame_Geleia.tscn"
+		"Bat Wings", "Bat Meat":
+			return "res://microgames/Cenas/Microgames/microgame_bat_carne.tscn"
+		"Fish Meat":
+			return "res://microgames/Cenas/Microgames/microgame_peixe.tscn"
+		"Bones":
+			return "res://microgames/Cenas/Microgames/Microgame_Bone.tscn"
+		_:
+			return "res://microgames/Cenas/Microgames/Microgame_Carne.tscn"
+
 func iniciar_sequencia_minijogos(metodo: String = ""):
 	pontuacao_total = 0.0 # Reinicia a pontuação
 	sequencia_minijogos_cancelada = false
 	metodo_atual = metodo
 	
-	var todas_cenas = []
-	if metodo == "Boil":
-		todas_cenas = microgames_boil
-	elif metodo == "Fry":
-		todas_cenas = microgames_fry
-	elif metodo == "Roast":
-		todas_cenas = microgames_roast
-	else:
-		todas_cenas = todas_as_cenas_minijogos
-		
-	# CRIAR A FILA: Copiamos apenas as cenas válidas para a fila
 	fila_de_minijogos = []
-	for caminho in todas_cenas:
-		if FileAccess.file_exists(caminho) and not fila_de_minijogos.has(caminho):
-			fila_de_minijogos.append(caminho)
 	
-	# Arranca para o primeiro da lista
+	# 1. Preparação (moscas/limpeza) para os ingredientes escolhidos
+	for ingrediente in ingredientes_atuais:
+		var prep_game = obter_jogo_preparacao(ingrediente)
+		if FileAccess.file_exists(prep_game) and not fila_de_minijogos.has(prep_game):
+			fila_de_minijogos.append(prep_game)
+			
+	if fila_de_minijogos.is_empty():
+		fila_de_minijogos.append("res://microgames/Cenas/Microgames/Microgame_Carne.tscn")
+		
+	# 2. Cortar
+	var corte_game = "res://microgames/Cenas/Microgames/Microgame_Corte.tscn"
+	if FileAccess.file_exists(corte_game):
+		fila_de_minijogos.append(corte_game)
+		
+	# 3. Apanhar
+	var apanhar_game = "res://microgames/Cenas/Microgames/Microgame_Apanhar.tscn"
+	if FileAccess.file_exists(apanhar_game):
+		fila_de_minijogos.append(apanhar_game)
+		
+	# 4. Temperatura
+	var temp_game = "res://microgames/Cenas/Microgames/Microgame_Temperatura.tscn"
+	if FileAccess.file_exists(temp_game):
+		fila_de_minijogos.append(temp_game)
+		
+	# 5. Boil -> Stir (Geleia)
+	if metodo == "Boil":
+		var stir_game = "res://microgames/Cenas/Microgames/Microgame_Geleia.tscn"
+		if FileAccess.file_exists(stir_game):
+			fila_de_minijogos.append(stir_game)
+			
+	# 5b. Boil or Roast -> Flambe
+	if metodo == "Boil" or metodo == "Roast":
+		var flambe_game = "res://microgames/Cenas/Microgames/Microgame_Flambe.tscn"
+		if FileAccess.file_exists(flambe_game):
+			fila_de_minijogos.append(flambe_game)
+			
+	# 6. Slime -> Cozinhar
+	if ingredientes_atuais.has("Slime"):
+		var cozinhar_game = "res://microgames/Cenas/Microgames/Microgame_Cozinhar.tscn"
+		if FileAccess.file_exists(cozinhar_game):
+			fila_de_minijogos.append(cozinhar_game)
+			
+	total_minijogos_na_sequencia = fila_de_minijogos.size()
+	print("[GameManager] Fila de minijogos gerada: ", fila_de_minijogos)
+	
 	avancar_para_proximo_minijogo()
 	
 func devolver_ingredientes_para_inventario(ingredientes: Array) -> void:
@@ -161,15 +205,8 @@ func mostrar_popup_resultado():
 	add_child(canvas) # Fica guardado no GameManager
 	
 	# 3. Calcula a nota média (Pontuação a dividir pelo nº total de jogos da receita)
-	var max_minijogos = todas_as_cenas_minijogos.size()
-	if metodo_atual == "Boil":
-		max_minijogos = microgames_boil.size()
-	elif metodo_atual == "Fry":
-		max_minijogos = microgames_fry.size()
-	elif metodo_atual == "Roast":
-		max_minijogos = microgames_roast.size()
-		
-	var nota_media = pontuacao_total / float(max_minijogos)
+	var max_minijogos = float(max(1, total_minijogos_na_sequencia))
+	var nota_media = pontuacao_total / max_minijogos
 	print("Prato Terminado! Pontuação Total: ", nota_media * 100, "%")
 	
 	# 4. Descobre a Receita e os Buffs!
