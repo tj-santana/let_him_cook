@@ -57,6 +57,10 @@ func _on_slime_area_input_event(_viewport, event, shape_idx):
 		cliques += 1.0
 		barra_progresso.value = cliques
 		
+		var am = get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/cloth3.ogg", 0.0, randf_range(0.9, 1.1))
+		
 		# Efeito visual de amassar o slime
 		amassar_slime()
 		

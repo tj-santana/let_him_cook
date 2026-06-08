@@ -87,12 +87,16 @@ func tentar_cortar():
 	# Check distance on X axis between ingredient and knife
 	var distance = abs(ingrediente.global_position.x - faca.global_position.x)
 	var perfect_zone = 45.0 # pixels tolerance
+	var am = get_node_or_null("/root/AudioManager")
 	
 	if distance <= perfect_zone:
 		# HIT!
 		hits += 1
 		_update_progresso_label()
 		_show_feedback("PERFECT CHOP!", Color.GREEN)
+		
+		if am:
+			am.play_chop()
 		
 		# Change ingredient visual state (e.g. scale or squish it temporarily)
 		var scale_tween = create_tween()
@@ -113,6 +117,8 @@ func tentar_cortar():
 	else:
 		# MISS!
 		_show_feedback("MISS!", Color.RED)
+		if am:
+			am.play_click()
 		tempo_restante = max(0.0, tempo_restante - 0.8) # Lose time penalty
 
 func _show_feedback(text: String, color: Color):

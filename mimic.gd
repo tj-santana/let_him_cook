@@ -70,6 +70,11 @@ func wake_up():
 	_state = "waking"
 	$HealthBar.show()
 	
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_creak()
+		am.play_door_open()
+	
 	# Shake effect to telegraph waking up
 	var duration = 0.6
 	var elapsed = 0.0
@@ -163,6 +168,9 @@ func _start_attack_cooldown() -> void:
 func take_hit(attack_dmg):
 	if _state == "disguised":
 		wake_up()
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_enemy_hit(name)
 	health -= attack_dmg
 	$HealthBar.value = health
 	
