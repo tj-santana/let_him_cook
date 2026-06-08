@@ -1,6 +1,6 @@
-[gd_scene format=3]
+[gd_scene format=3 uid="uid://dcqmd1aeaohib"]
 
-[ext_resource type="Script" path="res://microgames/Scripts/microgame_flambe.gd" id="1_script"]
+[ext_resource type="Script" uid="uid://c050na6omq2e8" path="res://microgames/Scripts/microgame_flambe.gd" id="1_script"]
 [ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="2_bg"]
 [ext_resource type="Texture2D" uid="uid://by31w4g7v4k7f" path="res://microgames/Assets/Panela.png" id="3_panela"]
 [ext_resource type="Texture2D" uid="uid://by14pa47nfdh4" path="res://microgames/Assets/chama.png" id="4_chama"]
@@ -19,10 +19,10 @@ corner_radius_top_right = 4
 corner_radius_bottom_right = 4
 corner_radius_bottom_left = 4
 
-[node name="Microgame_Flambe" type="Node2D"]
+[node name="Microgame_Flambe" type="Node2D" unique_id=1457864821]
 script = ExtResource("1_script")
 
-[node name="Fundo" type="TextureRect" parent="."]
+[node name="Fundo" type="TextureRect" parent="." unique_id=238921209]
 custom_minimum_size = Vector2(200, 200)
 anchors_preset = 15
 anchor_right = 1.0
@@ -34,37 +34,37 @@ grow_vertical = 2
 texture = ExtResource("2_bg")
 expand_mode = 1
 
-[node name="FogoVisual" type="Sprite2D" parent="."]
+[node name="FogoVisual" type="Sprite2D" parent="." unique_id=1165588695]
 position = Vector2(576, 420)
 texture = ExtResource("4_chama")
 
-[node name="PanelaVisual" type="Sprite2D" parent="."]
+[node name="PanelaVisual" type="Sprite2D" parent="." unique_id=1580682358]
 position = Vector2(576, 380)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_panela")
 region_enabled = true
-region_rect = Rect2(0, 206, 360, 154)
+region_rect = Rect2(0, 248.93, 360, 111.07001)
 
-[node name="TampaVisual" type="Node2D" parent="."]
+[node name="TampaVisual" type="Node2D" parent="." unique_id=1455957117]
 position = Vector2(576, 220)
 
-[node name="LidPlate" type="ColorRect" parent="TampaVisual"]
+[node name="LidPlate" type="ColorRect" parent="TampaVisual" unique_id=383777617]
 offset_left = -110.0
 offset_top = -12.0
 offset_right = 110.0
 offset_bottom = 12.0
 color = Color(0.75, 0.78, 0.8, 1)
 
-[node name="LidHandle" type="ColorRect" parent="TampaVisual"]
+[node name="LidHandle" type="ColorRect" parent="TampaVisual" unique_id=1080452670]
 offset_left = -25.0
 offset_top = -28.0
 offset_right = 25.0
 offset_bottom = -12.0
 color = Color(0.3, 0.32, 0.35, 1)
 
-[node name="UI" type="CanvasLayer" parent="."]
+[node name="UI" type="CanvasLayer" parent="." unique_id=1907302896]
 
-[node name="TextoAjuda" type="Label" parent="UI"]
+[node name="TextoAjuda" type="Label" parent="UI" unique_id=1959531684]
 anchors_preset = 5
 anchor_left = 0.5
 anchor_right = 0.5
@@ -79,7 +79,7 @@ text = "SMOTHER!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="BarraTempo" type="ProgressBar" parent="UI"]
+[node name="BarraTempo" type="ProgressBar" parent="UI" unique_id=1431900412]
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -96,7 +96,7 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_time")
 value = 100.0
 show_percentage = false
 
-[node name="Termometro" type="Control" parent="UI"]
+[node name="Termometro" type="Control" parent="UI" unique_id=30539479]
 layout_mode = 3
 anchors_preset = 0
 offset_left = 120.0
@@ -104,20 +104,20 @@ offset_top = 200.0
 offset_right = 160.0
 offset_bottom = 500.0
 
-[node name="FundoCinza" type="ColorRect" parent="UI/Termometro"]
+[node name="FundoCinza" type="ColorRect" parent="UI/Termometro" unique_id=1044660957]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 300.0
 color = Color(0.2, 0.25, 0.3, 1)
 
-[node name="ZonaVerde" type="ColorRect" parent="UI/Termometro"]
+[node name="ZonaVerde" type="ColorRect" parent="UI/Termometro" unique_id=1608981464]
 layout_mode = 0
 offset_top = 120.0
 offset_right = 40.0
 offset_bottom = 180.0
 color = Color(0.15, 0.7, 0.15, 1)
 
-[node name="Indicador" type="ColorRect" parent="UI/Termometro"]
+[node name="Indicador" type="ColorRect" parent="UI/Termometro" unique_id=1638657397]
 layout_mode = 0
 offset_left = -10.0
 offset_top = 150.0
