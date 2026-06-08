@@ -1,13 +1,37 @@
 ~ start
-Nathan: [[Hi|Hello|Howdy]], this is some dialogue.
-Nathan: Here are some choices.
-- First one
-	Nathan: You picked the first one.
-- Second one
-	Nathan: You picked the second one.
-- Start again => start
-- End the conversation => END
-Nathan: For more information see the online documentation.
+Placa: [b]--- ESQUEMA DE CONTROLOS ---[/b]
+Placa: [b]Movimento:[/b] W, A, S, D / Analógico Esquerdo
+Placa: [b]Ataque:[/b] Espaço / Clique Esquerdo / R1
+Placa: [b]Esquiva (Dash):[/b] Shift Esquerdo / Clique Direito / L1
+Placa: [b]Transformar (Humano <-> Spork):[/b] Q / Triângulo (Δ)
+Placa: [b]Interagir / Aceitar:[/b] E / Quadrado (⬜) / Cross (X)
+Placa: [b]Inventário:[/b] I / Touchpad
+Placa: [b]Pausa / Retroceder:[/b] Esc / Botão Menu (三) / Círculo (O)
+=> END
+
+~ game_start
+Chef: Ugh... My head...
+Chef: Where am I? Am I holding a Spork? It feels strange somehow.
+Chef: Oh right, I'm still in this godforsaken dungeon...
+Chef: Where I lost the rest of my party and somehow ended up in... a sacrifice room?
+Spork: More like a prison, if you ask me.
+Chef: Well, no one asked y-
+Chef: Wait, who said that?
+Chef: ...
+Chef: Oh God, I'm finally going insane... and kinda hungry.
+Chef: I should eat one of the emergency rations I've brought with me.
+=> END
+
+~ first_food
+Chef: Usually a bite like this makes me instantly full, but I've eaten the whole thing and I'm still hungry...
+Spork: Me too, maybe you should try eating the rest!
+Chef: Gah! I need to get out of here now! [WASD to move]
+=> END
+
+~ pit_dialogue
+Spork: Falling in those pits would be quite painful... I can give you a hand if that happens!
+Chef: There will be, little weird voice in my head, no need for that. I dont plan on falling anyway!
+Chef: I should be careful where I step here, the bridges seem to have collapsed... And I can't even see the bottom of this pit.
 => END
 
 ~ key_obtained
@@ -21,7 +45,7 @@ Something happened in this room.
 ~ boss
 This door is locked.
 if GameManager.has_key:
-	Unlocked with the from the mimic.
+	Unlocked with the key from the mimic.
 	set GameManager.boss_unlocked = true
 else:
 	There must be a key somewhere in this floor.

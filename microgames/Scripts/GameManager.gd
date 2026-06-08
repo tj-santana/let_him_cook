@@ -11,6 +11,26 @@ var total_minijogos_na_sequencia: int = 0
 var pontuacao_total: float = 0.0
 var sequencia_minijogos_cancelada := false
 var popup_ativo := false
+
+# --- DIALOGUE VARIABLES ---
+var game_start_dialogue_shown = false
+var first_food_dialogue_shown = false
+var pit_dialogue_shown = false
+
+const Balloon = preload("res://dialogue/balloon.tscn")
+var dialogue_resource = preload("res://dialogue/main.dialogue")
+
+func show_dialogue(title: String):
+	get_tree().paused = true
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
+	var balloon: Node = Balloon.instantiate()
+	balloon.process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().current_scene.add_child(balloon)
+	balloon.start(dialogue_resource, title)
+	await balloon.tree_exited
+	get_tree().paused = false
+	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+
 var buff_pendente = false
 var buff_velocidade = 0
 var buff_cooldown = 0.0
@@ -821,29 +841,9 @@ func aplicar_buff_detalhado(velocidade: int, cooldown: float, duracao: float, fo
 	buff_dano_recebido = float(dano_recebido)
 	print("[GameManager] aplicar_buff_detalhado called -> vel:", buff_velocidade, ", cooldown:", buff_cooldown, ", dur:", buff_duracao, ", fome:", buff_fome, ", vida:", buff_vida_recuperada, ", max_vida:", buff_max_vida_recuperada, ", dano:", buff_dano_causado, ", dano_rec:", buff_dano_recebido)
 
-const Balloon = preload("res://dialogue/balloon.tscn")
-@export var dialogue_resource: DialogueResource = preload("res://dialogue/main.dialogue")
 func get_key():
 	has_key = true
-	# 1. Pause the game and show the mouse
-	get_tree().paused = true
-	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
-	
-	# 2. Instantiate the balloon
-	var balloon: Node = Balloon.instantiate()
-	
-	# 3. CRITICAL: Tell the balloon to keep running even though the game is paused!
-	balloon.process_mode = Node.PROCESS_MODE_ALWAYS
-	
-	get_tree().current_scene.add_child(balloon)
-	balloon.start(dialogue_resource, "key_obtained")
-	
-	# 4. Wait right here until the dialogue finishes and the balloon deletes itself
-	await balloon.tree_exited
-	
-	# 5. Dialogue is over! Resume the game and hide the mouse
-	get_tree().paused = false
-	Input.mouse_mode = Input.MOUSE_MODE_HIDDEN
+	show_dialogue("key_obtained")
 
 var boss_unlocked = false
 

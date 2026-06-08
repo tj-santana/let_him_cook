@@ -226,6 +226,13 @@ func _get_room_snapshot_key(scene_path: String, room_root: Node = null) -> Strin
 		return str(room_root.room_id)
 	return DEFAULT_ROOM_SCENE
 
+func _has_pitfall(node: Node) -> bool:
+	if node.get("hazard_name") == "pitfall":
+		return true
+	for child in node.get_children():
+		if _has_pitfall(child):
+			return true
+	return false
 
 func _save_active_room_snapshot() -> void:
 	if active_room_instance == null or not is_instance_valid(active_room_instance):
@@ -360,6 +367,10 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 			active_room_instance = room
 			active_room_root = room
 			_set_base_room_visible(false)
+
+	if typeof(GameManager) != TYPE_NIL and not GameManager.pit_dialogue_shown and _has_pitfall(active_room_root):
+		GameManager.pit_dialogue_shown = true
+		GameManager.show_dialogue("pit_dialogue")
 
 	var player = $Player
 	if room.is_safe_room:
@@ -743,6 +754,10 @@ func _on_start_timer_timeout():
 		$MobTimer.start()
 		# Start first wave
 	_start_wave(current_wave)
+	
+	if typeof(GameManager) != TYPE_NIL and not GameManager.game_start_dialogue_shown:
+		GameManager.game_start_dialogue_shown = true
+		GameManager.show_dialogue("game_start")
 
 
 func _start_wave(index: int) -> void:
@@ -795,6 +810,10 @@ func consumir_prato(dados_do_prato: Dictionary) -> void:
 		$HUD.update_health(health, max_health)
 		$HUD.update_hunger(hunger, max_hunger)
 		print("Prato consumido com sucesso! Status atualizados.")
+		
+		if typeof(GameManager) != TYPE_NIL and not GameManager.first_food_dialogue_shown:
+			GameManager.first_food_dialogue_shown = true
+			GameManager.show_dialogue("first_food")
 	else:
 		print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")
 
