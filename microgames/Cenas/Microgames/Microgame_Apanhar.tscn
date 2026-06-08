@@ -1,4 +1,4 @@
-[gd_scene format=3 uid="uid://buct8aa1cwcaj"]
+[gd_scene format=3 uid="uid://bplrbxw2l5k0y"]
 
 [ext_resource type="Script" uid="uid://cmhosr2xym5ay" path="res://microgames/Scripts/Microgame_Apanhar.gd" id="1_catcher_script"]
 [ext_resource type="Texture2D" uid="uid://b412ycwholnqi" path="res://microgames/Assets/Tiles/tile_0000.png" id="2_bg"]
@@ -27,9 +27,11 @@ expand_mode = 1
 
 [node name="Panela" type="Sprite2D" parent="." unique_id=900078497]
 texture_filter = 1
-position = Vector2(576, 560)
+position = Vector2(586, 430)
 scale = Vector2(1.5, 1.5)
 texture = ExtResource("3_pot")
+region_enabled = true
+region_rect = Rect2(0, 0, 360, 200.5)
 
 [node name="ProgressBar" type="ProgressBar" parent="." unique_id=735750544]
 custom_minimum_size = Vector2(500, 30)

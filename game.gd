@@ -403,6 +403,7 @@ func _ready():
 		inventory_menu.hide_menu()
 	# If there's a saved state from the cooking flow, restore it.
 	if typeof(GameManager) != TYPE_NIL and GameManager.obter_estado_principal() != null:
+		GameManager.limite_ingredientes = 2
 		var s = GameManager.obter_estado_principal()
 		var saved_room_scene = s.get("room_scene", DEFAULT_ROOM_SCENE)
 		spork_mode_active = bool(s.get("spork_mode_active", false))

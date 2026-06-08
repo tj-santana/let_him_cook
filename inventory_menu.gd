@@ -109,6 +109,7 @@ func _on_prato_selected(prato: Dictionary, index: int) -> void:
 		detalhes += "• HP: +" + str(prato.get("vida", 0.0)) + "\n"
 	if prato.get("max_vida", 0.0) > 0:
 		detalhes += "• Max HP: +" + str(prato.get("max_vida", 0.0)) + "\n"
+	detalhes += "------------------------\n"
 	if prato.get("velocidade", 0) > 0:
 		detalhes += "• Speed: +" + str(prato.get("velocidade", 0)) + "\n"
 	if prato.get("dano_causado", 0.0) > 0:

@@ -6,7 +6,7 @@ extends Node2D
 @onready var feedback_label = $UI/FeedbackLabel
 @onready var help_label = $UI/TextoAjuda
 
-var tempo_restante: float = 7.0
+var tempo_restante: float = 8.0
 var jogo_ativo: bool = true
 var progresso: float = 0.0
 var progresso_max: float = 100.0

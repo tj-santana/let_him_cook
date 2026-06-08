@@ -18,11 +18,11 @@ func action() -> void:
 
 func _remove_walls() -> void:
 	if target_walls == 1:
-		get_parent().get_node("Walls2").hide()
+		get_parent().get_node("Walls2").queue_free()
 		get_parent().get_node("lever1off").hide()
 		get_parent().get_node("lever1on").show()
 	elif target_walls == 2:
-		get_parent().get_node("Walls3").hide()
+		get_parent().get_node("Walls3").queue_free()
 		get_parent().get_node("lever2off").hide()
 		get_parent().get_node("lever2on").show()
 		

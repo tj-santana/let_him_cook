@@ -289,13 +289,23 @@ func mostrar_popup_resultado():
 	if vida > 0:
 		texto_dos_buffs += " | HP: +" + str(vida)
 	if max_vida > 0:
-		texto_dos_buffs += " | MaxHP: +" + str(max_vida)
+		texto_dos_buffs += " | MaxHP: +" + str(max_vida) + "\n"
 	if vel > 0:
-		texto_dos_buffs += " | Speed: +" + str(vel)
+		texto_dos_buffs += "Speed: +" + str(vel)
 	if dano_causado > 0:
-		texto_dos_buffs += " | Damage: +" + str(dano_causado)
+		if vel > 0:
+			texto_dos_buffs += " | Damage: +" + str(dano_causado)
+		else:
+			texto_dos_buffs += "Damage: +" + str(dano_causado)
 	if dano_recebido < 1.0:
-		texto_dos_buffs += " | Defense: +" + str(int((1.0 - dano_recebido) * 100)) + "%"
+		if vel > 0 or dano_causado > 0:
+			texto_dos_buffs += " | Defense: +" + str(int((1.0 - dano_recebido) * 100)) + "%"
+		else:
+			texto_dos_buffs += "Defense: +" + str(int((1.0 - dano_recebido) * 100)) + "%"
+	if vel > 0 or dano_causado > 0 or dano_recebido > 0:
+		texto_dos_buffs += " | Duration: +" + str(dur) + "s"
+	else:
+		texto_dos_buffs += "Duration: +" + str(dur) + "s"
 		
 	# 6. Manda as informações todas para o script do teu Popup
 	popup.mostrar_resultado(nome_prato, nota_media, texto_dos_buffs, true)

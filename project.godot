@@ -28,6 +28,7 @@ runtime/balloon_path="res://dialogue/balloon.tscn"
 [display]
 
 window/size/viewport_height=640
+window/size/mode=4
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 

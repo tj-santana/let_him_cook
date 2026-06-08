@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://d2kb00l4rmrjv"]
+[gd_scene format=4 uid="uid://br1ojepvbyyrf"]
 
 [ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_17lqv"]
 [ext_resource type="Texture2D" uid="uid://bvfpfjnngf2yh" path="res://assets/DampDungeons/Tiles/DungeonDecorations.png" id="2_5cnh3"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://cpjkcql0iulp8" path="res://assets/Dungeon_Tileset/atlas_walls_low-16x16.png" id="7_1ase2"]
 [ext_resource type="Texture2D" uid="uid://c347xkadnu708" path="res://assets/Pixel_Dungeon_Assets/character and tileset/Dungeon_Tileset.png" id="8_amajd"]
 [ext_resource type="Texture2D" uid="uid://6ns53v4y7y6j" path="res://assets/LPC_city_inside/city_inside.png" id="9_g0un0"]
-[ext_resource type="PackedScene" uid="uid://dice8o3atycih" path="res://lever.tscn" id="10_5cnh3"]
+[ext_resource type="PackedScene" path="res://lever.tscn" id="10_5cnh3"]
 [ext_resource type="PackedScene" uid="uid://65ftny3rbk7b" path="res://floor/traps/SpikeTrap.tscn" id="10_nja71"]
 [ext_resource type="Script" uid="uid://djy10abgrul7o" path="res://floor/door.gd" id="11_ei8ej"]
 [ext_resource type="PackedScene" uid="uid://ceweh02bircdb" path="res://floor/traps/Pitfall.tscn" id="11_o5kff"]
@@ -2799,7 +2799,7 @@ scale = Vector2(0.74, 0.74)
 texture_filter = 1
 position = Vector2(14, -19)
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAEAAUAAAAAAAkAAAAMAAUABAACAAUAAAASAAgABAACAAUAAAA=")
+tile_map_data = PackedByteArray("AAASAAgABAACAAUAAAA=")
 tile_set = SubResource("TileSet_7ol3g")
 script = ExtResource("1_17lqv")
 
@@ -2808,7 +2808,7 @@ visible = false
 texture_filter = 1
 position = Vector2(14, -19)
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAEAAUAAAAAAAkAAAAMAAUABAACAAUAAAASAAgABAADAAUAAAA=")
+tile_map_data = PackedByteArray("AAASAAgABAADAAUAAAA=")
 tile_set = SubResource("TileSet_7ol3g")
 script = ExtResource("1_17lqv")
 
@@ -2822,7 +2822,7 @@ target_walls = 2
 texture_filter = 1
 position = Vector2(14, -19)
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAEAAUAAAAAAAkAAAAMAAUABAACAAUAAAAeAAwABAACAAUAAAA=")
+tile_map_data = PackedByteArray("AAAeAAwABAACAAUAAAA=")
 tile_set = SubResource("TileSet_7ol3g")
 script = ExtResource("1_17lqv")
 
@@ -2831,7 +2831,7 @@ visible = false
 texture_filter = 1
 position = Vector2(14, -19)
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAEAAUAAAAAAAkAAAAMAAUABAACAAUAAAAeAAwABAADAAUAAAA=")
+tile_map_data = PackedByteArray("AAAeAAwABAADAAUAAAA=")
 tile_set = SubResource("TileSet_7ol3g")
 script = ExtResource("1_17lqv")
 
@@ -2886,76 +2886,70 @@ warning_duration = 1.0
 [node name="SpikeTrap2" parent="." unique_id=333358779 instance=ExtResource("10_nja71")]
 position = Vector2(128, 96)
 warning_duration = 1.0
-start_delay = 0.24
+start_delay = 1.0
 
 [node name="SpikeTrap3" parent="." unique_id=1102625976 instance=ExtResource("10_nja71")]
 position = Vector2(128, 32)
 warning_duration = 1.0
-start_delay = 0.48
 
 [node name="SpikeTrap4" parent="." unique_id=512873098 instance=ExtResource("10_nja71")]
 position = Vector2(192, 32)
 warning_duration = 1.0
-start_delay = 0.72
+start_delay = 1.0
 
 [node name="SpikeTrap5" parent="." unique_id=1567483805 instance=ExtResource("10_nja71")]
 position = Vector2(256, 32)
 warning_duration = 1.0
-start_delay = 0.96
 
 [node name="SpikeTrap6" parent="." unique_id=2111362331 instance=ExtResource("10_nja71")]
 position = Vector2(320, 32)
 warning_duration = 1.0
-start_delay = 1.2
+start_delay = 1.0
 
 [node name="SpikeTrap7" parent="." unique_id=1358510500 instance=ExtResource("10_nja71")]
 position = Vector2(384, 32)
 warning_duration = 1.0
-start_delay = 1.44
 
 [node name="SpikeTrap8" parent="." unique_id=2016212810 instance=ExtResource("10_nja71")]
 position = Vector2(448, 32)
 warning_duration = 1.0
+start_delay = 1.0
 
 [node name="SpikeTrap9" parent="." unique_id=166543837 instance=ExtResource("10_nja71")]
 position = Vector2(512, 32)
 warning_duration = 1.0
-start_delay = 0.24
 
 [node name="SpikeTrap10" parent="." unique_id=1880696740 instance=ExtResource("10_nja71")]
 position = Vector2(576, 32)
 warning_duration = 1.0
-start_delay = 0.48
+start_delay = 1.0
 
 [node name="SpikeTrap11" parent="." unique_id=666317226 instance=ExtResource("10_nja71")]
 position = Vector2(576, 96)
 warning_duration = 1.0
-start_delay = 0.72
 
 [node name="SpikeTrap12" parent="." unique_id=155957994 instance=ExtResource("10_nja71")]
 position = Vector2(576, 160)
 warning_duration = 1.0
-start_delay = 0.96
+start_delay = 1.0
 
 [node name="SpikeTrap13" parent="." unique_id=572803559 instance=ExtResource("10_nja71")]
 position = Vector2(768, 32)
 warning_duration = 1.0
-start_delay = 1.2
 
 [node name="SpikeTrap14" parent="." unique_id=902699478 instance=ExtResource("10_nja71")]
 position = Vector2(832, 32)
 warning_duration = 1.0
-start_delay = 1.44
+start_delay = 1.0
 
 [node name="SpikeTrap15" parent="." unique_id=351516613 instance=ExtResource("10_nja71")]
 position = Vector2(640, 32)
 warning_duration = 1.0
-start_delay = 0.72
 
 [node name="SpikeTrap16" parent="." unique_id=2032655613 instance=ExtResource("10_nja71")]
 position = Vector2(704, 32)
 warning_duration = 1.0
-start_delay = 0.96
+start_delay = 1.0
 
 [node name="SpikeTrap17" parent="." unique_id=1644644567 instance=ExtResource("10_nja71")]
 position = Vector2(128, 288)
@@ -2964,106 +2958,97 @@ warning_duration = 1.0
 [node name="SpikeTrap18" parent="." unique_id=2013832119 instance=ExtResource("10_nja71")]
 position = Vector2(128, 352)
 warning_duration = 1.0
-start_delay = 0.24
+start_delay = 1.0
 
 [node name="SpikeTrap19" parent="." unique_id=1166055646 instance=ExtResource("10_nja71")]
 position = Vector2(128, 416)
 warning_duration = 1.0
-start_delay = 0.48
 
 [node name="SpikeTrap20" parent="." unique_id=2141637340 instance=ExtResource("10_nja71")]
 position = Vector2(128, 480)
 warning_duration = 1.0
-start_delay = 0.72
+start_delay = 1.0
 
 [node name="SpikeTrap21" parent="." unique_id=1679445233 instance=ExtResource("10_nja71")]
 position = Vector2(192, 480)
 warning_duration = 1.0
-start_delay = 0.96
 
 [node name="SpikeTrap22" parent="." unique_id=1572153327 instance=ExtResource("10_nja71")]
 position = Vector2(256, 480)
 warning_duration = 1.0
-start_delay = 1.2
+start_delay = 1.0
 
 [node name="SpikeTrap23" parent="." unique_id=1143465145 instance=ExtResource("10_nja71")]
 position = Vector2(320, 480)
 warning_duration = 1.0
-start_delay = 1.44
 
 [node name="SpikeTrap24" parent="." unique_id=984800804 instance=ExtResource("10_nja71")]
 position = Vector2(384, 480)
 warning_duration = 1.0
+start_delay = 1.0
 
 [node name="SpikeTrap25" parent="." unique_id=1993686450 instance=ExtResource("10_nja71")]
 position = Vector2(448, 480)
 warning_duration = 1.0
-start_delay = 0.24
 
 [node name="SpikeTrap26" parent="." unique_id=609877956 instance=ExtResource("10_nja71")]
 position = Vector2(512, 480)
 warning_duration = 1.0
-start_delay = 0.48
+start_delay = 1.0
 
 [node name="SpikeTrap27" parent="." unique_id=1578195761 instance=ExtResource("10_nja71")]
 position = Vector2(576, 480)
 warning_duration = 1.0
-start_delay = 0.72
 
 [node name="SpikeTrap28" parent="." unique_id=1792401561 instance=ExtResource("10_nja71")]
 position = Vector2(640, 480)
 warning_duration = 1.0
-start_delay = 0.96
+start_delay = 1.0
 
 [node name="SpikeTrap29" parent="." unique_id=407263736 instance=ExtResource("10_nja71")]
 position = Vector2(832, 480)
 warning_duration = 1.0
-start_delay = 1.2
 
 [node name="SpikeTrap30" parent="." unique_id=427117591 instance=ExtResource("10_nja71")]
 position = Vector2(896, 480)
 warning_duration = 1.0
-start_delay = 1.44
+start_delay = 1.0
 
 [node name="SpikeTrap31" parent="." unique_id=852800776 instance=ExtResource("10_nja71")]
 position = Vector2(704, 480)
 warning_duration = 1.0
-start_delay = 0.72
 
 [node name="SpikeTrap32" parent="." unique_id=1776629444 instance=ExtResource("10_nja71")]
 position = Vector2(768, 480)
 warning_duration = 1.0
-start_delay = 0.96
+start_delay = 1.0
 
 [node name="SpikeTrap33" parent="." unique_id=1043822852 instance=ExtResource("10_nja71")]
 position = Vector2(960, 480)
 warning_duration = 1.0
-start_delay = 0.24
 
 [node name="SpikeTrap34" parent="." unique_id=165484888 instance=ExtResource("10_nja71")]
 position = Vector2(960, 416)
 warning_duration = 1.0
-start_delay = 0.48
+start_delay = 1.0
 
 [node name="SpikeTrap35" parent="." unique_id=282795705 instance=ExtResource("10_nja71")]
 position = Vector2(896, 32)
 warning_duration = 1.0
-start_delay = 0.72
 
 [node name="SpikeTrap36" parent="." unique_id=2018762368 instance=ExtResource("10_nja71")]
 position = Vector2(960, 32)
 warning_duration = 1.0
-start_delay = 0.96
+start_delay = 1.0
 
 [node name="SpikeTrap39" parent="." unique_id=1732676106 instance=ExtResource("10_nja71")]
 position = Vector2(960, 96)
 warning_duration = 1.0
-start_delay = 0.72
 
 [node name="SpikeTrap40" parent="." unique_id=806501159 instance=ExtResource("10_nja71")]
 position = Vector2(960, 160)
 warning_duration = 1.0
-start_delay = 0.96
+start_delay = 1.0
 
 [node name="Pitfall" parent="." unique_id=317542892 instance=ExtResource("11_o5kff")]
 position = Vector2(192, 96)

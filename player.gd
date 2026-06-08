@@ -5,7 +5,7 @@ signal hit(dmg: float)
 @onready var audio_player : AudioStreamPlayer = $AudioStreamPlayer
 @onready var actionable_finder: Area2D = $ActionableFinder
 
-@export var speed = 400.0 # How fast the player will move (pixels/sec).
+@export var speed = 300.0 # How fast the player will move (pixels/sec).
 @export var max_health = 100.0
 @export var attack_dmg = 10.0
 @export var attack_range = 70.0
@@ -13,7 +13,7 @@ signal hit(dmg: float)
 @export var attack_cooldown = 0.5
 @export var dash_speed = 1200.0
 @export var dash_duration = 0.2
-@export var dash_cooldown = 0.7
+@export var dash_cooldown = 0.3
 @export var hit_invulnerability = 0.6
 @export var debug_attack_preview = true
 @export var is_playing = false
