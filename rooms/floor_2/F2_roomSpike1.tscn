@@ -2613,7 +2613,7 @@ sources/3 = SubResource("TileSetAtlasSource_0fmsr")
 size = Vector2(24, 80)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nbfxl"]
-size = Vector2(102, 48)
+size = Vector2(102, 40)
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_0cr3f"]
 
@@ -2636,7 +2636,7 @@ tile_set = SubResource("TileSet_7ygcu")
 [node name="Props" type="TileMapLayer" parent="." unique_id=365818942]
 texture_filter = 1
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAANAAAAAAAEAAcAAAAEAAEAAAAJAAUAAAAEAA4AAAAJAAUAAAAFAAEAAAAJAAQAAAAFAA4AAAAJAAQAAAAGAAEAAAAJAAUAAAAGAA4AAAAJAAUAAAAfAAEAAAAJAAUAAAASAAAAAAAEAAcAAAAEAAUAAAAAAAkAAAAEAAoAAAAAAAkAAAAHAAAAAAAEAAcAAAAQAAAAAQAQAAcAAAATAAAAAQATAAcAAAAWAAAAAAAEAAcAAAAbAAAAAAAEAAcAAAAfAAgAAAAIAAUAAAAfAAcAAAAIAAQAAAA=")
+tile_map_data = PackedByteArray("AAANAAAAAAAEAAcAAAAGAAEAAAAJAAUAAAAfAAEAAAAJAAUAAAASAAAAAAAEAAcAAAAHAAAAAAAEAAcAAAAQAAAAAQAQAAcAAAATAAAAAQATAAcAAAAWAAAAAAAEAAcAAAAbAAAAAAAEAAcAAAAfAAgAAAAIAAUAAAAfAAcAAAAIAAQAAAA=")
 tile_set = SubResource("TileSet_abd6q")
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=431172095]
@@ -2671,7 +2671,7 @@ target_scene = "res://rooms/floor_2/F2_Entry.tscn"
 entry_marker = "EntryDown"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorPrev" unique_id=1554191537]
-position = Vector2(0, -16)
+position = Vector2(0, -20)
 shape = SubResource("RectangleShape2D_nbfxl")
 
 [node name="Sprite2D" type="Sprite2D" parent="DoorPrev" unique_id=1625527292]
