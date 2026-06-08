@@ -3,6 +3,7 @@ extends CharacterBody2D
 signal hit(dmg: float)
 
 @onready var audio_player : AudioStreamPlayer = $AudioStreamPlayer
+@onready var actionable_finder: Area2D = $ActionableFinder
 
 @export var speed = 400.0 # How fast the player will move (pixels/sec).
 @export var max_health = 100.0
@@ -150,6 +151,12 @@ func _physics_process(delta):
 
 	if Input.is_action_just_pressed("dash"):
 		dash()
+		
+	if Input.is_action_just_pressed("interact"):
+		var actionables = actionable_finder.get_overlapping_areas()
+		if actionables.size() > 0:
+			actionables[0].action()
+			return
 		
 	if Input.is_action_just_pressed("cooking") and Input.is_action_just_pressed("mama"):
 		audio_player.play()

@@ -2,10 +2,10 @@
 
 [ext_resource type="PackedScene" uid="uid://c0vow7slq7hen" path="res://player.tscn" id="1_80nbo"]
 [ext_resource type="Script" uid="uid://jt3ouyxnp6nj" path="res://game.gd" id="1_feb5d"]
-[ext_resource type="PackedScene" path="res://mob.tscn" id="2_fc0e3"]
+[ext_resource type="PackedScene" uid="uid://c4gh5xu16jpkq" path="res://mob.tscn" id="2_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://cdv2ga1h6objp" path="res://hud.tscn" id="4_fc0e3"]
 [ext_resource type="PackedScene" uid="uid://qdd23e8706qe" path="res://pause_menu.tscn" id="5_pause"]
-[ext_resource type="PackedScene" path="res://inventory_menu.tscn" id="6_inventory"]
+[ext_resource type="PackedScene" uid="uid://cvgj2ye4j48xr" path="res://inventory_menu.tscn" id="6_inventory"]
 
 [node name="Game" type="Node" unique_id=1575222087]
 script = ExtResource("1_feb5d")
@@ -13,9 +13,10 @@ mob_scene = ExtResource("2_fc0e3")
 
 [node name="Player" parent="." unique_id=578278772 instance=ExtResource("1_80nbo")]
 y_sort_enabled = true
-scale = Vector2(0.905, 0.905)
+scale = Vector2(0.8, 0.8)
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=1476385613]
+zoom = Vector2(1.285, 1.25)
 
 [node name="MobTimer" type="Timer" parent="." unique_id=188491468]
 wait_time = 0.5

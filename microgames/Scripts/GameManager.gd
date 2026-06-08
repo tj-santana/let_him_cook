@@ -3,6 +3,7 @@ extends Node
 var cena_principal_path = "res://game_shell.tscn"
 
 var limite_ingredientes: int = 2
+var has_key = false
 
 # --- NOVA LÓGICA DE SEQUÊNCIA ---
 var fila_de_minijogos: Array = []
@@ -172,8 +173,11 @@ func mostrar_popup_resultado():
 	print("Prato Terminado! Pontuação Total: ", nota_media * 100, "%")
 	
 	# 4. Descobre a Receita e os Buffs!
+	print("Ingredientes usados: ", ingredientes_atuais)
 	var prato_info = obter_prato_e_buffs(ingredientes_atuais)
+	print("Informações do prato cozinhado: ", prato_info)
 	var nome_prato = prato_info["nome"]
+	print("Receita Cozinhada: ", nome_prato)
 	
 	var vel = prato_info["velocidade"]
 	var cooldown = prato_info["cooldown"]
@@ -336,10 +340,10 @@ func obter_prato_e_buffs(ingredientes: Array) -> Dictionary:
 	else:
 		# Procura por combinação exata no livro
 		for chave in livro_de_receitas.keys():
-			var chave_ordenada = chave.duplicate()
-			chave_ordenada.sort()
 			var metodo = chave[0] # O primeiro item da chave é o método
+			var chave_ordenada = chave.duplicate()
 			chave_ordenada.remove_at(0) # Remove o método para comparar só os ingredientes
+			chave_ordenada.sort()
 			if metodo == metodo_atual and ing_ordenados == chave_ordenada: # Compara só os ingredientes, ignorando o método
 				nome_prato = livro_de_receitas[chave]
 				break

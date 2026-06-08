@@ -7,24 +7,25 @@ layer = 3
 script = ExtResource("1_64ctp")
 
 [node name="ScoreLabel" type="Label" parent="." unique_id=1465033203]
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -22.5
-offset_right = 22.5
-offset_bottom = 78.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 64
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -128.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 66.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 30
 text = "Time: 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="HealthBar" type="ProgressBar" parent="." unique_id=-1077732729]
 self_modulate = Color(0.9474059, 4.0670484e-06, 3.85046e-07, 1)
-offset_left = 80.0
-offset_top = 5.0
-offset_right = 280.0
-offset_bottom = 35.0
+offset_left = 96.0
+offset_top = 16.0
+offset_right = 296.0
+offset_bottom = 46.0
 value = 100.0
 show_percentage = false
 
@@ -64,10 +65,10 @@ vertical_alignment = 1
 
 [node name="HungerBar" type="ProgressBar" parent="." unique_id=-1077732727]
 self_modulate = Color(0.85490197, 0.36078432, 0.019607844, 1)
-offset_left = 80.0
-offset_top = 39.0
-offset_right = 280.0
-offset_bottom = 69.0
+offset_left = 96.0
+offset_top = 50.0
+offset_right = 296.0
+offset_bottom = 80.0
 value = 100.0
 show_percentage = false
 

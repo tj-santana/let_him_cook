@@ -4,17 +4,16 @@ enum SpikeState { INACTIVE, WARNING, ACTIVE, COOLDOWN }
 
 @export var damage_amount: float = 5.0
 @export var warning_duration: float = 0.35
-@export var active_duration: float = 0.55
-@export var cooldown_duration: float = 0.45
+@export var active_duration: float = 1.0
+@export var cooldown_duration: float = 0.5
 @export var start_delay: float = 0.0
-@export var hazard_name: String = "spike_trap"
 
 var _state: SpikeState = SpikeState.INACTIVE
 var _cycle_token := 0
 var _damaged_bodies: Array[Node] = []
 
-@onready var _visual: Polygon2D = $Polygon2D
-
+# Array to hold all 4 of our AnimatedSprite2D nodes
+var _sprites: Array[AnimatedSprite2D] = []
 
 func _ready() -> void:
 	monitoring = true
@@ -24,6 +23,13 @@ func _ready() -> void:
 		collision_mask = 2
 	if not body_entered.is_connected(_on_body_entered):
 		body_entered.connect(_on_body_entered)
+		
+	# Gather all AnimatedSprite2D children dynamically
+	for child in get_children():
+		if child is AnimatedSprite2D:
+			_sprites.append(child)
+			child.pause() # Stop them from auto-playing, we will control the frames manually
+			
 	_apply_state(SpikeState.INACTIVE)
 	call_deferred("_run_cycle")
 
@@ -46,12 +52,18 @@ func _run_cycle() -> void:
 		_apply_state(SpikeState.ACTIVE)
 		_damaged_bodies.clear()
 		_damage_overlapping_bodies()
-		await _wait_phase(active_duration, token)
+		await _wait_phase(active_duration/2, token)
+		_apply_state(SpikeState.COOLDOWN)
+		_damaged_bodies.clear()
+		_damage_overlapping_bodies()
+		await _wait_phase(active_duration/2, token)
 		if not is_inside_tree() or token != _cycle_token:
 			return
 
-		_apply_state(SpikeState.COOLDOWN)
+		_apply_state(SpikeState.INACTIVE)
 		await _wait_phase(cooldown_duration, token)
+		if not is_inside_tree() or token != _cycle_token:
+			return
 
 
 func _wait_phase(duration: float, token: int) -> void:
@@ -64,18 +76,22 @@ func _wait_phase(duration: float, token: int) -> void:
 
 func _apply_state(new_state: SpikeState) -> void:
 	_state = new_state
-	if _visual == null:
-		return
-
+	
+	# Determine which frame corresponds to the current state
+	var target_frame = 0
 	match _state:
 		SpikeState.INACTIVE:
-			_visual.modulate = Color(0.35, 0.35, 0.35, 1.0)
+			target_frame = 0 # No Spikes
 		SpikeState.WARNING:
-			_visual.modulate = Color(1.0, 0.78, 0.2, 1.0)
+			target_frame = 1 # Just the Tip
 		SpikeState.ACTIVE:
-			_visual.modulate = Color(0.9, 0.18, 0.18, 1.0)
+			target_frame = 2 # Fully Out
 		SpikeState.COOLDOWN:
-			_visual.modulate = Color(0.5, 0.5, 0.5, 1.0)
+			target_frame = 3 # Half Out / Retracting
+			
+	# Apply the frame to all 4 sprites simultaneously
+	for sprite in _sprites:
+		sprite.frame = target_frame
 
 
 func _physics_process(_delta: float) -> void:

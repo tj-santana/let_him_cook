@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://cpjkcql0iulp8" path="res://assets/Dungeon_Tileset/atlas_walls_low-16x16.png" id="4_g0oit"]
 [ext_resource type="PackedScene" uid="uid://ceweh02bircdb" path="res://floor/traps/Pitfall.tscn" id="4_t28je"]
 [ext_resource type="PackedScene" uid="uid://65ftny3rbk7b" path="res://floor/traps/SpikeTrap.tscn" id="5_hi5i0"]
+[ext_resource type="Texture2D" uid="uid://bvfpfjnngf2yh" path="res://assets/DampDungeons/Tiles/DungeonDecorations.png" id="6_nfe3j"]
 [ext_resource type="PackedScene" uid="uid://e8pq77as44d4" path="res://pickup.tscn" id="9_nstbq"]
 [ext_resource type="Texture2D" uid="uid://cq8tfjtwepwd2" path="res://microgames/Assets/Food/Isolated Food/moss.png" id="10_g0oit"]
 
@@ -829,15 +830,401 @@ texture = ExtResource("3_nstbq")
 22:7/0 = 0
 23:7/0 = 0
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_jox8q"]
+texture = ExtResource("6_nfe3j")
+0:0/0 = 0
+1:0/0 = 0
+2:0/0 = 0
+3:0/0 = 0
+4:0/0 = 0
+5:0/0 = 0
+6:0/0 = 0
+7:0/0 = 0
+15:0/0 = 0
+16:0/0 = 0
+17:0/0 = 0
+18:0/0 = 0
+19:0/0 = 0
+20:0/0 = 0
+21:0/0 = 0
+22:0/0 = 0
+23:0/0 = 0
+24:0/0 = 0
+25:0/0 = 0
+26:0/0 = 0
+27:0/0 = 0
+28:0/0 = 0
+29:0/0 = 0
+30:0/0 = 0
+31:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+2:1/0 = 0
+3:1/0 = 0
+5:1/0 = 0
+6:1/0 = 0
+7:1/0 = 0
+9:1/0 = 0
+10:1/0 = 0
+11:1/0 = 0
+12:1/0 = 0
+15:1/0 = 0
+16:1/0 = 0
+17:1/0 = 0
+18:1/0 = 0
+19:1/0 = 0
+20:1/0 = 0
+21:1/0 = 0
+22:1/0 = 0
+23:1/0 = 0
+24:1/0 = 0
+25:1/0 = 0
+26:1/0 = 0
+27:1/0 = 0
+28:1/0 = 0
+29:1/0 = 0
+30:1/0 = 0
+31:1/0 = 0
+0:2/0 = 0
+1:2/0 = 0
+2:2/0 = 0
+3:2/0 = 0
+4:2/0 = 0
+5:2/0 = 0
+6:2/0 = 0
+7:2/0 = 0
+8:2/0 = 0
+9:2/0 = 0
+10:2/0 = 0
+11:2/0 = 0
+12:2/0 = 0
+13:2/0 = 0
+14:2/0 = 0
+15:2/0 = 0
+16:2/0 = 0
+17:2/0 = 0
+18:2/0 = 0
+19:2/0 = 0
+20:2/0 = 0
+21:2/0 = 0
+22:2/0 = 0
+23:2/0 = 0
+24:2/0 = 0
+25:2/0 = 0
+26:2/0 = 0
+27:2/0 = 0
+28:2/0 = 0
+29:2/0 = 0
+30:2/0 = 0
+31:2/0 = 0
+0:3/0 = 0
+1:3/0 = 0
+2:3/0 = 0
+3:3/0 = 0
+4:3/0 = 0
+5:3/0 = 0
+6:3/0 = 0
+7:3/0 = 0
+8:3/0 = 0
+9:3/0 = 0
+10:3/0 = 0
+11:3/0 = 0
+12:3/0 = 0
+13:3/0 = 0
+14:3/0 = 0
+15:3/0 = 0
+16:3/0 = 0
+17:3/0 = 0
+18:3/0 = 0
+19:3/0 = 0
+20:3/0 = 0
+21:3/0 = 0
+22:3/0 = 0
+23:3/0 = 0
+24:3/0 = 0
+25:3/0 = 0
+26:3/0 = 0
+27:3/0 = 0
+28:3/0 = 0
+29:3/0 = 0
+30:3/0 = 0
+31:3/0 = 0
+0:4/0 = 0
+1:4/0 = 0
+2:4/0 = 0
+3:4/0 = 0
+4:4/0 = 0
+5:4/0 = 0
+7:4/0 = 0
+9:4/0 = 0
+10:4/0 = 0
+11:4/0 = 0
+12:4/0 = 0
+13:4/0 = 0
+14:4/0 = 0
+15:4/0 = 0
+16:4/0 = 0
+17:4/0 = 0
+18:4/0 = 0
+19:4/0 = 0
+20:4/0 = 0
+21:4/0 = 0
+22:4/0 = 0
+23:4/0 = 0
+24:4/0 = 0
+25:4/0 = 0
+26:4/0 = 0
+27:4/0 = 0
+28:4/0 = 0
+29:4/0 = 0
+30:4/0 = 0
+0:5/0 = 0
+1:5/0 = 0
+2:5/0 = 0
+3:5/0 = 0
+4:5/0 = 0
+5:5/0 = 0
+7:5/0 = 0
+9:5/0 = 0
+10:5/0 = 0
+11:5/0 = 0
+12:5/0 = 0
+13:5/0 = 0
+14:5/0 = 0
+16:5/0 = 0
+17:5/0 = 0
+18:5/0 = 0
+19:5/0 = 0
+20:5/0 = 0
+22:5/0 = 0
+23:5/0 = 0
+24:5/0 = 0
+25:5/0 = 0
+26:5/0 = 0
+27:5/0 = 0
+28:5/0 = 0
+29:5/0 = 0
+30:5/0 = 0
+0:6/0 = 0
+2:6/0 = 0
+5:6/0 = 0
+6:6/0 = 0
+7:6/0 = 0
+9:6/0 = 0
+10:6/0 = 0
+11:6/0 = 0
+12:6/0 = 0
+13:6/0 = 0
+14:6/0 = 0
+16:6/0 = 0
+17:6/0 = 0
+20:6/0 = 0
+21:6/0 = 0
+22:6/0 = 0
+23:6/0 = 0
+24:6/0 = 0
+24:6/0/z_index = 1
+25:6/0 = 0
+25:6/0/z_index = 1
+26:6/0 = 0
+26:6/0/z_index = 1
+27:6/0 = 0
+27:6/0/z_index = 1
+28:6/0 = 0
+28:6/0/z_index = 1
+0:7/0 = 0
+1:7/0 = 0
+2:7/0 = 0
+5:7/0 = 0
+6:7/0 = 0
+7:7/0 = 0
+8:7/0 = 0
+9:7/0 = 0
+10:7/0 = 0
+11:7/0 = 0
+12:7/0 = 0
+13:7/0 = 0
+14:7/0 = 0
+15:7/0 = 0
+16:7/0 = 0
+17:7/0 = 0
+18:7/0 = 0
+19:7/0 = 0
+20:7/0 = 0
+21:7/0 = 0
+22:7/0 = 0
+23:7/0 = 0
+23:7/0/z_index = 1
+24:7/0 = 0
+24:7/0/z_index = 1
+25:7/0 = 0
+25:7/0/z_index = 1
+26:7/0 = 0
+26:7/0/z_index = 1
+27:7/0 = 0
+27:7/0/z_index = 1
+28:7/0 = 0
+28:7/0/z_index = 1
+0:8/0 = 0
+1:8/0 = 0
+2:8/0 = 0
+3:8/0 = 0
+5:8/0 = 0
+6:8/0 = 0
+7:8/0 = 0
+8:8/0 = 0
+9:8/0 = 0
+10:8/0 = 0
+11:8/0 = 0
+12:8/0 = 0
+13:8/0 = 0
+14:8/0 = 0
+15:8/0 = 0
+16:8/0 = 0
+17:8/0 = 0
+18:8/0 = 0
+19:8/0 = 0
+20:8/0 = 0
+21:8/0 = 0
+22:8/0 = 0
+23:8/0 = 0
+23:8/0/z_index = 1
+24:8/0 = 0
+25:8/0 = 0
+26:8/0 = 0
+26:8/0/z_index = 1
+27:8/0 = 0
+27:8/0/z_index = 1
+28:8/0 = 0
+28:8/0/z_index = 1
+0:9/0 = 0
+1:9/0 = 0
+2:9/0 = 0
+3:9/0 = 0
+4:9/0 = 0
+5:9/0 = 0
+8:9/0 = 0
+9:9/0 = 0
+10:9/0 = 0
+11:9/0 = 0
+12:9/0 = 0
+13:9/0 = 0
+14:9/0 = 0
+15:9/0 = 0
+16:9/0 = 0
+17:9/0 = 0
+18:9/0 = 0
+19:9/0 = 0
+20:9/0 = 0
+21:9/0 = 0
+22:9/0 = 0
+23:9/0 = 0
+24:9/0 = 0
+25:9/0 = 0
+26:9/0 = 0
+27:9/0 = 0
+28:9/0 = 0
+29:9/0 = 0
+30:9/0 = 0
+31:9/0 = 0
+0:10/0 = 0
+3:10/0 = 0
+4:10/0 = 0
+5:10/0 = 0
+6:10/0 = 0
+7:10/0 = 0
+8:10/0 = 0
+9:10/0 = 0
+10:10/0 = 0
+11:10/0 = 0
+12:10/0 = 0
+14:10/0 = 0
+15:10/0 = 0
+16:10/0 = 0
+17:10/0 = 0
+18:10/0 = 0
+19:10/0 = 0
+20:10/0 = 0
+21:10/0 = 0
+22:10/0 = 0
+23:10/0 = 0
+24:10/0 = 0
+25:10/0 = 0
+26:10/0 = 0
+27:10/0 = 0
+28:10/0 = 0
+29:10/0 = 0
+30:10/0 = 0
+31:10/0 = 0
+0:11/0 = 0
+1:11/0 = 0
+2:11/0 = 0
+4:11/0 = 0
+5:11/0 = 0
+6:11/0 = 0
+7:11/0 = 0
+8:11/0 = 0
+9:11/0 = 0
+10:11/0 = 0
+11:11/0 = 0
+12:11/0 = 0
+13:11/0 = 0
+14:11/0 = 0
+15:11/0 = 0
+16:11/0 = 0
+17:11/0 = 0
+20:11/0 = 0
+21:11/0 = 0
+0:12/0 = 0
+1:12/0 = 0
+4:12/0 = 0
+5:12/0 = 0
+6:12/0 = 0
+7:12/0 = 0
+11:12/0 = 0
+13:12/0 = 0
+14:12/0 = 0
+15:12/0 = 0
+16:12/0 = 0
+17:12/0 = 0
+20:12/0 = 0
+21:12/0 = 0
+0:13/0 = 0
+5:13/0 = 0
+7:13/0 = 0
+11:13/0 = 0
+13:13/0 = 0
+14:13/0 = 0
+15:13/0 = 0
+0:14/0 = 0
+13:14/0 = 0
+14:14/0 = 0
+15:14/0 = 0
+13:15/0 = 0
+14:15/0 = 0
+15:15/0 = 0
+0:16/0 = 0
+1:16/0 = 0
+2:16/0 = 0
+0:17/0 = 0
+1:17/0 = 0
+2:17/0 = 0
+0:18/0 = 0
+1:18/0 = 0
+0:19/0 = 0
+1:19/0 = 0
+0:20/0 = 0
+
 [sub_resource type="TileSet" id="TileSet_8u1ts"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_oiqj8")
 sources/1 = SubResource("TileSetAtlasSource_nhut0")
+sources/2 = SubResource("TileSetAtlasSource_jox8q")
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_g0oit"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nfe3j"]
-size = Vector2(32, 80)
+size = Vector2(24, 80)
 
 [node name="F1Room5" type="Node2D" unique_id=1375949922]
 script = ExtResource("1_thv3o")
@@ -852,13 +1239,13 @@ tile_set = SubResource("TileSet_jox8q")
 [node name="Walls" type="TileMapLayer" parent="." unique_id=430540380]
 texture_filter = 1
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAAAABAABQAAAAEAAAAAABEABQAAAAEAAAAAABIABQAAAAEAAAAAAA0ABQAAAAEAAAAAAA4ABQAAAAEAAAAAAA8ABQAAAAEAAAAAAAoABQAAAAEAAAAAAAsABQAAAAEAAAAAAAwABQAAAAEAAAAAAAcABQAAAAEAAAAAAAgABQAAAAEAAAAAAAkABQAAAAEAAAAAAAQABQAAAAEAAAAAAAUABQAAAAEAAAAAAAYABQAAAAEAAAAAAAEABQAAAAEAAAAAAAIABQAAAAEAAAAAAAMABQAAAAEAAAABAAAABAACAAMAAAADAAAABAACAAMAAAAEAAAABAACAAMAAAAFAAAABAACAAMAAAAGAAAABAACAAMAAAAIAAAABAACAAMAAAAJAAAABAACAAMAAAAKAAAABAACAAMAAAALAAAABAACAAMAAAANAAAABAACAAMAAAAOAAAABAACAAMAAAAPAAAABAACAAMAAAAQAAAABAACAAMAAAASAAAABAACAAMAAAATAAAABAACAAMAAAAUAAAABAACAAMAAAAVAAAABAACAAMAAAAWAAAABAACAAMAAAAXAAAABAACAAMAAAAYAAAABAACAAMAAAAZAAAABAACAAMAAAAaAAAABAACAAMAAAAbAAAABAACAAMAAAAcAAAABAACAAMAAAAdAAAABAACAAMAAAAeAAAABAACAAMAAAAfAAAABAACAAMAAAAgAAAABAACAAMAAAAhAAAABAACAAMAAAAiAAAABAACAAMAAAAjAAAABAACAAMAAAAAAAAABQABAAAAAAAAABMABQABAAIAAAAjABMAAgACAAMAAAABABMAAgACAAMAAAACABMAAgACAAMAAAADABMAAgACAAMAAAAEABMAAgACAAMAAAAFABMAAgACAAMAAAAGABMAAgACAAMAAAAHABMAAgACAAMAAAAIABMAAgACAAMAAAAJABMAAgACAAMAAAAKABMAAgACAAMAAAALABMAAgACAAMAAAAMABMAAgACAAMAAAANABMAAgACAAMAAAAOABMAAgACAAMAAAAPABMAAgACAAMAAAAUABMAAgACAAMAAAAVABMAAgACAAMAAAAWABMAAgACAAMAAAAXABMAAgACAAMAAAAYABMAAgACAAMAAAAZABMAAgACAAMAAAAaABMAAgACAAMAAAAbABMAAgACAAMAAAAcABMAAgACAAMAAAAdABMAAgACAAMAAAAeABMAAgACAAMAAAAfABMAAgACAAMAAAAgABMAAgACAAMAAAAhABMAAgACAAMAAAAiABMAAgACAAMAAAARAAAABAACAAMAAAAMAAAABAACAAMAAAAHAAAABAACAAMAAAACAAAABAACAAMAAABTAAAABQABAAAAABBTAAEABQAAAAEAABBTAAIABQAAAAEAABBTAAMABQAAAAEAABBTAAQABQAAAAEAABBTAAUABQAAAAEAABBTAAYABQAAAAEAABBTAAcABQAAAAEAABBTAAgABQAAAAEAABBTAAkABQAAAAEAABBTAAoABQAAAAEAABBTAAsABQAAAAEAABBTAAwABQAAAAEAABBTAA0ABQAAAAEAABBTAA4ABQAAAAEAABBTAA8ABQAAAAEAABBTABAABQAAAAEAABBTABEABQAAAAEAABBTABIABQAAAAEAABBTABMAAgACAAMAAAAkABMAAgACAAMAAAAlABMAAgACAAMAAAAmABMAAgACAAMAAAAnABMAAgACAAMAAAAoABMAAgACAAMAAAApABMAAgACAAMAAAAqABMAAgACAAMAAAArABMAAgACAAMAAAAsABMAAgACAAMAAAAtABMAAgACAAMAAAAuABMAAgACAAMAAAAvABMAAgACAAMAAAAwABMAAgACAAMAAAAxABMAAgACAAMAAAAyABMAAgACAAMAAAAzABMAAgACAAMAAAA0ABMAAgACAAMAAAA1ABMAAgACAAMAAAA2ABMAAgACAAMAAAA3ABMAAgACAAMAAAA4ABMAAgACAAMAAAA5ABMAAgACAAMAAAA6ABMAAgACAAMAAAA7ABMAAgACAAMAAAA8ABMAAgACAAMAAAA9ABMAAgACAAMAAAA+ABMAAgACAAMAAAA/ABMAAgACAAMAAABAABMAAgACAAMAAABBABMAAgACAAMAAABCABMAAgACAAMAAABDABMAAgACAAMAAABEABMAAgACAAMAAABFABMAAgACAAMAAABGABMAAgACAAMAAABHABMAAgACAAMAAABIABMAAgACAAMAAABJABMAAgACAAMAAABKABMAAgACAAMAAABLABMAAgACAAMAAABMABMAAgACAAMAAABNABMAAgACAAMAAABOABMAAgACAAMAAABPABMAAgACAAMAAABQABMAAgACAAMAAABRABMAAgACAAMAAABSABMAAgACAAMAAAAkAAAABAACAAMAAAAlAAAABAACAAMAAAAmAAAABAACAAMAAAAnAAAABAACAAMAAAAoAAAABAACAAMAAAApAAAABAACAAMAAAAqAAAABAACAAMAAAArAAAABAACAAMAAAAsAAAABAACAAMAAAAtAAAABAACAAMAAAAuAAAABAACAAMAAAAvAAAABAACAAMAAAAwAAAABAACAAMAAAAxAAAABAACAAMAAAAyAAAABAACAAMAAAAzAAAABAACAAMAAAA0AAAABAACAAMAAAA6AAAABAACAAMAAAA5AAAABAACAAMAAAA4AAAABAACAAMAAAA3AAAABAACAAMAAAA2AAAABAACAAMAAAA1AAAABAACAAMAAAA7AAAABAACAAMAAAA8AAAABAACAAMAAAA9AAAABAACAAMAAAA+AAAABAACAAMAAAA/AAAABAACAAMAAABAAAAABAACAAMAAABBAAAABAACAAMAAABCAAAABAACAAMAAABDAAAABAACAAMAAABEAAAABAACAAMAAABFAAAABAACAAMAAABGAAAABAACAAMAAABHAAAABAACAAMAAABIAAAABAACAAMAAABJAAAABAACAAMAAABKAAAABAACAAMAAABLAAAABAACAAMAAABMAAAABAACAAMAAABNAAAABAACAAMAAABOAAAABAACAAMAAABPAAAABAACAAMAAABQAAAABAACAAMAAABRAAAABAACAAMAAABSAAAABAACAAMAAAAQABMAAgACAAMAAAARABMAAgACAAMAAAASABMAAgACAAMAAAATABMAAgACAAMAAAAGAAcAAgAIAAAAAAAHAAcAAgAKAAAAAAAIAAcAAgAKAAAAAAAJAAcAAgAKAAAAAAAKAAcAAgAKAAAAAAALAAcAAgAKAAAAAAAMAAcAAgAKAAAAAAANAAcAAgAKAAAAAAAOAAcAAgAKAAAAAAAPAAcAAgAKAAAAAAAQAAcAAgAKAAAAAAARAAcAAgAKAAAAAAASAAcAAgAKAAAAAAATAAcAAgAKAAAAAAAUAAcAAgAKAAAAAAAVAAcAAgALAAAAAAAVAAgAAgALAAIAAAAVAAkAAgALAAIAAAAVAAoAAgALAAIAAAAVAAsAAgALAAIAAAAVAAwAAgALAAIAAAAGAAwAAgAIAAEAAAAGAAsAAgAIAAEAAAAGAAoAAgAIAAEAAAAGAAkAAgAIAAEAAAAGAAgAAgAIAAEAAAAHAAgAAgAJAAIAAAAIAAgAAgAJAAIAAAAJAAgAAgAJAAIAAAAKAAgAAgAJAAIAAAALAAgAAgAJAAIAAAAMAAgAAgAJAAIAAAANAAgAAgAJAAIAAAAOAAgAAgAJAAIAAAAPAAgAAgAJAAIAAAAQAAgAAgAJAAIAAAARAAgAAgAJAAIAAAASAAgAAgAJAAIAAAATAAgAAgAJAAIAAAAUAAgAAgAJAAIAAAAUAAkAAgAJAAIAAAAUAAoAAgAJAAIAAAAUAAsAAgAJAAIAAAATAAsAAgAJAAIAAAASAAsAAgAJAAIAAAARAAsAAgAJAAIAAAAQAAsAAgAJAAIAAAAPAAsAAgAJAAIAAAAOAAsAAgAJAAIAAAANAAsAAgAJAAIAAAAMAAsAAgAJAAIAAAALAAsAAgAJAAIAAAAKAAsAAgAJAAIAAAAJAAsAAgAJAAIAAAAIAAsAAgAJAAIAAAAHAAsAAgAJAAIAAAAHAAoAAgAJAAIAAAAHAAkAAgAJAAIAAAAIAAkAAgAJAAIAAAAJAAkAAgAJAAIAAAAIAAoAAgAJAAIAAAAJAAoAAgAJAAIAAAAKAAoAAgAJAAIAAAAKAAkAAgAJAAIAAAALAAoAAgAJAAIAAAAMAAoAAgAJAAIAAAANAAkAAgAJAAIAAAAMAAkAAgAJAAIAAAALAAkAAgAJAAIAAAANAAoAAgAJAAIAAAAOAAoAAgAJAAIAAAAPAAoAAgAJAAIAAAAPAAkAAgAJAAIAAAAOAAkAAgAJAAIAAAAQAAoAAgAJAAIAAAARAAoAAgAJAAIAAAARAAkAAgAJAAIAAAAQAAkAAgAJAAIAAAASAAoAAgAJAAIAAAATAAoAAgAJAAIAAAATAAkAAgAJAAIAAAASAAkAAgAJAAIAAAAgAAcAAgAIAAAAAAAtAAcAAgALAAAAAAAVAA0AAgALAAMAAAAHAA0AAgAJAAMAAAAIAA0AAgAJAAMAAAAJAA0AAgAJAAMAAAAKAA0AAgAJAAMAAAALAA0AAgAJAAMAAAAMAA0AAgAJAAMAAAANAA0AAgAJAAMAAAAOAA0AAgAJAAMAAAAPAA0AAgAJAAMAAAAQAA0AAgAJAAMAAAARAA0AAgAJAAMAAAASAA0AAgAJAAMAAAATAA0AAgAJAAMAAAAUAA0AAgAJAAMAAAAGAA0AAgAIAAMAAAAgAA0AAgAIAAMAAAAtAA0AAgALAAMAAAAhAA0AAgAJAAMAAAAiAA0AAgAJAAMAAAAjAA0AAgAJAAMAAAAkAA0AAgAJAAMAAAAlAA0AAgAJAAMAAAAmAA0AAgAJAAMAAAAnAA0AAgAJAAMAAAAoAA0AAgAJAAMAAAApAA0AAgAJAAMAAAAqAA0AAgAJAAMAAAArAA0AAgAJAAMAAAAsAA0AAgAJAAMAAAAgAAwAAgAIAAEAAAAgAAsAAgAIAAEAAAAgAAoAAgAIAAEAAAAgAAkAAgAIAAEAAAAgAAgAAgAIAAEAAAAtAAwAAgALAAIAAAAtAAsAAgALAAIAAAAtAAoAAgALAAIAAAAtAAkAAgALAAIAAAAtAAgAAgALAAIAAAAhAAwAAgAJAAIAAAAiAAwAAgAJAAIAAAAjAAwAAgAJAAIAAAAkAAwAAgAJAAIAAAAlAAwAAgAJAAIAAAAmAAwAAgAJAAIAAAAnAAwAAgAJAAIAAAAoAAwAAgAJAAIAAAApAAwAAgAJAAIAAAAqAAwAAgAJAAIAAAArAAwAAgAJAAIAAAAsAAwAAgAJAAIAAAAsAAsAAgAJAAIAAAAsAAoAAgAJAAIAAAAsAAkAAgAJAAIAAAAsAAgAAgAJAAIAAAArAAgAAgAJAAIAAAAqAAgAAgAJAAIAAAAqAAcAAgAKAAAAAAArAAcAAgAKAAAAAAAsAAcAAgAKAAAAAAApAAcAAgAKAAAAAAAoAAcAAgAKAAAAAAAnAAcAAgAKAAAAAAAmAAcAAgAKAAAAAAAlAAcAAgAKAAAAAAAkAAcAAgAKAAAAAAAkAAgAAgAJAAIAAAAjAAgAAgAJAAIAAAAiAAgAAgAJAAIAAAAhAAgAAgAJAAIAAAAlAAgAAgAJAAIAAAAmAAgAAgAJAAIAAAAnAAgAAgAJAAIAAAAoAAgAAgAJAAIAAAApAAgAAgAJAAIAAAArAAkAAgAJAAIAAAArAAoAAgAJAAIAAAArAAsAAgAJAAIAAAAqAAsAAgAJAAIAAAApAAsAAgAJAAIAAAAoAAsAAgAJAAIAAAAnAAsAAgAJAAIAAAAmAAsAAgAJAAIAAAAlAAsAAgAJAAIAAAAkAAsAAgAJAAIAAAAjAAsAAgAJAAIAAAAiAAsAAgAJAAIAAAAiAAoAAgAJAAIAAAAhAAoAAgAJAAIAAAAhAAkAAgAJAAIAAAAhAAsAAgAJAAIAAAAjAAoAAgAJAAIAAAAjAAkAAgAJAAIAAAAiAAkAAgAJAAIAAAAkAAoAAgAJAAIAAAAkAAkAAgAJAAIAAAAlAAoAAgAJAAIAAAAmAAoAAgAJAAIAAAAmAAkAAgAJAAIAAAAnAAkAAgAJAAIAAAAlAAkAAgAJAAIAAAAnAAoAAgAJAAIAAAAoAAoAAgAJAAIAAAApAAoAAgAJAAIAAAApAAkAAgAJAAIAAAAoAAkAAgAJAAIAAAAqAAoAAgAJAAIAAAAqAAkAAgAJAAIAAAAhAAcAAgAKAAAAAAAiAAcAAgAKAAAAAAAjAAcAAgAKAAAAAAAUAAwAAgAJAAIAAAATAAwAAgAJAAIAAAASAAwAAgAJAAIAAAARAAwAAgAJAAIAAAAQAAwAAgAJAAIAAAAPAAwAAgAJAAIAAAAOAAwAAgAJAAIAAAANAAwAAgAJAAIAAAAMAAwAAgAJAAIAAAALAAwAAgAJAAIAAAAKAAwAAgAJAAIAAAAJAAwAAgAJAAIAAAAIAAwAAgAJAAIAAAAHAAwAAgAJAAIAAAA=")
+tile_map_data = PackedByteArray("AAAAABAABQAAAAEAAAAAABEABQAAAAEAAAAAABIABQAAAAEAAAAAAA0ABQAAAAEAAAAAAA4ABQAAAAEAAAAAAA8ABQAAAAEAAAAAAAoABQAAAAEAAAAAAAsABQAAAAEAAAAAAAwABQAAAAEAAAAAAAcABQAAAAEAAAAAAAgABQAAAAEAAAAAAAkABQAAAAEAAAAAAAQABQAAAAEAAAAAAAUABQAAAAEAAAAAAAYABQAAAAEAAAAAAAEABQAAAAEAAAAAAAIABQAAAAEAAAAAAAMABQAAAAEAAAABAAAABAACAAMAAAADAAAABAACAAMAAAAEAAAABAACAAMAAAAFAAAABAACAAMAAAAGAAAABAACAAMAAAAIAAAABAACAAMAAAAJAAAABAACAAMAAAAKAAAABAACAAMAAAALAAAABAACAAMAAAANAAAABAACAAMAAAAOAAAABAACAAMAAAAPAAAABAACAAMAAAAQAAAABAACAAMAAAASAAAABAACAAMAAAATAAAABAACAAMAAAAUAAAABAACAAMAAAAVAAAABAACAAMAAAAWAAAABAACAAMAAAAXAAAABAACAAMAAAAYAAAABAACAAMAAAAZAAAABAACAAMAAAAaAAAABAACAAMAAAAbAAAABAACAAMAAAAcAAAABAACAAMAAAAdAAAABAACAAMAAAAeAAAABAACAAMAAAAfAAAABAACAAMAAAAgAAAABAACAAMAAAAhAAAABAACAAMAAAAiAAAABAACAAMAAAAjAAAABAACAAMAAAAAAAAABQABAAAAAAAAABMABQABAAIAAAAjABMAAgACAAMAAAABABMAAgACAAMAAAACABMAAgACAAMAAAADABMAAgACAAMAAAAEABMAAgACAAMAAAAFABMAAgACAAMAAAAGABMAAgACAAMAAAAHABMAAgACAAMAAAAIABMAAgACAAMAAAAJABMAAgACAAMAAAAKABMAAgACAAMAAAALABMAAgACAAMAAAAMABMAAgACAAMAAAANABMAAgACAAMAAAAOABMAAgACAAMAAAAPABMAAgACAAMAAAAUABMAAgACAAMAAAAVABMAAgACAAMAAAAWABMAAgACAAMAAAAXABMAAgACAAMAAAAYABMAAgACAAMAAAAZABMAAgACAAMAAAAaABMAAgACAAMAAAAbABMAAgACAAMAAAAcABMAAgACAAMAAAAdABMAAgACAAMAAAAeABMAAgACAAMAAAAfABMAAgACAAMAAAAgABMAAgACAAMAAAAhABMAAgACAAMAAAAiABMAAgACAAMAAAARAAAABAACAAMAAAAMAAAABAACAAMAAAAHAAAABAACAAMAAAACAAAABAACAAMAAABTAAAABQABAAAAABBTAAEABQAAAAEAABBTAAIABQAAAAEAABBTAAMABQAAAAEAABBTAAQABQAAAAEAABBTAAUABQAAAAEAABBTAAYABQAAAAEAABBTAAcABQAAAAEAABBTAAgABQAAAAEAABBTAAkABQAAAAEAABBTAAoABQAAAAEAABBTAAsABQAAAAEAABBTAAwABQAAAAEAABBTAA0ABQAAAAEAABBTAA4ABQAAAAEAABBTAA8ABQAAAAEAABBTABAABQAAAAEAABBTABEABQAAAAEAABBTABIABQAAAAEAABBTABMAAgACAAMAAAAkABMAAgACAAMAAAAlABMAAgACAAMAAAAmABMAAgACAAMAAAAnABMAAgACAAMAAAAoABMAAgACAAMAAAApABMAAgACAAMAAAAqABMAAgACAAMAAAArABMAAgACAAMAAAAsABMAAgACAAMAAAAtABMAAgACAAMAAAAuABMAAgACAAMAAAAvABMAAgACAAMAAAAwABMAAgACAAMAAAAxABMAAgACAAMAAAAyABMAAgACAAMAAAAzABMAAgACAAMAAAA0ABMAAgACAAMAAAA1ABMAAgACAAMAAAA2ABMAAgACAAMAAAA3ABMAAgACAAMAAAA4ABMAAgACAAMAAAA5ABMAAgACAAMAAAA6ABMAAgACAAMAAAA7ABMAAgACAAMAAAA8ABMAAgACAAMAAAA9ABMAAgACAAMAAAA+ABMAAgACAAMAAAA/ABMAAgACAAMAAABAABMAAgACAAMAAABBABMAAgACAAMAAABCABMAAgACAAMAAABDABMAAgACAAMAAABEABMAAgACAAMAAABFABMAAgACAAMAAABGABMAAgACAAMAAABHABMAAgACAAMAAABIABMAAgACAAMAAABJABMAAgACAAMAAABKABMAAgACAAMAAABLABMAAgACAAMAAABMABMAAgACAAMAAABNABMAAgACAAMAAABOABMAAgACAAMAAABPABMAAgACAAMAAABQABMAAgACAAMAAABRABMAAgACAAMAAABSABMAAgACAAMAAAAkAAAABAACAAMAAAAlAAAABAACAAMAAAAmAAAABAACAAMAAAAnAAAABAACAAMAAAAoAAAABAACAAMAAAApAAAABAACAAMAAAAqAAAABAACAAMAAAArAAAABAACAAMAAAAsAAAABAACAAMAAAAtAAAABAACAAMAAAAuAAAABAACAAMAAAAvAAAABAACAAMAAAAwAAAABAACAAMAAAAxAAAABAACAAMAAAAyAAAABAACAAMAAAAzAAAABAACAAMAAAA0AAAABAACAAMAAAA6AAAABAACAAMAAAA5AAAABAACAAMAAAA4AAAABAACAAMAAAA3AAAABAACAAMAAAA2AAAABAACAAMAAAA1AAAABAACAAMAAAA7AAAABAACAAMAAAA8AAAABAACAAMAAAA9AAAABAACAAMAAAA+AAAABAACAAMAAAA/AAAABAACAAMAAABAAAAABAACAAMAAABBAAAABAACAAMAAABCAAAABAACAAMAAABDAAAABAACAAMAAABEAAAABAACAAMAAABFAAAABAACAAMAAABGAAAABAACAAMAAABHAAAABAACAAMAAABIAAAABAACAAMAAABJAAAABAACAAMAAABKAAAABAACAAMAAABLAAAABAACAAMAAABMAAAABAACAAMAAABNAAAABAACAAMAAABOAAAABAACAAMAAABPAAAABAACAAMAAABQAAAABAACAAMAAABRAAAABAACAAMAAABSAAAABAACAAMAAAAQABMAAgACAAMAAAARABMAAgACAAMAAAASABMAAgACAAMAAAATABMAAgACAAMAAAAGAAcAAgAIAAEAAAAVAAcAAgALAAIAAAAVAAgAAgALAAIAAAAVAAkAAgALAAIAAAAVAAoAAgALAAIAAAAVAAsAAgALAAIAAAAVAAwAAgALAAIAAAAGAAwAAgAIAAEAAAAGAAsAAgAIAAEAAAAGAAoAAgAIAAEAAAAGAAkAAgAIAAEAAAAGAAgAAgAIAAEAAAAHAAgAAgAJAAIAAAAIAAgAAgAJAAIAAAAJAAgAAgAJAAIAAAAKAAgAAgAJAAIAAAALAAgAAgAJAAIAAAAMAAgAAgAJAAIAAAANAAgAAgAJAAIAAAAOAAgAAgAJAAIAAAAPAAgAAgAJAAIAAAAQAAgAAgAJAAIAAAARAAgAAgAJAAIAAAASAAgAAgAJAAIAAAATAAgAAgAJAAIAAAAUAAgAAgAJAAIAAAAUAAkAAgAJAAIAAAAUAAoAAgAJAAIAAAAUAAsAAgAJAAIAAAATAAsAAgAJAAIAAAASAAsAAgAJAAIAAAARAAsAAgAJAAIAAAAQAAsAAgAJAAIAAAAPAAsAAgAJAAIAAAAOAAsAAgAJAAIAAAANAAsAAgAJAAIAAAAMAAsAAgAJAAIAAAALAAsAAgAJAAIAAAAKAAsAAgAJAAIAAAAJAAsAAgAJAAIAAAAIAAsAAgAJAAIAAAAHAAsAAgAJAAIAAAAHAAoAAgAJAAIAAAAHAAkAAgAJAAIAAAAIAAkAAgAJAAIAAAAJAAkAAgAJAAIAAAAIAAoAAgAJAAIAAAAJAAoAAgAJAAIAAAAKAAoAAgAJAAIAAAAKAAkAAgAJAAIAAAALAAoAAgAJAAIAAAAMAAoAAgAJAAIAAAANAAkAAgAJAAIAAAAMAAkAAgAJAAIAAAALAAkAAgAJAAIAAAANAAoAAgAJAAIAAAAOAAoAAgAJAAIAAAAPAAoAAgAJAAIAAAAPAAkAAgAJAAIAAAAOAAkAAgAJAAIAAAAQAAoAAgAJAAIAAAARAAoAAgAJAAIAAAARAAkAAgAJAAIAAAAQAAkAAgAJAAIAAAASAAoAAgAJAAIAAAATAAoAAgAJAAIAAAATAAkAAgAJAAIAAAASAAkAAgAJAAIAAAAgAAcAAgAIAAEAAAAtAAcAAgALAAIAAAAVAA0AAgALAAMAAAAHAA0AAgAJAAMAAAAIAA0AAgAJAAMAAAAJAA0AAgAJAAMAAAAKAA0AAgAJAAMAAAALAA0AAgAJAAMAAAAMAA0AAgAJAAMAAAANAA0AAgAJAAMAAAAOAA0AAgAJAAMAAAAPAA0AAgAJAAMAAAAQAA0AAgAJAAMAAAARAA0AAgAJAAMAAAASAA0AAgAJAAMAAAATAA0AAgAJAAMAAAAUAA0AAgAJAAMAAAAGAA0AAgAIAAMAAAAgAA0AAgAIAAMAAAAtAA0AAgALAAMAAAAhAA0AAgAJAAMAAAAiAA0AAgAJAAMAAAAjAA0AAgAJAAMAAAAkAA0AAgAJAAMAAAAlAA0AAgAJAAMAAAAmAA0AAgAJAAMAAAAnAA0AAgAJAAMAAAAoAA0AAgAJAAMAAAApAA0AAgAJAAMAAAAqAA0AAgAJAAMAAAArAA0AAgAJAAMAAAAsAA0AAgAJAAMAAAAgAAwAAgAIAAEAAAAgAAsAAgAIAAEAAAAgAAoAAgAIAAEAAAAgAAkAAgAIAAEAAAAgAAgAAgAIAAEAAAAtAAwAAgALAAIAAAAtAAsAAgALAAIAAAAtAAoAAgALAAIAAAAtAAkAAgALAAIAAAAtAAgAAgALAAIAAAAhAAwAAgAJAAIAAAAiAAwAAgAJAAIAAAAjAAwAAgAJAAIAAAAkAAwAAgAJAAIAAAAlAAwAAgAJAAIAAAAmAAwAAgAJAAIAAAAnAAwAAgAJAAIAAAAoAAwAAgAJAAIAAAApAAwAAgAJAAIAAAAqAAwAAgAJAAIAAAArAAwAAgAJAAIAAAAsAAwAAgAJAAIAAAAsAAsAAgAJAAIAAAAsAAoAAgAJAAIAAAAsAAkAAgAJAAIAAAAsAAgAAgAJAAIAAAArAAgAAgAJAAIAAAAqAAgAAgAJAAIAAAAqAAcAAgAJAAIAAAArAAcAAgAJAAIAAAAsAAcAAgAJAAIAAAApAAcAAgAJAAIAAAAoAAcAAgAJAAIAAAAnAAcAAgAJAAIAAAAmAAcAAgAJAAIAAAAlAAcAAgAJAAIAAAAkAAcAAgAJAAIAAAAkAAgAAgAJAAIAAAAjAAgAAgAJAAIAAAAiAAgAAgAJAAIAAAAhAAgAAgAJAAIAAAAlAAgAAgAJAAIAAAAmAAgAAgAJAAIAAAAnAAgAAgAJAAIAAAAoAAgAAgAJAAIAAAApAAgAAgAJAAIAAAArAAkAAgAJAAIAAAArAAoAAgAJAAIAAAArAAsAAgAJAAIAAAAqAAsAAgAJAAIAAAApAAsAAgAJAAIAAAAoAAsAAgAJAAIAAAAnAAsAAgAJAAIAAAAmAAsAAgAJAAIAAAAlAAsAAgAJAAIAAAAkAAsAAgAJAAIAAAAjAAsAAgAJAAIAAAAiAAsAAgAJAAIAAAAiAAoAAgAJAAIAAAAhAAoAAgAJAAIAAAAhAAkAAgAJAAIAAAAhAAsAAgAJAAIAAAAjAAoAAgAJAAIAAAAjAAkAAgAJAAIAAAAiAAkAAgAJAAIAAAAkAAoAAgAJAAIAAAAkAAkAAgAJAAIAAAAlAAoAAgAJAAIAAAAmAAoAAgAJAAIAAAAmAAkAAgAJAAIAAAAnAAkAAgAJAAIAAAAlAAkAAgAJAAIAAAAnAAoAAgAJAAIAAAAoAAoAAgAJAAIAAAApAAoAAgAJAAIAAAApAAkAAgAJAAIAAAAoAAkAAgAJAAIAAAAqAAoAAgAJAAIAAAAqAAkAAgAJAAIAAAAhAAcAAgAJAAIAAAAiAAcAAgAJAAIAAAAjAAcAAgAJAAIAAAAUAAwAAgAJAAIAAAATAAwAAgAJAAIAAAASAAwAAgAJAAIAAAARAAwAAgAJAAIAAAAQAAwAAgAJAAIAAAAPAAwAAgAJAAIAAAAOAAwAAgAJAAIAAAANAAwAAgAJAAIAAAAMAAwAAgAJAAIAAAALAAwAAgAJAAIAAAAKAAwAAgAJAAIAAAAJAAwAAgAJAAIAAAAIAAwAAgAJAAIAAAAHAAwAAgAJAAIAAAAGAAYAAgAIAAAAAAAHAAYAAgAKAAAAAAAIAAYAAgAKAAAAAAAJAAYAAgAKAAAAAAAKAAYAAgAKAAAAAAALAAYAAgAKAAAAAAAMAAYAAgAKAAAAAAANAAYAAgAKAAAAAAAOAAYAAgAKAAAAAAAPAAYAAgAKAAAAAAAQAAYAAgAKAAAAAAARAAYAAgAKAAAAAAASAAYAAgAKAAAAAAATAAYAAgAKAAAAAAAUAAYAAgAKAAAAAAAVAAYAAgALAAAAAAAUAAcAAgAJAAIAAAATAAcAAgAJAAIAAAASAAcAAgAJAAIAAAARAAcAAgAJAAIAAAAQAAcAAgAJAAIAAAAPAAcAAgAJAAIAAAAOAAcAAgAJAAIAAAANAAcAAgAJAAIAAAAMAAcAAgAJAAIAAAALAAcAAgAJAAIAAAAKAAcAAgAJAAIAAAAJAAcAAgAJAAIAAAAIAAcAAgAJAAIAAAAHAAcAAgAJAAIAAAAPAAUAAgAJAAIAAAAgAAYAAgAIAAAAAAAhAAYAAgAKAAAAAAAiAAYAAgAKAAAAAAAjAAYAAgAKAAAAAAAkAAYAAgAKAAAAAAAlAAYAAgAKAAAAAAAmAAYAAgAKAAAAAAAnAAYAAgAKAAAAAAAoAAYAAgAKAAAAAAApAAYAAgAKAAAAAAAqAAYAAgAKAAAAAAArAAYAAgAKAAAAAAAsAAYAAgAKAAAAAAAtAAYAAgALAAAAAAA=")
 tile_set = SubResource("TileSet_a10lv")
 
 [node name="Props" type="TileMapLayer" parent="." unique_id=187524989]
 texture_filter = 1
 scale = Vector2(2, 2)
-tile_map_data = PackedByteArray("AAABAAEAAAAJAAQAAAABABIAAAAJAAQAAAACABIAAAAJAAUAAAACAAEAAAAJAAUAAAAAAAMAAAAAAAkAAAAAAAcAAAAAAAkAAAAAABIAAAAJAAUAAAAAAAEAAAAJAAUAAAAjAAEAAAAJAAUAAABTAAkAAAAIAAQAAABTAAoAAAAIAAUAAAAAAAkAAAAHAAQAAAAAAAoAAAAHAAUAAAAEAAAAAAAEAAcAAAAJAAAAAAAEAAcAAAAOAAAAAAAEAAcAAAATAAAAAAAEAAcAAAAYAAAAAAAEAAcAAAAdAAAAAAAEAAcAAAAiAAAAAAAEAAcAAAAnAAAAAAAEAAcAAAAsAAAAAAAEAAcAAAAxAAAAAAAEAAcAAAA2AAAAAAAEAAcAAAA7AAAAAAAEAAcAAABAAAAAAAAEAAcAAABFAAAAAAAEAAcAAABKAAAAAAAEAAcAAABPAAAAAAAEAAcAAAAAAAwAAAAAAAkAAABTAAwAAAADAAkAAABTAAcAAAADAAkAAABTAAQAAAADAAkAAABTAA8AAAADAAkAAAA=")
+tile_map_data = PackedByteArray("AAABAAEAAAAJAAQAAAABABIAAAAJAAQAAAACABIAAAAJAAUAAAACAAEAAAAJAAUAAAAAAAMAAAAAAAkAAAAAAAcAAAAAAAkAAAAAABIAAAAJAAUAAAAAAAEAAAAJAAUAAAAjAAEAAAAJAAUAAABTAAkAAAAIAAQAAABTAAoAAAAIAAUAAAAAAAkAAAAHAAQAAAAAAAoAAAAHAAUAAAAEAAAAAAAEAAcAAAAJAAAAAAAEAAcAAAAOAAAAAAAEAAcAAAATAAAAAAAEAAcAAAAYAAAAAAAEAAcAAAAdAAAAAAAEAAcAAAAiAAAAAAAEAAcAAAAnAAAAAAAEAAcAAAAsAAAAAAAEAAcAAAAxAAAAAAAEAAcAAAA2AAAAAAAEAAcAAAA7AAAAAAAEAAcAAABAAAAAAAAEAAcAAABFAAAAAAAEAAcAAABKAAAAAAAEAAcAAABPAAAAAAAEAAcAAAAAAAwAAAAAAAkAAABTAAwAAAADAAkAAABTAAcAAAADAAkAAABTAAQAAAADAAkAAABTAA8AAAADAAkAAAABAAAAAgAUAAYAAAACAAAAAgAVAAYAAAADAAAAAgAWAAYAAAAHAAAAAgAYAAYAAAAHAAEAAgAYAAcAAAAIAAAAAgAZAAYAAAAIAAEAAgAZAAcAAAAVAAAAAgAbAAYAAAAVAAEAAgAbAAcAAAAVAAIAAgAbAAgAAAAWAAAAAgAcAAYAAAAWAAEAAgAcAAcAAAAWAAIAAgAcAAgAAAAfAAAAAgAXAAcAAAAfAAEAAgAXAAgAAAAgAAAAAgAXAAcAAAAgAAEAAgAXAAgAAAAuAAAAAgAaAAYAAAAuAAEAAgAaAAcAAAAuAAIAAgAaAAgAAAAvAAAAAgAaAAYAAAAvAAEAAgAaAAcAAAAvAAIAAgAaAAgAAABSAAsAAgAWAAkAAABSAAwAAgAWAAoAAABSAAcAAgAWAAkAAABSAAgAAgAWAAoAAABSAAQAAgAUAAkAAABRAAQAAgAVAAkAAABRAAAAAgAXAAYAAABSAAAAAgAXAAYAAABTAAUAAgAWAAAAAABRABAAAgAPAAkAAABRAA4AAgANAAgAAABRAA8AAgAPAAkAAABSAA4AAgAOAAcAAABTAA4AAgAOAAcAAAAzAAQAAgASAAkAAAAzAAUAAgASAAoAAAA0AAQAAgATAAkAAAA0AAUAAgATAAoAAAAzAAYAAgAQAAoAAAA1AAQAAgARAAkAAAAYAAYAAgAUAAgAAAAZAAcAAgAVAAgAAAAXAAsAAgAVAAgAAAAYAAsAAgARAAYAAAAaAAkAAgAQAAYAAAAYAA8AAgAQAAYAAAA2AA0AAgAQAAYAAAA=")
 tile_set = SubResource("TileSet_8u1ts")
 
 [node name="StartPosition" type="Marker2D" parent="." unique_id=47707579]
@@ -881,7 +1268,7 @@ scale = Vector2(12.000066, 64)
 texture = SubResource("CanvasTexture_g0oit")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DoorPrev" unique_id=832009694]
-position = Vector2(-24, 0)
+position = Vector2(-28, 0)
 shape = SubResource("RectangleShape2D_nfe3j")
 
 [node name="EntryNext" type="Marker2D" parent="." unique_id=2076039832]
@@ -912,357 +1299,489 @@ scale = Vector2(41.85, 1.5)
 position = Vector2(1.9073486e-06, 520)
 scale = Vector2(41.96, 1.5)
 
-[node name="SpikeTrap" parent="." unique_id=1474454901 instance=ExtResource("5_hi5i0")]
-position = Vector2(255, 456)
-
-[node name="SpikeTrap2" parent="." unique_id=1974454902 instance=ExtResource("5_hi5i0")]
-position = Vector2(351, 456)
-start_delay = 0.25
-
-[node name="SpikeTrap3" parent="." unique_id=1974454903 instance=ExtResource("5_hi5i0")]
-position = Vector2(447, 456)
-start_delay = 0.5
-
-[node name="SpikeTrap4" parent="." unique_id=1974454904 instance=ExtResource("5_hi5i0")]
-position = Vector2(543, 456)
-start_delay = 0.75
-
-[node name="SpikeTrap5" parent="." unique_id=1974454905 instance=ExtResource("5_hi5i0")]
-position = Vector2(639, 456)
-start_delay = 1.0
-
-[node name="SpikeTrap6" parent="." unique_id=716954072 instance=ExtResource("5_hi5i0")]
-position = Vector2(639, 176)
-
-[node name="SpikeTrap7" parent="." unique_id=1647035399 instance=ExtResource("5_hi5i0")]
-position = Vector2(543, 176)
-start_delay = 0.25
-
-[node name="SpikeTrap8" parent="." unique_id=1185853543 instance=ExtResource("5_hi5i0")]
-position = Vector2(447, 176)
-start_delay = 0.5
-
-[node name="SpikeTrap9" parent="." unique_id=2026198290 instance=ExtResource("5_hi5i0")]
-position = Vector2(351, 176)
-start_delay = 0.75
-
-[node name="SpikeTrap10" parent="." unique_id=397497805 instance=ExtResource("5_hi5i0")]
-position = Vector2(255, 176)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap11" parent="." unique_id=655019588 instance=ExtResource("5_hi5i0")]
-position = Vector2(960, 466)
-
-[node name="SpikeTrap12" parent="." unique_id=1308648022 instance=ExtResource("5_hi5i0")]
-position = Vector2(1056, 466)
-start_delay = 0.25
-
-[node name="SpikeTrap13" parent="." unique_id=663296531 instance=ExtResource("5_hi5i0")]
-position = Vector2(1152, 466)
-start_delay = 0.5
-
-[node name="SpikeTrap14" parent="." unique_id=1498390771 instance=ExtResource("5_hi5i0")]
-position = Vector2(1248, 466)
-start_delay = 0.75
-
-[node name="SpikeTrap15" parent="." unique_id=814576646 instance=ExtResource("5_hi5i0")]
-position = Vector2(1344, 466)
-start_delay = 1.0
-
-[node name="SpikeTrap16" parent="." unique_id=1113093941 instance=ExtResource("5_hi5i0")]
-position = Vector2(1440, 466)
-start_delay = 1.25
-
-[node name="SpikeTrap17" parent="." unique_id=631009041 instance=ExtResource("5_hi5i0")]
-position = Vector2(1536, 466)
-start_delay = 1.5
-
-[node name="SpikeTrap18" parent="." unique_id=371771080 instance=ExtResource("5_hi5i0")]
-position = Vector2(1536, 408)
-start_delay = 1.75
-
-[node name="SpikeTrap19" parent="." unique_id=106507249 instance=ExtResource("5_hi5i0")]
-position = Vector2(1536, 350)
-start_delay = 2.0
-
-[node name="SpikeTrap20" parent="." unique_id=1902840277 instance=ExtResource("5_hi5i0")]
-position = Vector2(1536, 292)
-start_delay = 2.25
-
-[node name="SpikeTrap21" parent="." unique_id=1068552071 instance=ExtResource("5_hi5i0")]
-position = Vector2(1536, 234)
-start_delay = 2.5
-
-[node name="SpikeTrap22" parent="." unique_id=439430871 instance=ExtResource("5_hi5i0")]
-position = Vector2(1536, 176)
-
-[node name="SpikeTrap23" parent="." unique_id=2103309900 instance=ExtResource("5_hi5i0")]
-position = Vector2(1440, 176)
-start_delay = 0.25
-
-[node name="SpikeTrap24" parent="." unique_id=172176203 instance=ExtResource("5_hi5i0")]
-position = Vector2(1344, 176)
-start_delay = 0.5
-
-[node name="SpikeTrap25" parent="." unique_id=1504581334 instance=ExtResource("5_hi5i0")]
-position = Vector2(1248, 176)
-start_delay = 0.75
-
-[node name="SpikeTrap26" parent="." unique_id=801442154 instance=ExtResource("5_hi5i0")]
-position = Vector2(1152, 176)
-start_delay = 1.0
-
-[node name="SpikeTrap27" parent="." unique_id=942276464 instance=ExtResource("5_hi5i0")]
-position = Vector2(1056, 176)
-start_delay = 1.25
-
-[node name="SpikeTrap28" parent="." unique_id=75818221 instance=ExtResource("5_hi5i0")]
-position = Vector2(960, 176)
-start_delay = 1.5
-
-[node name="SpikeTrap29" parent="." unique_id=1242419547 instance=ExtResource("5_hi5i0")]
-position = Vector2(960, 234)
-start_delay = 1.75
-
-[node name="SpikeTrap30" parent="." unique_id=1168379537 instance=ExtResource("5_hi5i0")]
-position = Vector2(960, 292)
-start_delay = 2.0
-
-[node name="SpikeTrap31" parent="." unique_id=1856494485 instance=ExtResource("5_hi5i0")]
-position = Vector2(960, 350)
-start_delay = 2.25
-
-[node name="SpikeTrap32" parent="." unique_id=587226709 instance=ExtResource("5_hi5i0")]
-position = Vector2(960, 408)
-start_delay = 2.5
-
-[node name="SpikeTrap33" parent="." unique_id=206650620 instance=ExtResource("5_hi5i0")]
-position = Vector2(1904, 466)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap34" parent="." unique_id=979756923 instance=ExtResource("5_hi5i0")]
-position = Vector2(1904, 408)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap35" parent="." unique_id=1561388396 instance=ExtResource("5_hi5i0")]
-position = Vector2(1904, 350)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap36" parent="." unique_id=1540977338 instance=ExtResource("5_hi5i0")]
-position = Vector2(1904, 292)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap37" parent="." unique_id=432467477 instance=ExtResource("5_hi5i0")]
-position = Vector2(1904, 234)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap38" parent="." unique_id=1453335894 instance=ExtResource("5_hi5i0")]
-position = Vector2(1904, 176)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap39" parent="." unique_id=63979290 instance=ExtResource("5_hi5i0")]
-position = Vector2(2040, 466)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap40" parent="." unique_id=1976650804 instance=ExtResource("5_hi5i0")]
-position = Vector2(2040, 408)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap41" parent="." unique_id=1925012061 instance=ExtResource("5_hi5i0")]
-position = Vector2(2040, 350)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap42" parent="." unique_id=325517017 instance=ExtResource("5_hi5i0")]
-position = Vector2(2040, 292)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap43" parent="." unique_id=681977032 instance=ExtResource("5_hi5i0")]
-position = Vector2(2040, 234)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap44" parent="." unique_id=1132797184 instance=ExtResource("5_hi5i0")]
-position = Vector2(2040, 176)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap45" parent="." unique_id=1756892566 instance=ExtResource("5_hi5i0")]
-position = Vector2(2176, 466)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap46" parent="." unique_id=862694171 instance=ExtResource("5_hi5i0")]
-position = Vector2(2176, 408)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap47" parent="." unique_id=1662586096 instance=ExtResource("5_hi5i0")]
-position = Vector2(2176, 350)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap48" parent="." unique_id=1547963741 instance=ExtResource("5_hi5i0")]
-position = Vector2(2176, 292)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap49" parent="." unique_id=302266927 instance=ExtResource("5_hi5i0")]
-position = Vector2(2176, 234)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap50" parent="." unique_id=973288825 instance=ExtResource("5_hi5i0")]
-position = Vector2(2176, 176)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap51" parent="." unique_id=843459027 instance=ExtResource("5_hi5i0")]
-position = Vector2(2312, 466)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap52" parent="." unique_id=479393629 instance=ExtResource("5_hi5i0")]
-position = Vector2(2312, 408)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap53" parent="." unique_id=1164076948 instance=ExtResource("5_hi5i0")]
-position = Vector2(2312, 350)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap54" parent="." unique_id=999952425 instance=ExtResource("5_hi5i0")]
-position = Vector2(2312, 292)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap55" parent="." unique_id=697610491 instance=ExtResource("5_hi5i0")]
-position = Vector2(2312, 234)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap56" parent="." unique_id=846159413 instance=ExtResource("5_hi5i0")]
-position = Vector2(2312, 176)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-start_delay = 1.0
-
-[node name="SpikeTrap57" parent="." unique_id=1668154511 instance=ExtResource("5_hi5i0")]
-position = Vector2(2448, 466)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap58" parent="." unique_id=64966096 instance=ExtResource("5_hi5i0")]
-position = Vector2(2448, 408)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap59" parent="." unique_id=352099088 instance=ExtResource("5_hi5i0")]
-position = Vector2(2448, 350)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap60" parent="." unique_id=2139624686 instance=ExtResource("5_hi5i0")]
-position = Vector2(2448, 292)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap61" parent="." unique_id=1471264593 instance=ExtResource("5_hi5i0")]
-position = Vector2(2448, 234)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
-[node name="SpikeTrap62" parent="." unique_id=220358652 instance=ExtResource("5_hi5i0")]
-position = Vector2(2448, 176)
-scale = Vector2(1.4, 1)
-warning_duration = 1.0
-active_duration = 0.5
-cooldown_duration = 1.0
-
 [node name="Moss" parent="." unique_id=1591031966 instance=ExtResource("9_nstbq")]
 position = Vector2(48, 176)
 scale = Vector2(0.12, 0.12)
 item_texture = ExtResource("10_g0oit")
 unique_id = "f1r5moss1"
+
+[node name="Spikes" type="Node" parent="." unique_id=504530849]
+
+[node name="SpikeTrap" parent="Spikes" unique_id=1474454901 instance=ExtResource("5_hi5i0")]
+position = Vector2(224, 448)
+
+[node name="SpikeTrap2" parent="Spikes" unique_id=1974454902 instance=ExtResource("5_hi5i0")]
+position = Vector2(288, 448)
+start_delay = 0.25
+
+[node name="SpikeTrap3" parent="Spikes" unique_id=1974454903 instance=ExtResource("5_hi5i0")]
+position = Vector2(352, 448)
+start_delay = 0.5
+
+[node name="SpikeTrap4" parent="Spikes" unique_id=1974454904 instance=ExtResource("5_hi5i0")]
+position = Vector2(416, 448)
+start_delay = 0.75
+
+[node name="SpikeTrap5" parent="Spikes" unique_id=1974454905 instance=ExtResource("5_hi5i0")]
+position = Vector2(480, 448)
+start_delay = 1.0
+
+[node name="SpikeTrap6" parent="Spikes" unique_id=716954072 instance=ExtResource("5_hi5i0")]
+position = Vector2(544, 448)
+start_delay = 1.25
+
+[node name="SpikeTrap7" parent="Spikes" unique_id=1647035399 instance=ExtResource("5_hi5i0")]
+position = Vector2(608, 448)
+start_delay = 1.5
+
+[node name="SpikeTrap8" parent="Spikes" unique_id=1185853543 instance=ExtResource("5_hi5i0")]
+position = Vector2(608, 128)
+
+[node name="SpikeTrap9" parent="Spikes" unique_id=2026198290 instance=ExtResource("5_hi5i0")]
+position = Vector2(544, 128)
+start_delay = 0.25
+
+[node name="SpikeTrap10" parent="Spikes" unique_id=397497805 instance=ExtResource("5_hi5i0")]
+position = Vector2(480, 128)
+start_delay = 0.5
+
+[node name="SpikeTrap11" parent="Spikes" unique_id=655019588 instance=ExtResource("5_hi5i0")]
+position = Vector2(416, 128)
+start_delay = 0.75
+
+[node name="SpikeTrap12" parent="Spikes" unique_id=1308648022 instance=ExtResource("5_hi5i0")]
+position = Vector2(352, 128)
+start_delay = 1.0
+
+[node name="SpikeTrap13" parent="Spikes" unique_id=663296531 instance=ExtResource("5_hi5i0")]
+position = Vector2(288, 128)
+start_delay = 1.25
+
+[node name="SpikeTrap14" parent="Spikes" unique_id=1498390771 instance=ExtResource("5_hi5i0")]
+position = Vector2(224, 128)
+start_delay = 1.5
+
+[node name="SpikeTrap15" parent="Spikes" unique_id=814576646 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 448)
+warning_duration = 0.3
+active_duration = 0.7
+
+[node name="SpikeTrap16" parent="Spikes" unique_id=1113093941 instance=ExtResource("5_hi5i0")]
+position = Vector2(1024, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.24
+
+[node name="SpikeTrap17" parent="Spikes" unique_id=631009041 instance=ExtResource("5_hi5i0")]
+position = Vector2(1088, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.48
+
+[node name="SpikeTrap18" parent="Spikes" unique_id=371771080 instance=ExtResource("5_hi5i0")]
+position = Vector2(1152, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.72
+
+[node name="SpikeTrap19" parent="Spikes" unique_id=106507249 instance=ExtResource("5_hi5i0")]
+position = Vector2(1216, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.96
+
+[node name="SpikeTrap20" parent="Spikes" unique_id=1902840277 instance=ExtResource("5_hi5i0")]
+position = Vector2(1280, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.2
+
+[node name="SpikeTrap21" parent="Spikes" unique_id=1068552071 instance=ExtResource("5_hi5i0")]
+position = Vector2(1344, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.44
+
+[node name="SpikeTrap22" parent="Spikes" unique_id=439430871 instance=ExtResource("5_hi5i0")]
+position = Vector2(1408, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.6800000000000002
+
+[node name="SpikeTrap23" parent="Spikes" unique_id=2103309900 instance=ExtResource("5_hi5i0")]
+position = Vector2(1472, 448)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.92
+
+[node name="SpikeTrap24" parent="Spikes" unique_id=172176203 instance=ExtResource("5_hi5i0")]
+position = Vector2(1472, 384)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.16
+
+[node name="SpikeTrap25" parent="Spikes" unique_id=1504581334 instance=ExtResource("5_hi5i0")]
+position = Vector2(1472, 316)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.4
+
+[node name="SpikeTrap26" parent="Spikes" unique_id=801442154 instance=ExtResource("5_hi5i0")]
+position = Vector2(1472, 256)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.64
+
+[node name="SpikeTrap27" parent="Spikes" unique_id=942276464 instance=ExtResource("5_hi5i0")]
+position = Vector2(1472, 192)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.88
+
+[node name="SpikeTrap28" parent="Spikes" unique_id=75818221 instance=ExtResource("5_hi5i0")]
+position = Vector2(1472, 128)
+warning_duration = 0.3
+active_duration = 0.7
+
+[node name="SpikeTrap29" parent="Spikes" unique_id=1242419547 instance=ExtResource("5_hi5i0")]
+position = Vector2(1408, 128)
+rotation = 0.0010830717
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.24
+
+[node name="SpikeTrap30" parent="Spikes" unique_id=1168379537 instance=ExtResource("5_hi5i0")]
+position = Vector2(1344, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.48
+
+[node name="SpikeTrap31" parent="Spikes" unique_id=1856494485 instance=ExtResource("5_hi5i0")]
+position = Vector2(1280, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.72
+
+[node name="SpikeTrap32" parent="Spikes" unique_id=587226709 instance=ExtResource("5_hi5i0")]
+position = Vector2(1216, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 0.96
+
+[node name="SpikeTrap33" parent="Spikes" unique_id=206650620 instance=ExtResource("5_hi5i0")]
+position = Vector2(1152, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.2
+
+[node name="SpikeTrap34" parent="Spikes" unique_id=979756923 instance=ExtResource("5_hi5i0")]
+position = Vector2(1088, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.44
+
+[node name="SpikeTrap35" parent="Spikes" unique_id=1561388396 instance=ExtResource("5_hi5i0")]
+position = Vector2(1024, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.6800000000000002
+
+[node name="SpikeTrap36" parent="Spikes" unique_id=1540977338 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 128)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 1.92
+
+[node name="SpikeTrap37" parent="Spikes" unique_id=432467477 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 192)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.16
+
+[node name="SpikeTrap38" parent="Spikes" unique_id=1453335894 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 256)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.4
+
+[node name="SpikeTrap39" parent="Spikes" unique_id=63979290 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 320)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.64
+
+[node name="SpikeTrap40" parent="Spikes" unique_id=1976650804 instance=ExtResource("5_hi5i0")]
+position = Vector2(960, 384)
+warning_duration = 0.3
+active_duration = 0.7
+start_delay = 2.88
+
+[node name="SpikeTrap41" parent="Spikes" unique_id=1925012061 instance=ExtResource("5_hi5i0")]
+position = Vector2(1824, 448)
+warning_duration = 1.0
+
+[node name="SpikeTrap42" parent="Spikes" unique_id=325517017 instance=ExtResource("5_hi5i0")]
+position = Vector2(1824, 384)
+warning_duration = 1.0
+
+[node name="SpikeTrap43" parent="Spikes" unique_id=681977032 instance=ExtResource("5_hi5i0")]
+position = Vector2(1824, 320)
+warning_duration = 1.0
+
+[node name="SpikeTrap44" parent="Spikes" unique_id=1132797184 instance=ExtResource("5_hi5i0")]
+position = Vector2(1824, 256)
+warning_duration = 1.0
+
+[node name="SpikeTrap45" parent="Spikes" unique_id=1756892566 instance=ExtResource("5_hi5i0")]
+position = Vector2(1824, 192)
+warning_duration = 1.0
+
+[node name="SpikeTrap46" parent="Spikes" unique_id=862694171 instance=ExtResource("5_hi5i0")]
+position = Vector2(1824, 128)
+warning_duration = 1.0
+
+[node name="SpikeTrap47" parent="Spikes" unique_id=1662586096 instance=ExtResource("5_hi5i0")]
+position = Vector2(1888, 448)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap48" parent="Spikes" unique_id=1547963741 instance=ExtResource("5_hi5i0")]
+position = Vector2(1888, 384)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap49" parent="Spikes" unique_id=302266927 instance=ExtResource("5_hi5i0")]
+position = Vector2(1888, 320)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap50" parent="Spikes" unique_id=973288825 instance=ExtResource("5_hi5i0")]
+position = Vector2(1888, 256)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap51" parent="Spikes" unique_id=843459027 instance=ExtResource("5_hi5i0")]
+position = Vector2(1888, 192)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap52" parent="Spikes" unique_id=479393629 instance=ExtResource("5_hi5i0")]
+position = Vector2(1888, 128)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap53" parent="Spikes" unique_id=1164076948 instance=ExtResource("5_hi5i0")]
+position = Vector2(1952, 448)
+warning_duration = 1.0
+
+[node name="SpikeTrap54" parent="Spikes" unique_id=999952425 instance=ExtResource("5_hi5i0")]
+position = Vector2(1952, 384)
+warning_duration = 1.0
+
+[node name="SpikeTrap55" parent="Spikes" unique_id=697610491 instance=ExtResource("5_hi5i0")]
+position = Vector2(1952, 320)
+warning_duration = 1.0
+
+[node name="SpikeTrap56" parent="Spikes" unique_id=846159413 instance=ExtResource("5_hi5i0")]
+position = Vector2(1952, 256)
+warning_duration = 1.0
+
+[node name="SpikeTrap57" parent="Spikes" unique_id=1668154511 instance=ExtResource("5_hi5i0")]
+position = Vector2(1952, 192)
+warning_duration = 1.0
+
+[node name="SpikeTrap58" parent="Spikes" unique_id=64966096 instance=ExtResource("5_hi5i0")]
+position = Vector2(1952, 128)
+warning_duration = 1.0
+
+[node name="SpikeTrap59" parent="Spikes" unique_id=352099088 instance=ExtResource("5_hi5i0")]
+position = Vector2(2016, 448)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap60" parent="Spikes" unique_id=2139624686 instance=ExtResource("5_hi5i0")]
+position = Vector2(2016, 384)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap61" parent="Spikes" unique_id=1471264593 instance=ExtResource("5_hi5i0")]
+position = Vector2(2016, 320)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap62" parent="Spikes" unique_id=220358652 instance=ExtResource("5_hi5i0")]
+position = Vector2(2016, 256)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap63" parent="Spikes" unique_id=1061144229 instance=ExtResource("5_hi5i0")]
+position = Vector2(2016, 192)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap64" parent="Spikes" unique_id=855929403 instance=ExtResource("5_hi5i0")]
+position = Vector2(2016, 128)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap65" parent="Spikes" unique_id=1974487985 instance=ExtResource("5_hi5i0")]
+position = Vector2(2080, 448)
+warning_duration = 1.0
+
+[node name="SpikeTrap66" parent="Spikes" unique_id=2090233870 instance=ExtResource("5_hi5i0")]
+position = Vector2(2080, 384)
+warning_duration = 1.0
+
+[node name="SpikeTrap67" parent="Spikes" unique_id=1848037399 instance=ExtResource("5_hi5i0")]
+position = Vector2(2080, 320)
+warning_duration = 1.0
+
+[node name="SpikeTrap68" parent="Spikes" unique_id=1895197373 instance=ExtResource("5_hi5i0")]
+position = Vector2(2080, 256)
+warning_duration = 1.0
+
+[node name="SpikeTrap69" parent="Spikes" unique_id=1056931746 instance=ExtResource("5_hi5i0")]
+position = Vector2(2080, 192)
+warning_duration = 1.0
+
+[node name="SpikeTrap70" parent="Spikes" unique_id=1374587546 instance=ExtResource("5_hi5i0")]
+position = Vector2(2080, 128)
+warning_duration = 1.0
+
+[node name="SpikeTrap71" parent="Spikes" unique_id=637616273 instance=ExtResource("5_hi5i0")]
+position = Vector2(2144, 448)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap72" parent="Spikes" unique_id=2098154393 instance=ExtResource("5_hi5i0")]
+position = Vector2(2144, 384)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap73" parent="Spikes" unique_id=1632308930 instance=ExtResource("5_hi5i0")]
+position = Vector2(2144, 320)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap74" parent="Spikes" unique_id=723151756 instance=ExtResource("5_hi5i0")]
+position = Vector2(2144, 256)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap75" parent="Spikes" unique_id=262369636 instance=ExtResource("5_hi5i0")]
+position = Vector2(2144, 192)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap76" parent="Spikes" unique_id=1905685390 instance=ExtResource("5_hi5i0")]
+position = Vector2(2144, 128)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap77" parent="Spikes" unique_id=181852771 instance=ExtResource("5_hi5i0")]
+position = Vector2(2208, 448)
+warning_duration = 1.0
+
+[node name="SpikeTrap78" parent="Spikes" unique_id=506522779 instance=ExtResource("5_hi5i0")]
+position = Vector2(2208, 384)
+warning_duration = 1.0
+
+[node name="SpikeTrap79" parent="Spikes" unique_id=198882218 instance=ExtResource("5_hi5i0")]
+position = Vector2(2208, 320)
+warning_duration = 1.0
+
+[node name="SpikeTrap80" parent="Spikes" unique_id=1360294519 instance=ExtResource("5_hi5i0")]
+position = Vector2(2208, 256)
+warning_duration = 1.0
+
+[node name="SpikeTrap81" parent="Spikes" unique_id=1206695674 instance=ExtResource("5_hi5i0")]
+position = Vector2(2208, 192)
+warning_duration = 1.0
+
+[node name="SpikeTrap82" parent="Spikes" unique_id=570783650 instance=ExtResource("5_hi5i0")]
+position = Vector2(2208, 128)
+warning_duration = 1.0
+
+[node name="SpikeTrap83" parent="Spikes" unique_id=1040894583 instance=ExtResource("5_hi5i0")]
+position = Vector2(2272, 448)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap84" parent="Spikes" unique_id=1452544571 instance=ExtResource("5_hi5i0")]
+position = Vector2(2272, 384)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap85" parent="Spikes" unique_id=122272920 instance=ExtResource("5_hi5i0")]
+position = Vector2(2272, 320)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap86" parent="Spikes" unique_id=2015920130 instance=ExtResource("5_hi5i0")]
+position = Vector2(2272, 256)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap87" parent="Spikes" unique_id=568582631 instance=ExtResource("5_hi5i0")]
+position = Vector2(2272, 192)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap88" parent="Spikes" unique_id=897988558 instance=ExtResource("5_hi5i0")]
+position = Vector2(2272, 128)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap89" parent="Spikes" unique_id=1188596654 instance=ExtResource("5_hi5i0")]
+position = Vector2(2336, 448)
+warning_duration = 1.0
+
+[node name="SpikeTrap90" parent="Spikes" unique_id=378661067 instance=ExtResource("5_hi5i0")]
+position = Vector2(2336, 384)
+warning_duration = 1.0
+
+[node name="SpikeTrap91" parent="Spikes" unique_id=1392351770 instance=ExtResource("5_hi5i0")]
+position = Vector2(2336, 320)
+warning_duration = 1.0
+
+[node name="SpikeTrap92" parent="Spikes" unique_id=1090733443 instance=ExtResource("5_hi5i0")]
+position = Vector2(2336, 256)
+warning_duration = 1.0
+
+[node name="SpikeTrap93" parent="Spikes" unique_id=937564208 instance=ExtResource("5_hi5i0")]
+position = Vector2(2336, 192)
+warning_duration = 1.0
+
+[node name="SpikeTrap94" parent="Spikes" unique_id=1875361884 instance=ExtResource("5_hi5i0")]
+position = Vector2(2336, 128)
+warning_duration = 1.0
+
+[node name="SpikeTrap95" parent="Spikes" unique_id=1153746531 instance=ExtResource("5_hi5i0")]
+position = Vector2(2400, 448)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap96" parent="Spikes" unique_id=1671109193 instance=ExtResource("5_hi5i0")]
+position = Vector2(2400, 384)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap97" parent="Spikes" unique_id=1765614453 instance=ExtResource("5_hi5i0")]
+position = Vector2(2400, 320)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap98" parent="Spikes" unique_id=264839261 instance=ExtResource("5_hi5i0")]
+position = Vector2(2400, 256)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap99" parent="Spikes" unique_id=766951045 instance=ExtResource("5_hi5i0")]
+position = Vector2(2400, 192)
+warning_duration = 1.0
+start_delay = 1.0
+
+[node name="SpikeTrap100" parent="Spikes" unique_id=555506176 instance=ExtResource("5_hi5i0")]
+position = Vector2(2400, 128)
+warning_duration = 1.0
+start_delay = 1.0

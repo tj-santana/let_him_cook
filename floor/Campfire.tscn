@@ -6,21 +6,24 @@
 radius = 64.49806
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_me101"]
-size = Vector2(64, 24)
+size = Vector2(64, 40)
 
 [node name="Campfire" type="Node2D" unique_id=1304247761]
 z_index = 1
 script = ExtResource("1")
 
 [node name="Base" type="Polygon2D" parent="." unique_id=1052575811]
+visible = false
 color = Color(0.2, 0.12, 0.06, 1)
 polygon = PackedVector2Array(-34, 14, 34, 14, 24, 30, -24, 30)
 
 [node name="Glow" type="Polygon2D" parent="." unique_id=2080833036]
+visible = false
 color = Color(1, 0.52, 0.14, 0.45)
 polygon = PackedVector2Array(0, -30, 18, -8, 10, 18, 0, 28, -10, 18, -18, -8)
 
 [node name="Flame" type="Polygon2D" parent="." unique_id=33364403]
+visible = false
 color = Color(1, 0.84, 0.3, 0.95)
 polygon = PackedVector2Array(0, -24, 8, -6, 4, 14, 0, 22, -4, 14, -8, -6)
 
@@ -36,5 +39,5 @@ shape = SubResource("CircleShape2D_1")
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=143872201]
-position = Vector2(0, 12)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_me101")
