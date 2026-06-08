@@ -141,6 +141,10 @@ func tentar_adicionar_ingrediente(ingrediente: String):
 			ingredientes_na_panela.append(ingrediente)
 			print(ingrediente, " adicionado!")
 			
+			var am = get_node_or_null("/root/AudioManager")
+			if am:
+				am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/cloth2.ogg", -4.0, randf_range(0.9, 1.1))
+			
 			atualizar_ecra()
 			atualizar_textos_inventario()
 		else:
@@ -153,6 +157,10 @@ func tentar_remover_ingrediente(indice_slot: int):
 		var ingrediente_removido = ingredientes_na_panela[indice_slot]
 		GameManager.inventario_jogador[ingrediente_removido] += 1
 		ingredientes_na_panela.remove_at(indice_slot)
+		
+		var am = get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/cloth1.ogg", -4.0, randf_range(0.95, 1.05))
 		
 		atualizar_ecra()
 		atualizar_textos_inventario()
@@ -180,12 +188,18 @@ func _on_botao_assar_pressed():
 func _on_botao_livro_pressed():
 	var overlay = get_node_or_null("CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay")
 	if overlay:
+		var am = get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/bookOpen.ogg", 0.0, randf_range(0.95, 1.05))
 		overlay.visible = true
 		atualizar_livro_receitas()
 
 func _on_botao_fechar_livro_pressed():
 	var overlay = get_node_or_null("CanvasLayer/MenuCozinha_Overlay/LivroReceitas_Overlay")
 	if overlay:
+		var am = get_node_or_null("/root/AudioManager")
+		if am:
+			am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/bookClose.ogg", 0.0, randf_range(0.95, 1.05))
 		overlay.visible = false
 
 func atualizar_livro_receitas():

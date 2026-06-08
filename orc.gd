@@ -280,6 +280,9 @@ func _start_special_cooldown() -> void:
 	_special_ready = true
 
 func take_hit(attack_dmg):
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_enemy_hit(name)
 	health -= attack_dmg
 	$HealthBar.value = health
 	

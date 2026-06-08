@@ -38,6 +38,7 @@ var can_attack = true
 var can_dash = true
 var can_take_hit = true
 var is_dashing = false
+var _footstep_timer: float = 0.0
 var is_attacking = false
 var dash_time_left = 0.0
 var current_health = 100.0
@@ -62,6 +63,11 @@ func _apply_damage(dmg: float, can_kill: bool = true) -> void:
 
 	current_health -= applied_damage
 	hit.emit(applied_damage)
+	
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_sfx_path("res://assets/kenney_rpg-audio/Audio/dropLeather.ogg", 0.0, 0.9)
+
 	
 	# Death is managed by the master game script (game.gd).
 	# The player remains active in near death state until game_over is triggered.
@@ -171,6 +177,13 @@ func _physics_process(delta):
 		if input_vector.length() > 0:
 			velocity = input_vector.normalized() * speed
 			$AnimatedSprite2D.play()
+			
+			_footstep_timer -= delta
+			if _footstep_timer <= 0.0:
+				_footstep_timer = 0.35
+				var am = get_node_or_null("/root/AudioManager")
+				if am:
+					am.play_footstep()
 		else:
 			velocity = Vector2.ZERO
 			if is_attacking:
@@ -181,7 +194,7 @@ func _physics_process(delta):
 	# move_and_slide and position clamping
 	move_and_slide()
 	# DO NOT clamp to viewport here — room bounds or camera limits will govern allowed movement
-
+ 
 	if debug_attack_preview and show_attack_preview:
 		queue_redraw()
 	
@@ -198,15 +211,19 @@ func _physics_process(delta):
 			$AnimatedSprite2D.flip_v = false
 		else:
 			$AnimatedSprite2D.animation = "idle"
-
+ 
 func attack():
 	if not can_attack:
 		return
-
+ 
 	can_attack = false
 	is_attacking = true
 	show_attack_preview = true
 	queue_redraw()
+	
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_swing()
 		
 	if $AnimatedSprite2D.sprite_frames.has_animation("attack"):
 		$AnimatedSprite2D.animation = "attack"
@@ -222,7 +239,7 @@ func attack():
 	query.collide_with_bodies = true
 	query.collide_with_areas = true
 	query.collision_mask = attack_collision_mask
-
+ 
 	var hits = get_world_2d().direct_space_state.intersect_shape(query, 8)
 	var hit_mobs = []
 	
@@ -237,22 +254,31 @@ func attack():
 			if child.has_method("take_hit") and child.has_method("damage_player"):
 				if child.global_position.distance_to(attack_center) <= attack_range:
 					child.take_hit(attack_dmg)
-
+					hit_mobs.append(child)
+					
+	if not hit_mobs.is_empty():
+		if am:
+			am.play_slice()
+ 
 	await get_tree().create_timer(attack_cooldown).timeout
 	show_attack_preview = false
 	queue_redraw()
 	can_attack = true
 	is_attacking = false
-
+ 
 func dash():
 	if not can_dash or near_death_active:
 		return
-
+ 
 	can_dash = false
 	is_dashing = true
 	dash_time_left = dash_duration
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_dash()
 	await get_tree().create_timer(dash_cooldown).timeout
 	can_dash = true
+
 
 func _on_hitbox_body_entered(body):
 	if body.has_method("take_hit") or body.has_method("damage_player"):

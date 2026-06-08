@@ -122,17 +122,22 @@ func _update_falling_items(delta):
 			# Caught!
 			items_to_remove.append(item)
 			var is_hazard = item.get_meta("is_hazard")
+			var am = get_node_or_null("/root/AudioManager")
 			
 			if is_hazard:
 				# BAD! Caught a fly
 				progresso = max(0.0, progresso - 25.0)
 				_show_feedback("FLY IN THE SOUP!", Color.RED)
 				_shake_pot()
+				if am:
+					am.play_click()
 			else:
 				# GOOD! Caught an ingredient
 				progresso = min(progresso_max, progresso + 20.0)
 				_show_feedback("YUM!", Color.GREEN)
 				_bounce_pot()
+				if am:
+					am.play_metal_pot()
 				
 			barra_progresso.value = progresso
 			

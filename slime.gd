@@ -65,11 +65,15 @@ func _start_attack_cooldown() -> void:
 	_attack_ready = true
 
 func take_hit(attack_dmg):
+	var am = get_node_or_null("/root/AudioManager")
+	if am:
+		am.play_enemy_hit(name)
 	health -= attack_dmg
 	$HealthBar.value = health
 	if health <= 0:
 		defeated.emit(drop_type)
 		queue_free()
+
 
 func damage_player():
 	if get_parent() and get_parent().has_method("take_damage_from_enemy"):
