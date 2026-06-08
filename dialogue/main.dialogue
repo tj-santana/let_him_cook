@@ -50,3 +50,15 @@ if GameManager.has_key:
 else:
 	There must be a key somewhere in this floor.
 => END
+
+~ slime_room
+Chef: Wait, are those slimes? I thought I'd cleared all of them on my way here! I cant get out beacuse of their force field. I guess I'll have to use this spork.
+Spork: Oooh! Ohh! Let me at'em! [M1 to attack with the spork]
+=> END
+
+~ slime_room_cleared
+Chef: Wooh, this spork is in a whole other level of power! It's even stronger than my barbarian's greatsword!
+Spork: That's why I'm the "legendary" artifact, duh...
+Chef: Wait, you're the voice in my head?! Gah!
+Chef: Why can't I drop you? What kind of magic is this?
+=> END

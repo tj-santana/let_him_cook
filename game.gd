@@ -371,6 +371,10 @@ func enter_room(scene_path: String, entry_marker: String = "", player_position: 
 	if typeof(GameManager) != TYPE_NIL and not GameManager.pit_dialogue_shown and _has_pitfall(active_room_root):
 		GameManager.pit_dialogue_shown = true
 		GameManager.show_dialogue("pit_dialogue")
+		
+	if typeof(GameManager) != TYPE_NIL and not GameManager.slime_room_dialogue_shown and "F1_room3" in scene_path:
+		GameManager.slime_room_dialogue_shown = true
+		GameManager.show_dialogue("slime_room")
 
 	var player = $Player
 	if room.is_safe_room:
@@ -608,6 +612,17 @@ func new_game():
 	if typeof(GameManager) != TYPE_NIL:
 		GameManager.inventario_jogador = player_inventory.duplicate()
 		GameManager.pratos_cozinhados.clear()
+		GameManager.pratos_cozinhados.append({
+			"nome": "Emergency Ration",
+			"vida": 10.0,
+			"fome": 50.0,
+			"velocidade": 0,
+			"duracao": 0.0,
+			"max_vida": 0.0,
+			"dano_causado": 0.0,
+			"dano_recebido": 1.0,
+			"cooldown": 0.0
+		})
 
 	_configure_player_camera()
 
@@ -690,6 +705,10 @@ func _on_mob_defeated(drop_type: String = "Sus Meat"):
 	# track alive mobs for wave progression
 	mobs_alive = max(0, mobs_alive - 1)
 	if use_room_spawn_points:
+		if mobs_alive == 0:
+			if typeof(GameManager) != TYPE_NIL and active_room_instance != null and "F1_room3" in active_room_instance.scene_file_path and not GameManager.slime_room_cleared_dialogue_shown:
+				GameManager.slime_room_cleared_dialogue_shown = true
+				GameManager.show_dialogue("slime_room_cleared")
 		return
 	if mobs_left_to_spawn == 0 and mobs_alive == 0:
 		_advance_wave()
@@ -813,6 +832,8 @@ func consumir_prato(dados_do_prato: Dictionary) -> void:
 		
 		if typeof(GameManager) != TYPE_NIL and not GameManager.first_food_dialogue_shown:
 			GameManager.first_food_dialogue_shown = true
+			if inventory_menu != null:
+				inventory_menu.hide_menu()
 			GameManager.show_dialogue("first_food")
 	else:
 		print("ERRO: O script do Jogador não tem a função aplicar_buff_comida!")

@@ -16,6 +16,8 @@ var popup_ativo := false
 var game_start_dialogue_shown = false
 var first_food_dialogue_shown = false
 var pit_dialogue_shown = false
+var slime_room_dialogue_shown = false
+var slime_room_cleared_dialogue_shown = false
 
 const Balloon = preload("res://dialogue/balloon.tscn")
 var dialogue_resource = preload("res://dialogue/main.dialogue")
