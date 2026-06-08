@@ -130,6 +130,8 @@ func _on_body_entered(body):
 		# FIXED: Use the saved direct reference instead of get_node() pathing
 		if is_instance_valid(btn_no_reference):
 			btn_no_reference.grab_focus.call_deferred()
+		
+		GameManager.limite_ingredientes += 1
 	else:
 		# Normal intra-floor transition
 		if controller and controller.has_method("enter_room"):

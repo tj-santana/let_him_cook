@@ -1,0 +1,18 @@
+[gd_scene format=3 uid="uid://dice8o3atycih"]
+
+[ext_resource type="Script" uid="uid://b346bhjglilx5" path="res://lever.gd" id="1_0ohsc"]
+[ext_resource type="PackedScene" uid="uid://dvjyav7jwqcui" path="res://dialogue/actionable.tscn" id="2_1btnt"]
+[ext_resource type="Resource" uid="uid://c2p5taebcq31g" path="res://dialogue/main.dialogue" id="3_7uavd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1btnt"]
+radius = 40.0
+
+[node name="Lever" type="Node2D" unique_id=885591709]
+script = ExtResource("1_0ohsc")
+
+[node name="Actionable" parent="." unique_id=180140955 instance=ExtResource("2_1btnt")]
+dialogue_resource = ExtResource("3_7uavd")
+dialogue_start = "lever"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable" unique_id=1554036516]
+shape = SubResource("CircleShape2D_1btnt")

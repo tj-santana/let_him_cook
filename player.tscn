@@ -179,6 +179,8 @@ radius = 41.01219
 z_index = 1
 collision_layer = 2
 script = ExtResource("1_sweqy")
+attack_dmg = 100.0
+attack_range = 700.0
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1077344491]
 texture_filter = 1

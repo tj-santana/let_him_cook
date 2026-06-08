@@ -9,3 +9,20 @@ Nathan: Here are some choices.
 - End the conversation => END
 Nathan: For more information see the online documentation.
 => END
+
+~ key_obtained
+You got a key! Wonder what it's for...
+=> END
+
+~ lever
+Something happened in this room.
+=> END
+
+~ boss
+This door is locked.
+if GameManager.has_key:
+	Unlocked with the from the mimic.
+	set GameManager.boss_unlocked = true
+else:
+	There must be a key somewhere in this floor.
+=> END

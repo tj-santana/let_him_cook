@@ -173,8 +173,9 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("interact"):
 		var actionables = actionable_finder.get_overlapping_areas()
 		if actionables.size() > 0:
-			actionables[0].action()
-			return
+			if actionables[0].has_method("action"):
+				actionables[0].action()
+				return
 		
 	if Input.is_action_just_pressed("cooking") and Input.is_action_just_pressed("mama"):
 		audio_player.play()

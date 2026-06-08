@@ -1646,6 +1646,7 @@ shape = SubResource("RectangleShape2D_door_to_room_b")
 [node name="Actionable" parent="." unique_id=180140955 instance=ExtResource("8_pbfvd")]
 position = Vector2(528, 464)
 dialogue_resource = ExtResource("9_pbfvd")
+lever = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Actionable" unique_id=300550755]
 shape = SubResource("CircleShape2D_wgh2h")

@@ -2,14 +2,14 @@ extends CharacterBody2D
 
 signal defeated(drop_type: String)
 
-@export var damage_amount = 12.0
-@export var drop_type: String = "Orc Meat, Bat Wings, Slime, Bones"
+@export var damage_amount = 8.0
+@export var drop_type: String = "Mimic Eye, Mimic Eye, Mimic Tongue, Sus Meat"
 @export var speed: float = 60.0
 @export var chase_speed: float = 110.0
 @export var detection_radius: float = 180.0
 @export var attack_range: float = 24.0
 @export var attack_cooldown: float = 1.0
-@export var health: float = 40.0
+@export var health: float = 100.0
 
 var _player = null
 var _state: String = "disguised" # "disguised", "waking", "chase", "lunge"
@@ -185,6 +185,7 @@ func take_hit(attack_dmg):
 	if health <= 0:
 		defeated.emit(drop_type)
 		queue_free()
+		GameManager.get_key()
 
 func damage_player(dmg: float):
 	if get_parent() and get_parent().has_method("take_damage_from_enemy"):
