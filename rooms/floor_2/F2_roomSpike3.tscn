@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://cqofau5ih5k5r"]
+[gd_scene format=4 uid="uid://ddxcj26khpddt"]
 
 [ext_resource type="Script" uid="uid://bb3cw6yl3psf0" path="res://floor/room_base.gd" id="1_kukmd"]
 [ext_resource type="Texture2D" uid="uid://bvfpfjnngf2yh" path="res://assets/DampDungeons/Tiles/DungeonDecorations.png" id="2_ppgh7"]

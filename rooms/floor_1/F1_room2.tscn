@@ -58,6 +58,7 @@ texture = ExtResource("2_jkrov")
 5:6/0 = 0
 
 [sub_resource type="TileSet" id="TileSet_f31wf"]
+physics_layer_0/collision_layer = 1
 sources/2 = SubResource("TileSetAtlasSource_e4krc")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k056n"]

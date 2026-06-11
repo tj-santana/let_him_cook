@@ -31,7 +31,7 @@ Chef: Gah! I need to get out of here now! [WASD to move]
 ~ pit_dialogue
 Spork: Falling in those pits would be quite painful... I can give you a hand if that happens!
 Chef: There will be, little weird voice in my head, no need for that. I dont plan on falling anyway!
-Chef: I should be careful where I step here, the bridges seem to have collapsed... And I can't even see the bottom of this pit.
+Chef: I should be careful where I step here, the bridges seem to have collapsed... And I can't even see the bottom of this pit. [M2 to Dash]
 => END
 
 ~ key_obtained
